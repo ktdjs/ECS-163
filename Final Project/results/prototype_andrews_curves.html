@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tabula Sapiens — Andrews Curves (MitoCarta)</title>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: #0f1117;
+    color: #e0e0e0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px 16px;
+  }
+
+  h1 {
+    font-size: 1.45rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    margin-bottom: 4px;
+    color: #f5f5f5;
+  }
+
+  .subtitle {
+    font-size: 0.82rem;
+    color: #777;
+    margin-bottom: 24px;
+    text-align: center;
+    max-width: 620px;
+    line-height: 1.5;
+  }
+
+  .controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: flex-start;
+    justify-content: center;
+    margin-bottom: 20px;
+    background: #1a1d27;
+    padding: 16px 24px;
+    border-radius: 10px;
+    border: 1px solid #2a2d3a;
+    width: 100%;
+    max-width: 960px;
+  }
+
+  .control-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  label {
+    font-size: 0.72rem;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .slider-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  input[type=range] {
+    -webkit-appearance: none;
+    width: 150px;
+    height: 4px;
+    background: #2e3347;
+    border-radius: 2px;
+    outline: none;
+  }
+
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 14px;
+    height: 14px;
+    background: #7b9fff;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  input[type=range]::-webkit-slider-thumb:hover { background: #a0b8ff; }
+
+  .slider-value {
+    font-size: 0.8rem;
+    color: #bbb;
+    min-width: 36px;
+    text-align: right;
+  }
+
+  /* Legend / category filter */
+  .legend {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 0.76rem;
+    color: #aaa;
+    cursor: pointer;
+    padding: 3px 8px;
+    border-radius: 5px;
+    transition: background 0.15s;
+    user-select: none;
+  }
+
+  .legend-item:hover { background: #232636; }
+  .legend-item.dimmed { opacity: 0.3; }
+
+  .legend-swatch {
+    width: 18px;
+    height: 3px;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  .chart-wrap {
+    position: relative;
+    width: 100%;
+    max-width: 960px;
+    background: #13161f;
+    border-radius: 12px;
+    border: 1px solid #1e2130;
+    overflow: hidden;
+  }
+
+  svg { display: block; width: 100%; }
+
+  .tooltip {
+    position: absolute;
+    background: #1e2233;
+    border: 1px solid #3a3e55;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 0.78rem;
+    line-height: 1.7;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.15s;
+    z-index: 10;
+    max-width: 270px;
+    white-space: nowrap;
+  }
+
+  .tooltip.visible { opacity: 1; }
+
+  .tooltip-name {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #f0f0f0;
+    margin-bottom: 3px;
+  }
+
+  .tooltip-cat {
+    font-size: 0.72rem;
+    margin-bottom: 6px;
+    opacity: 0.8;
+  }
+
+  .pc-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 2px;
+  }
+
+  .pc-label { color: #999; width: 30px; flex-shrink: 0; font-size: 0.72rem; }
+
+  .pc-bar-track {
+    flex: 1;
+    height: 6px;
+    background: #2a2d3a;
+    border-radius: 3px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .pc-bar-fill {
+    height: 100%;
+    border-radius: 3px;
+    position: absolute;
+  }
+
+  .pc-val {
+    color: #ddd;
+    width: 42px;
+    text-align: right;
+    flex-shrink: 0;
+    font-size: 0.72rem;
+  }
+
+  .pathway-section {
+    margin-top: 7px;
+    border-top: 1px solid #2e3347;
+    padding-top: 5px;
+  }
+
+  .pathway-label { font-size: 0.68rem; color: #777; margin-bottom: 3px; }
+
+  .pathway-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.71rem;
+    margin-bottom: 2px;
+  }
+
+  .pathway-bar {
+    height: 5px;
+    background: #4a6fa5;
+    border-radius: 2px;
+    min-width: 2px;
+  }
+
+  .pathway-name { color: #bbb; }
+  .pathway-score { color: #888; font-size: 0.68rem; }
+
+  .no-curves-msg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #555;
+    font-size: 0.9rem;
+    pointer-events: none;
+    display: none;
+  }
+
+  .grid line { stroke: #1e2130; stroke-dasharray: 3,3; }
+  .grid path { stroke: none; }
+  .zero-line { stroke: #2e3347; stroke-width: 1; stroke-dasharray: 4,4; }
+  .pi-line  { stroke: #2e3347; stroke-width: 0.5; }
+
+  /* curve labels */
+  .curve-label {
+    font-size: 9px;
+    fill: #ccc;
+    pointer-events: none;
+  }
+
+  .var-info {
+    font-size: 0.74rem;
+    color: #555;
+    margin-top: 10px;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+
+<h1>Tabula Sapiens — Andrews Curves (MitoCarta)</h1>
+<p class="subtitle">
+  Real Tabula Sapiens data · 17 cell types described by the 10 most variable MitoCarta
+  mitochondrial genes (z-scored across cell types) · Each colored curve is one cell type
+</p>
+
+<div class="controls">
+
+  <div class="control-group">
+    <label>Opacity</label>
+    <div class="slider-row">
+      <input type="range" id="opacity-slider" min="0.1" max="1.0" step="0.02" value="0.72">
+      <span class="slider-value" id="opacity-val">0.72</span>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <label>Stroke width</label>
+    <div class="slider-row">
+      <input type="range" id="width-slider" min="0.5" max="5" step="0.25" value="2.0">
+      <span class="slider-value" id="width-val">2.0</span>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <label>Show labels</label>
+    <div class="slider-row" style="padding-top:6px;">
+      <input type="checkbox" id="labels-toggle" checked style="width:16px;height:16px;cursor:pointer;accent-color:#7b9fff;">
+    </div>
+  </div>
+
+  <div class="control-group">
+    <label>Filter by category</label>
+    <div class="legend" id="legend"></div>
+  </div>
+
+</div>
+
+<div class="chart-wrap" id="chart-wrap">
+  <div class="tooltip" id="tooltip"></div>
+  <div class="no-curves-msg" id="no-msg">No cell types match filter</div>
+</div>
+
+<div class="var-info" id="var-info"></div>
+
+<script>
+// ─── EMBEDDED FEATURE DATA ───────────────────────────────────────────────────
+// REAL data from Tabula Sapiens mito expression (data/tabula_sapiens_mito_expr.tsv,
+// 1132 MitoCarta genes × 17 cell types). Features = the 10 most variable genes
+// across the 17 cell types (per-gene variance computed on log1p mean expression).
+// Each feature was z-scored across the 17 cell types so no high-expression gene
+// dominates the Andrews curve. Feature vector ordering (x1..x10) is by decreasing
+// variance, so the most-variable gene is on the x1/√2 constant term.
+
+// Feature genes, most-variable first (x1 → x10):
+const FEATURE_GENES = ["PDK4","SLC25A4","UCP2","ATP5F1A","LDHB","ATP5F1B","IDH2","SOD2","VDAC3","CYCS"];
+
+// feats = z-scored expression of FEATURE_GENES (same order) per cell type.
+const CELL_DATA = [
+  {name:"B cell",                              feats:[-0.64359,-0.4547,0.4735,-0.39679,-0.23523,-0.67194,-0.61381,-1.27114,-0.73069,-0.40745]},
+  {name:"T cell",                              feats:[-0.33997,-0.215,0.33648,0.03045,-0.01784,-0.15555,-0.38544,-0.85823,-0.20229,-0.11537]},
+  {name:"classical monocyte",                  feats:[-0.1782,-0.77536,-0.09153,-0.78685,-0.83659,-0.82915,-0.89736,-0.36885,-0.86612,-0.98639]},
+  {name:"erythrocyte",                         feats:[-0.7904,-0.7779,0.37517,-1.68212,-1.40162,-0.63295,-1.25212,-1.44015,-1.30603,-1.68489]},
+  {name:"erythroid progenitor cell",           feats:[-0.73063,-0.33944,1.21642,1.32789,1.62519,1.07206,1.32393,0.07419,1.34827,0.81238]},
+  {name:"hematopoietic stem cell",             feats:[-0.75072,-0.02188,1.366,1.36681,2.00307,1.04629,1.24099,0.55338,1.15001,0.54757]},
+  {name:"macrophage",                          feats:[0.31221,-0.70369,0.27446,-0.6532,-0.3615,-0.59143,-0.73901,0.50059,-0.5895,-0.44154]},
+  {name:"mature NK T cell",                    feats:[-0.72064,-0.19425,0.83031,0.13758,0.02367,0.06053,-0.00805,-1.2022,0.08006,-0.10236]},
+  {name:"monocyte",                            feats:[-0.11541,-0.76009,0.00045,-0.68912,-0.61165,-0.78317,-0.83563,-0.56472,-0.69278,-1.00821]},
+  {name:"neutrophil",                          feats:[-0.77586,-0.77742,-1.32203,-1.51415,-1.407,-2.03233,-1.2591,-0.31028,-1.42517,-1.62399]},
+  {name:"platelet",                            feats:[-0.77866,-0.77649,1.66672,-0.60835,0.70465,-0.5181,-0.18024,1.15327,1.29817,0.23717]},
+  {name:"cardiac muscle cell",                 feats:[-0.69713,0.69917,-1.26476,0.10709,0.42434,-0.04918,-0.21035,-1.1993,-0.21749,0.1586]},
+  {name:"fast muscle cell",                    feats:[1.44582,2.09423,0.22506,1.26666,-0.06544,1.45077,1.64253,0.88315,1.35804,1.38945]},
+  {name:"hepatocyte",                          feats:[-0.36648,-0.48963,-1.38183,-0.70099,-1.41132,-0.6582,0.51432,0.23973,-1.21528,-0.37881]},
+  {name:"muscle cell",                         feats:[2.21582,1.45641,-1.36179,0.76571,0.93981,1.22975,0.32306,1.87397,0.05794,1.82032]},
+  {name:"skeletal muscle satellite stem cell", feats:[1.37905,-0.16494,-1.20133,0.55345,0.75451,0.46266,-0.54484,0.86332,0.97571,0.6365]},
+  {name:"slow muscle cell",                    feats:[1.53479,2.20099,-0.14129,1.47593,-0.12704,1.59994,1.88111,1.07327,0.97716,1.147]},
+];
+
+// ─── CATEGORIES ──────────────────────────────────────────────────────────────
+// Key: category id  → { label, color (representative), cells: [...names] }
+const CATEGORIES = [
+  {
+    id: "myeloid",
+    label: "Myeloid (monocyte/macrophage/neutrophil)",
+    color: "#4a90e2",
+    cells: new Set(["classical monocyte","monocyte","macrophage","neutrophil"]),
+    // individual shades
+    cellColors: {
+      "classical monocyte": "#6aaaf0",
+      "monocyte":           "#4a90e2",
+      "macrophage":         "#2d6cbf",
+      "neutrophil":         "#1a4d99",
+    }
+  },
+  {
+    id: "lymphoid",
+    label: "Lymphoid T/NK (T cell, NK T cell)",
+    color: "#56c987",
+    cells: new Set(["T cell","mature NK T cell"]),
+    cellColors: {
+      "T cell":           "#56c987",
+      "mature NK T cell": "#2eaa60",
+    }
+  },
+  {
+    id: "bcell",
+    label: "B cell lineage",
+    color: "#b97fff",
+    cells: new Set(["B cell"]),
+    cellColors: {
+      "B cell": "#b97fff",
+    }
+  },
+  {
+    id: "progenitor",
+    label: "Progenitors (HSC, erythroid prog.)",
+    color: "#f5a623",
+    cells: new Set(["hematopoietic stem cell","erythroid progenitor cell"]),
+    cellColors: {
+      "hematopoietic stem cell":     "#f5a623",
+      "erythroid progenitor cell":   "#d47f10",
+    }
+  },
+  {
+    id: "erythro",
+    label: "Erythrocyte / Platelet",
+    color: "#e25050",
+    cells: new Set(["erythrocyte","platelet"]),
+    cellColors: {
+      "erythrocyte": "#e25050",
+      "platelet":    "#b82020",
+    }
+  },
+  {
+    id: "other",
+    label: "Other tissue (muscle, liver)",
+    color: "#999",
+    cells: new Set(["cardiac muscle cell","fast muscle cell","hepatocyte","muscle cell","skeletal muscle satellite stem cell","slow muscle cell"]),
+    cellColors: {
+      "cardiac muscle cell":                "#aaa",
+      "fast muscle cell":                   "#999",
+      "hepatocyte":                         "#888",
+      "muscle cell":                        "#777",
+      "skeletal muscle satellite stem cell":"#bbb",
+      "slow muscle cell":                   "#888",
+    }
+  },
+];
+
+// Attach category & color to each cell datum
+const catMap = {};  // cellName → category object
+CATEGORIES.forEach(cat => {
+  cat.cells.forEach(name => { catMap[name] = cat; });
+});
+
+CELL_DATA.forEach(d => {
+  const cat = catMap[d.name] || CATEGORIES[CATEGORIES.length-1];
+  d.category   = cat.id;
+  d.color      = (cat.cellColors && cat.cellColors[d.name]) || cat.color;
+  d.catLabel   = cat.label;
+  d.catColor   = cat.color;
+});
+
+// ─── CONSTANTS ───────────────────────────────────────────────────────────────
+const N_FEATS  = FEATURE_GENES.length;
+const T_STEPS  = 200;
+const T_MIN    = -Math.PI;
+const T_MAX    =  Math.PI;
+// per-feature bar colors (cycled)
+const FEAT_COLORS = ['#4a90e2','#56c987','#f5a623','#c97fff','#e25050',
+                     '#3fc1c9','#ff9f7f','#9ccc65','#ba68c8','#7b9fff'];
+
+// ─── ANDREWS CURVE ───────────────────────────────────────────────────────────
+// f(t) = x1/√2 + x2·sin(t) + x3·cos(t) + x4·sin(2t) + x5·cos(2t) + …
+function andrewsValue(x, t) {
+  let f = x[0] / Math.SQRT2;
+  for (let k = 1; k < x.length; k++) {
+    const freq = Math.ceil(k / 2);
+    f += k % 2 === 1
+      ? x[k] * Math.sin(freq * t)
+      : x[k] * Math.cos(freq * t);
+  }
+  return f;
+}
+
+function makeCurve(x) {
+  const pts = [];
+  for (let i = 0; i <= T_STEPS; i++) {
+    const t = T_MIN + (T_MAX - T_MIN) * i / T_STEPS;
+    pts.push([t, andrewsValue(x, t)]);
+  }
+  return pts;
+}
+
+// Pre-compute curves
+CELL_DATA.forEach(d => { d.curvePoints = makeCurve(d.feats); });
+
+// Global y-extent
+const allY = CELL_DATA.flatMap(d => d.curvePoints.map(p => p[1]));
+const globalYExtent = [d3.min(allY), d3.max(allY)];
+
+// ─── STATE ────────────────────────────────────────────────────────────────────
+let activeCategories = new Set(CATEGORIES.map(c => c.id));
+let baseOpacity = 0.72;
+let strokeWidth = 2.0;
+let showLabels  = true;
+
+// ─── LAYOUT ──────────────────────────────────────────────────────────────────
+const MARGIN = { top: 20, right: 30, bottom: 48, left: 56 };
+
+let svgWidth = 960, svgHeight = 520;
+function updateDimensions() {
+  const wrap = document.getElementById('chart-wrap');
+  svgWidth  = wrap.clientWidth || 960;
+  svgHeight = Math.min(svgWidth * 0.54, 540);
+}
+
+updateDimensions();
+
+const svg = d3.select('#chart-wrap')
+  .append('svg')
+  .attr('viewBox', `0 0 ${svgWidth} ${svgHeight}`)
+  .attr('preserveAspectRatio', 'xMidYMid meet');
+
+const g = svg.append('g').attr('transform', `translate(${MARGIN.left},${MARGIN.top})`);
+const innerW = svgWidth  - MARGIN.left - MARGIN.right;
+const innerH = svgHeight - MARGIN.top  - MARGIN.bottom;
+
+const xScale = d3.scaleLinear().domain([T_MIN, T_MAX]).range([0, innerW]);
+const yPad   = Math.abs(globalYExtent[1] - globalYExtent[0]) * 0.06;
+const yScale = d3.scaleLinear()
+  .domain([globalYExtent[0] - yPad, globalYExtent[1] + yPad])
+  .range([innerH, 0]);
+
+// Grid
+g.append('g').attr('class', 'grid')
+  .call(d3.axisLeft(yScale).ticks(6).tickSize(-innerW).tickFormat(''));
+
+// Zero line
+g.append('line').attr('class', 'zero-line')
+  .attr('x1', 0).attr('x2', innerW)
+  .attr('y1', yScale(0)).attr('y2', yScale(0));
+
+// π vertical guides
+[-Math.PI, -Math.PI/2, 0, Math.PI/2, Math.PI].forEach(t => {
+  g.append('line').attr('class', 'pi-line')
+    .attr('x1', xScale(t)).attr('x2', xScale(t))
+    .attr('y1', 0).attr('y2', innerH);
+});
+
+// Axes
+const xAxis = g.append('g').attr('class', 'x-axis')
+  .attr('transform', `translate(0,${innerH})`)
+  .call(d3.axisBottom(xScale)
+    .tickValues([-Math.PI, -Math.PI/2, 0, Math.PI/2, Math.PI])
+    .tickFormat(t => {
+      const m = {
+        [(-Math.PI   ).toFixed(5)]: '−π',
+        [(-Math.PI/2 ).toFixed(5)]: '−π/2',
+        '0.00000':                  '0',
+        [(Math.PI/2  ).toFixed(5)]: 'π/2',
+        [(Math.PI    ).toFixed(5)]: 'π',
+      };
+      return m[t.toFixed(5)] ?? '';
+    }));
+xAxis.selectAll('line,path').attr('stroke', '#2e3347');
+xAxis.selectAll('text').attr('fill', '#666').attr('font-size', '11px');
+
+const yAxis = g.append('g').attr('class', 'y-axis')
+  .call(d3.axisLeft(yScale).ticks(6));
+yAxis.selectAll('line,path').attr('stroke', '#2e3347');
+yAxis.selectAll('text').attr('fill', '#666').attr('font-size', '11px');
+
+// Axis labels
+g.append('text')
+  .attr('x', innerW / 2).attr('y', innerH + 40)
+  .attr('text-anchor', 'middle')
+  .attr('fill', '#555').attr('font-size', '12px')
+  .text('t  (−π → π)');
+
+g.append('text')
+  .attr('transform', 'rotate(-90)')
+  .attr('x', -innerH / 2).attr('y', -44)
+  .attr('text-anchor', 'middle')
+  .attr('fill', '#555').attr('font-size', '12px')
+  .text('f(t)');
+
+// Clip path
+svg.append('defs').append('clipPath').attr('id', 'plot-clip')
+  .append('rect').attr('width', innerW).attr('height', innerH);
+
+// Layers
+const curvesGroup = g.append('g').attr('class', 'curves').attr('clip-path', 'url(#plot-clip)');
+const labelsGroup = g.append('g').attr('class', 'labels');
+
+// Line generator
+const lineGen = d3.line()
+  .x(p => xScale(p[0]))
+  .y(p => yScale(p[1]))
+  .curve(d3.curveCatmullRom.alpha(0.5));
+
+// ─── TOOLTIP ─────────────────────────────────────────────────────────────────
+const tooltip = document.getElementById('tooltip');
+let activePath = null;
+
+function featBarHTML(feats) {
+  const maxAbs = Math.max(...feats.map(Math.abs), 0.1);
+  return feats.map((v, i) => {
+    const pct = Math.abs(v) / maxAbs * 100;
+    const left = v < 0 ? `${50 - pct/2}%` : '50%';
+    const color = FEAT_COLORS[i % FEAT_COLORS.length];
+    return `
+    <div class="pc-bar-row">
+      <span class="pc-label" style="width:62px;">${FEATURE_GENES[i]}</span>
+      <div class="pc-bar-track">
+        <div class="pc-bar-fill" style="width:${pct/2}%;left:${left};background:${color};"></div>
+      </div>
+      <span class="pc-val">${v.toFixed(2)}</span>
+    </div>`;
+  }).join('');
+}
+
+function showTooltip(event, d) {
+  tooltip.innerHTML = `
+    <div class="tooltip-name">${d.name}</div>
+    <div class="tooltip-cat" style="color:${d.catColor}">${d.catLabel}</div>
+    <div class="pathway-label" style="margin-bottom:4px;">Feature z-scores (top variable MitoCarta genes)</div>
+    ${featBarHTML(d.feats)}
+  `;
+  tooltip.classList.add('visible');
+  moveTooltip(event);
+}
+
+function moveTooltip(event) {
+  const wrap = document.getElementById('chart-wrap');
+  const rect = wrap.getBoundingClientRect();
+  const x = event.clientX - rect.left + 14;
+  const y = event.clientY - rect.top  - 10;
+  tooltip.style.left = Math.min(x, rect.width - 280) + 'px';
+  tooltip.style.top  = Math.max(y, 5) + 'px';
+}
+
+function hideTooltip() {
+  tooltip.classList.remove('visible');
+}
+
+// ─── DRAW ─────────────────────────────────────────────────────────────────────
+function visibleData() {
+  return CELL_DATA.filter(d => activeCategories.has(d.category));
+}
+
+function drawCurves() {
+  const subset = visibleData();
+  document.getElementById('no-msg').style.display = subset.length === 0 ? 'block' : 'none';
+
+  // ── paths ──
+  const paths = curvesGroup.selectAll('path.curve').data(subset, d => d.name);
+
+  paths.enter()
+    .append('path')
+    .attr('class', 'curve')
+    .merge(paths)
+    .attr('d', d => lineGen(d.curvePoints))
+    .attr('fill', 'none')
+    .attr('stroke', d => d.color)
+    .attr('stroke-width', strokeWidth)
+    .attr('opacity', baseOpacity)
+    .on('mouseenter', function(event, d) {
+      if (activePath) {
+        d3.select(activePath).attr('stroke-width', strokeWidth).attr('opacity', baseOpacity);
+        // restore old label
+        labelsGroup.selectAll(`text.lbl-${CSS.escape(activePath.__data__.name.replace(/\s+/g,'_'))}`)
+          .attr('font-weight', 'normal').attr('fill', '#ccc').attr('font-size', '9px');
+      }
+      activePath = this;
+      d3.select(this).raise().attr('stroke-width', Math.max(strokeWidth, 2) * 1.6).attr('opacity', 1);
+      labelsGroup.selectAll(`text.lbl-${CSS.escape(d.name.replace(/\s+/g,'_'))}`)
+        .attr('font-weight', 'bold').attr('fill', '#fff').attr('font-size', '10.5px');
+      showTooltip(event, d);
+    })
+    .on('mousemove', moveTooltip)
+    .on('mouseleave', function(event, d) {
+      d3.select(this).attr('stroke-width', strokeWidth).attr('opacity', baseOpacity);
+      labelsGroup.selectAll(`text.lbl-${CSS.escape(d.name.replace(/\s+/g,'_'))}`)
+        .attr('font-weight', 'normal').attr('fill', '#ccc').attr('font-size', '9px');
+      activePath = null;
+      hideTooltip();
+    });
+
+  paths.exit().remove();
+
+  // ── curve-end labels ──
+  drawLabels(subset);
+}
+
+function drawLabels(subset) {
+  // Place label at t = π (right edge)
+  labelsGroup.selectAll('text.curve-label').remove();
+
+  if (!showLabels) return;
+
+  subset.forEach(d => {
+    const lastPt = d.curvePoints[d.curvePoints.length - 1];
+    const x = xScale(lastPt[0]) + MARGIN.left + 4;
+    const y = yScale(lastPt[1]) + MARGIN.top;
+    const safeName = d.name.replace(/\s+/g, '_');
+    labelsGroup.append('text')
+      .attr('class', `curve-label lbl-${safeName}`)
+      .attr('x', x)
+      .attr('y', y)
+      .attr('dy', '0.35em')
+      .attr('fill', '#ccc')
+      .attr('font-size', '9px')
+      .attr('font-family', "'Segoe UI', system-ui, sans-serif")
+      .text(d.name);
+  });
+}
+
+// ─── LEGEND ───────────────────────────────────────────────────────────────────
+const legendEl = document.getElementById('legend');
+CATEGORIES.forEach(cat => {
+  const item = document.createElement('div');
+  item.className = 'legend-item';
+  item.innerHTML = `
+    <div class="legend-swatch" style="background:${cat.color}"></div>
+    <span>${cat.label}</span>
+  `;
+  item.addEventListener('click', () => {
+    if (activeCategories.has(cat.id)) {
+      activeCategories.delete(cat.id);
+      item.classList.add('dimmed');
+    } else {
+      activeCategories.add(cat.id);
+      item.classList.remove('dimmed');
+    }
+    drawCurves();
+  });
+  legendEl.appendChild(item);
+});
+
+// ─── CONTROLS ─────────────────────────────────────────────────────────────────
+document.getElementById('opacity-slider').addEventListener('input', e => {
+  baseOpacity = parseFloat(e.target.value);
+  document.getElementById('opacity-val').textContent = baseOpacity.toFixed(2);
+  drawCurves();
+});
+
+document.getElementById('width-slider').addEventListener('input', e => {
+  strokeWidth = parseFloat(e.target.value);
+  document.getElementById('width-val').textContent = strokeWidth.toFixed(2);
+  drawCurves();
+});
+
+document.getElementById('labels-toggle').addEventListener('change', e => {
+  showLabels = e.target.checked;
+  drawCurves();
+});
+
+// ─── FEATURE INFO ─────────────────────────────────────────────────────────────
+const varInfo = document.getElementById('var-info');
+varInfo.innerHTML =
+  `Features (x1→x10, most variable first): ${FEATURE_GENES.join(' · ')}<br>` +
+  `Each gene z-scored across the 17 cell types · Source: Tabula Sapiens mito expression (1132 MitoCarta genes)`;
+
+// ─── INITIAL DRAW ─────────────────────────────────────────────────────────────
+drawCurves();
+</script>
+</body>
+</html>

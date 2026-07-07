@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interactive Healthy Blood — Pathway Atlas</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --hero:   #d97706;
+    --hero2:  #f59e0b;
+    --navy:   #0f172a;
+    --navy2:  #1e293b;
+    --navy3:  #334155;
+    --muted:  #64748b;
+    --border: #e2e8f0;
+    --bg:     #f8fafc;
+    --white:  #ffffff;
+  }
+
+  body {
+    font-family: system-ui, -apple-system, sans-serif;
+    background: var(--navy);
+    color: var(--white);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 24px;
+    overflow-x: hidden;
+  }
+
+  /* ── star field ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image:
+      radial-gradient(1px 1px at 12% 18%, rgba(255,255,255,.55) 0%, transparent 100%),
+      radial-gradient(1px 1px at 34% 72%, rgba(255,255,255,.35) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 57% 11%, rgba(255,255,255,.45) 0%, transparent 100%),
+      radial-gradient(1px 1px at 78% 55%, rgba(255,255,255,.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 91% 29%, rgba(255,255,255,.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 5%  88%, rgba(255,255,255,.3) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 66% 83%, rgba(255,255,255,.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 44% 44%, rgba(255,255,255,.25) 0%, transparent 100%),
+      radial-gradient(1px 1px at 23% 61%, rgba(255,255,255,.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 88% 90%, rgba(255,255,255,.35) 0%, transparent 100%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── header ── */
+  .hero-block {
+    position: relative; z-index: 1;
+    text-align: center;
+    margin-bottom: 56px;
+  }
+
+  .eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--hero2);
+    margin-bottom: 14px;
+  }
+
+  h1 {
+    font-size: clamp(1.6rem, 4vw, 2.8rem);
+    font-weight: 800;
+    line-height: 1.15;
+    color: #fff;
+    max-width: 700px;
+    margin: 0 auto 16px;
+  }
+
+  h1 span { color: var(--hero2); }
+
+  .subtitle {
+    font-size: 15px;
+    color: #94a3b8;
+    max-width: 520px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  /* ── main card grid ── */
+  .cards {
+    position: relative; z-index: 1;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    max-width: 980px;
+    width: 100%;
+    margin-bottom: 48px;
+  }
+
+  .card {
+    background: rgba(255,255,255,.05);
+    border: 1px solid rgba(255,255,255,.10);
+    border-radius: 16px;
+    padding: 32px 28px;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    transition: background .2s, border-color .2s, transform .18s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 16px;
+    background: linear-gradient(135deg, rgba(217,119,6,.08) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity .2s;
+  }
+
+  .card:hover {
+    background: rgba(255,255,255,.09);
+    border-color: rgba(217,119,6,.5);
+    transform: translateY(-3px);
+  }
+  .card:hover::after { opacity: 1; }
+
+  .card-icon {
+    width: 52px; height: 52px;
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px;
+    flex-shrink: 0;
+  }
+
+  .card-icon.amber  { background: rgba(217,119,6,.18); }
+  .card-icon.blue   { background: rgba(59,108,183,.25); }
+  .card-icon.teal   { background: rgba(20,184,166,.18); }
+
+  .card-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #f1f5f9;
+    line-height: 1.2;
+  }
+
+  .card-sub {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--hero2);
+    margin-top: -10px;
+  }
+
+  .card-desc {
+    font-size: 13.5px;
+    color: #94a3b8;
+    line-height: 1.6;
+    flex: 1;
+  }
+
+  .card-meta {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 4px;
+  }
+
+  .tag {
+    font-size: 11px;
+    padding: 3px 9px;
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,.12);
+    color: #94a3b8;
+    background: rgba(255,255,255,.04);
+  }
+
+  .tag.hero { border-color: rgba(217,119,6,.4); color: var(--hero2); background: rgba(217,119,6,.08); }
+
+  .open-btn {
+    align-self: flex-start;
+    margin-top: 8px;
+    padding: 9px 20px;
+    border-radius: 8px;
+    background: rgba(217,119,6,.15);
+    border: 1px solid rgba(217,119,6,.4);
+    color: var(--hero2);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .15s, border-color .15s;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .open-btn:hover { background: rgba(217,119,6,.28); border-color: var(--hero2); }
+
+  /* ── divider ── */
+  .section-label {
+    position: relative; z-index: 1;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: #475569;
+    margin-bottom: 20px;
+    display: flex; align-items: center; gap: 12px;
+    max-width: 980px;
+    width: 100%;
+  }
+  .section-label::before, .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(255,255,255,.08);
+  }
+
+  /* ── secondary prototypes ── */
+  .proto-grid {
+    position: relative; z-index: 1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    max-width: 980px;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .proto-chip {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 10px;
+    padding: 12px 18px;
+    text-decoration: none;
+    color: #94a3b8;
+    font-size: 13px;
+    transition: background .15s, border-color .15s, color .15s;
+  }
+  .proto-chip:hover {
+    background: rgba(255,255,255,.08);
+    border-color: rgba(255,255,255,.18);
+    color: #e2e8f0;
+  }
+  .proto-chip .icon { font-size: 17px; }
+  .proto-chip .label { font-weight: 600; }
+  .proto-chip .dim { font-size: 11px; color: #475569; margin-top: 1px; }
+
+  /* ── footer ── */
+  footer {
+    position: relative; z-index: 1;
+    margin-top: 52px;
+    text-align: center;
+    font-size: 12px;
+    color: #334155;
+    line-height: 1.8;
+  }
+  footer a { color: #475569; text-decoration: none; }
+  footer a:hover { color: #94a3b8; }
+</style>
+</head>
+<body>
+
+<!-- ── Header ── -->
+<div class="hero-block">
+  <div class="eyebrow">ECS 163 · Spring 2026 · Team 29</div>
+  <h1>Interactive Healthy Blood<br><span>A Pathway Atlas</span></h1>
+  <p class="subtitle">
+    From one gene module to a thousand donors —
+    explore mitochondrial pathway activity across five biological scales
+    in whole-blood transcriptomics.
+  </p>
+</div>
+
+<!-- ── Three main cards ── -->
+<div class="cards">
+
+  <a class="card" href="transcriptome_multilevel_viz.html">
+    <div class="card-icon amber">🧬</div>
+    <div>
+      <div class="card-sub">Levels 1 – 5</div>
+      <div class="card-title">Pathway Atlas</div>
+    </div>
+    <div class="card-desc">
+      Navigate five biological scales — from gene co-expression to cell-type landscape —
+      with SDHA as the hero gene. Treemaps, radial petals, and bubble scatter across
+      MitoCarta, Reactome, and GO compartments.
+    </div>
+    <div class="card-meta">
+      <span class="tag hero">SDHA ✦</span>
+      <span class="tag">Tabula Sapiens</span>
+      <span class="tag">MitoCarta 3.0</span>
+      <span class="tag">Reactome</span>
+    </div>
+    <span class="open-btn">Open Atlas →</span>
+  </a>
+
+  <a class="card" href="prototype_clock_face.html">
+    <div class="card-icon blue">🕐</div>
+    <div>
+      <div class="card-sub">Time Series</div>
+      <div class="card-title">Circadian Clock Face</div>
+    </div>
+    <div class="card-desc">
+      Watch pathway activity oscillate over 24 hours in whole blood.
+      Toggle between two datasets (GSE223613 · GSE98582), select individual
+      donors or show the mean, and see which pathways are time-dependent.
+    </div>
+    <div class="card-meta">
+      <span class="tag">GSE223613</span>
+      <span class="tag">GSE98582</span>
+      <span class="tag">5 pathways</span>
+      <span class="tag">24 h animated</span>
+    </div>
+    <span class="open-btn">Open Clock →</span>
+  </a>
+
+  <a class="card" href="prototype_andrews_curves.html">
+    <div class="card-icon teal">📈</div>
+    <div>
+      <div class="card-sub">Dimensionality</div>
+      <div class="card-title">Andrews Curves</div>
+    </div>
+    <div class="card-desc">
+      17 blood cell types encoded as Fourier-series curves from the top 5 PCs
+      of MitoCarta expression (85.1% variance). PC1 separates differentiation
+      state — progenitors vs mature cells — not immune lineage.
+    </div>
+    <div class="card-meta">
+      <span class="tag">Tabula Sapiens</span>
+      <span class="tag">85,233 cells</span>
+      <span class="tag">PCA · 5 PCs</span>
+      <span class="tag">17 cell types</span>
+    </div>
+    <span class="open-btn">Open Curves →</span>
+  </a>
+
+</div>
+
+<!-- ── Other prototypes ── -->
+<div class="section-label">Other Prototypes</div>
+
+<div class="proto-grid">
+
+  <a class="proto-chip" href="database_lenses.html" style="border-color:rgba(217,119,6,.4)">
+    <span class="icon">🔬</span>
+    <div>
+      <div class="label">Database Lenses</div>
+      <div class="dim">Same Tabula Sapiens genes · 8 database vocabularies</div>
+    </div>
+  </a>
+
+  <a class="proto-chip" href="database_crosswalk.html" style="border-color:rgba(217,119,6,.4)">
+    <span class="icon">🗺️</span>
+    <div>
+      <div class="label">Reactome ↔ MitoCarta Crosswalk</div>
+      <div class="dim">Gene-overlap heatmap · 1,124 genes · many-to-many</div>
+    </div>
+  </a>
+
+  <a class="proto-chip" href="prototype_coexp_network.html">
+    <span class="icon">🕸️</span>
+    <div>
+      <div class="label">Co-expression Network</div>
+      <div class="dim">41 OxPhos genes · real Pearson r · 19 cell types</div>
+    </div>
+  </a>
+
+  <a class="proto-chip" href="prototype_constellation.html">
+    <span class="icon">✦</span>
+    <div>
+      <div class="label">Pathway Constellation</div>
+      <div class="dim">20 pathway tokens · scroll-linked activity · pinnable</div>
+    </div>
+  </a>
+
+  <a class="proto-chip" href="prototype_petal_glyph.html">
+    <span class="icon">🌸</span>
+    <div>
+      <div class="label">Radial Petal Glyph</div>
+      <div class="dim">GTEx donors · live API · z-score petals</div>
+    </div>
+  </a>
+
+  <a class="proto-chip" href="transcriptome_multilevel_viz_constellation.html">
+    <span class="icon">🔭</span>
+    <div>
+      <div class="label">Atlas + Constellation</div>
+      <div class="dim">Fork with persistent sidebar panel</div>
+    </div>
+  </a>
+
+</div>
+
+<footer>
+  Johnny Betmansour · Robin Sayar · Kevali Shah &nbsp;·&nbsp; UC Davis ECS 163 Spring 2026<br>
+  Data:
+  <a href="https://tabula-sapiens-portal.ds.czbiohub.org/" target="_blank" rel="noopener">Tabula Sapiens</a> ·
+  <a href="https://www.broadinstitute.org/mitocarta/mitocarta30-inventory-mammalian-mitochondrial-proteins-and-pathways" target="_blank" rel="noopener">MitoCarta 3.0</a> ·
+  <a href="https://reactome.org/" target="_blank" rel="noopener">Reactome</a> ·
+  <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE223613" target="_blank" rel="noopener">GSE223613</a> ·
+  <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE98582" target="_blank" rel="noopener">GSE98582</a>
+</footer>
+
+</body>
+</html>

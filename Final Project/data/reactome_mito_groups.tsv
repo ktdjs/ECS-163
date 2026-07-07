@@ -1,0 +1,827 @@
+group_name	group_id	subgroup_name	subgroup_id	reactome_id	pathway_name	n_genes	neutrophil_total	monocyte_total
+Autophagy	R-HSA-9612973	Autophagy	R-HSA-9612973	R-HSA-9612973	Autophagy	20.0000	1.9462	6.0464
+Autophagy	R-HSA-9612973	Chaperone Mediated Autophagy	R-HSA-9613829	R-HSA-9613829	Chaperone Mediated Autophagy	1.0000	0.1187	0.6925
+Autophagy	R-HSA-9612973	Late endosomal microautophagy	R-HSA-9615710	R-HSA-9615710	Late endosomal microautophagy	1.0000	0.1187	0.6925
+Autophagy	R-HSA-9612973	Macroautophagy	R-HSA-1632852	R-HSA-1632852	Macroautophagy	20.0000	1.9462	6.0464
+Autophagy	R-HSA-9612973	Macroautophagy	R-HSA-1632852	R-HSA-9663891	Selective autophagy	20.0000	1.9462	6.0464
+Autophagy	R-HSA-9612973	Macroautophagy	R-HSA-1632852	R-HSA-5205647	Mitophagy	17.0000	1.4764	4.8517
+Autophagy	R-HSA-9612973	Macroautophagy	R-HSA-1632852	R-HSA-5205685	PINK1-PRKN Mediated Mitophagy	15.0000	1.4653	4.7644
+Autophagy	R-HSA-9612973	Macroautophagy	R-HSA-1632852	R-HSA-9646399	Aggrephagy	2.0000	0.1350	0.7518
+Autophagy	R-HSA-9612973	Macroautophagy	R-HSA-1632852	R-HSA-8934903	Receptor Mediated Mitophagy	2.0000	0.0112	0.0873
+Autophagy	R-HSA-9612973	Macroautophagy	R-HSA-1632852	R-HSA-9664873	Pexophagy	2.0000	0.3511	0.5022
+Cell Cycle	R-HSA-1640170	Cell Cycle	R-HSA-1640170	R-HSA-1640170	Cell Cycle	4.0000	0.6438	0.9693
+Cell Cycle	R-HSA-1640170	Cell Cycle Checkpoints	R-HSA-69620	R-HSA-69473	G2/M DNA damage checkpoint	2.0000	0.2307	0.3447
+Cell Cycle	R-HSA-1640170	Cell Cycle Checkpoints	R-HSA-69620	R-HSA-69481	G2/M Checkpoints	2.0000	0.2307	0.3447
+Cell Cycle	R-HSA-1640170	Cell Cycle Checkpoints	R-HSA-69620	R-HSA-69620	Cell Cycle Checkpoints	2.0000	0.2307	0.3447
+Cell Cycle	R-HSA-1640170	Cell Cycle, Mitotic	R-HSA-69278	R-HSA-69278	Cell Cycle, Mitotic	2.0000	0.4324	0.6481
+Cell Cycle	R-HSA-1640170	Cell Cycle, Mitotic	R-HSA-69278	R-HSA-453274	Mitotic G2-G2/M phases	1.0000	0.4109	0.6219
+Cell Cycle	R-HSA-1640170	Cell Cycle, Mitotic	R-HSA-69278	R-HSA-69275	G2/M Transition	1.0000	0.4109	0.6219
+Cell Cycle	R-HSA-1640170	Cell Cycle, Mitotic	R-HSA-69278	R-HSA-69242	S Phase	1.0000	0.0215	0.0262
+Cell Cycle	R-HSA-1640170	Cell Cycle, Mitotic	R-HSA-69278	R-HSA-68886	M Phase	1.0000	0.4109	0.6219
+Cell Cycle	R-HSA-1640170	Cell Cycle, Mitotic	R-HSA-69278	R-HSA-68877	Mitotic Prometaphase	1.0000	0.4109	0.6219
+Cell Cycle	R-HSA-1640170	Cell Cycle, Mitotic	R-HSA-69278	R-HSA-2565942	Regulation of PLK1 Activity at G2/M Transition	1.0000	0.4109	0.6219
+Cell Cycle	R-HSA-1640170	Cell Cycle, Mitotic	R-HSA-69278	R-HSA-8854518	AURKA Activation by TPX2	1.0000	0.4109	0.6219
+Cell Cycle	R-HSA-1640170	Cell Cycle, Mitotic	R-HSA-69278	R-HSA-380320	Recruitment of NuMA to mitotic centrosomes	1.0000	0.4109	0.6219
+Cell Cycle	R-HSA-1640170	Cell Cycle, Mitotic	R-HSA-69278	R-HSA-380259	Loss of Nlp from mitotic centrosomes	1.0000	0.4109	0.6219
+Cell Cycle	R-HSA-1640170	Cell Cycle, Mitotic	R-HSA-69278	R-HSA-380270	Recruitment of mitotic centrosome proteins and complexes	1.0000	0.4109	0.6219
+Cell Cycle	R-HSA-1640170	Cell Cycle, Mitotic	R-HSA-69278	R-HSA-380284	Loss of proteins required for interphase microtubule organization from the centrosome	1.0000	0.4109	0.6219
+Cell Cycle	R-HSA-1640170	Cell Cycle, Mitotic	R-HSA-69278	R-HSA-380287	Centrosome maturation	1.0000	0.4109	0.6219
+Cell Cycle	R-HSA-1640170	Chromosome Maintenance	R-HSA-73886	R-HSA-73886	Chromosome Maintenance	2.0000	0.0237	0.0289
+Cell Cycle	R-HSA-1640170	Chromosome Maintenance	R-HSA-73886	R-HSA-180786	Extension of Telomeres	2.0000	0.0237	0.0289
+Cell Cycle	R-HSA-1640170	Chromosome Maintenance	R-HSA-73886	R-HSA-157579	Telomere Maintenance	2.0000	0.0237	0.0289
+Cell Cycle	R-HSA-1640170	Chromosome Maintenance	R-HSA-73886	R-HSA-174437	Removal of the Flap Intermediate from the C-strand	1.0000	0.0215	0.0262
+Cell Cycle	R-HSA-1640170	Chromosome Maintenance	R-HSA-73886	R-HSA-171319	Telomere Extension By Telomerase	1.0000	0.0022	0.0026
+Cell Cycle	R-HSA-1640170	Chromosome Maintenance	R-HSA-73886	R-HSA-174414	Processive synthesis on the C-strand of the telomere	1.0000	0.0215	0.0262
+Cell Cycle	R-HSA-1640170	Chromosome Maintenance	R-HSA-73886	R-HSA-174417	Telomere C-strand (Lagging Strand) Synthesis	1.0000	0.0215	0.0262
+Cell Cycle	R-HSA-1640170	Meiosis	R-HSA-1500620	R-HSA-1500620	Meiosis	1.0000	0.2092	0.3185
+Cell Cycle	R-HSA-1640170	Meiosis	R-HSA-1500620	R-HSA-912446	Meiotic recombination	1.0000	0.2092	0.3185
+Cellular responses to stimuli	R-HSA-8953897	Cellular responses to mechanical stimuli	R-HSA-9855142	R-HSA-9860931	Response of endothelial cells to shear stress	1.0000	0.4109	0.6219
+Cellular responses to stimuli	R-HSA-8953897	Cellular responses to mechanical stimuli	R-HSA-9855142	R-HSA-9856530	High laminar flow shear stress activates signaling by PIEZO1 and PECAM1:CDH5:KDR in endothelial cells	1.0000	0.4109	0.6219
+Cellular responses to stimuli	R-HSA-8953897	Cellular responses to mechanical stimuli	R-HSA-9855142	R-HSA-9855142	Cellular responses to mechanical stimuli	1.0000	0.4109	0.6219
+Cellular responses to stimuli	R-HSA-8953897	Cellular responses to stimuli	R-HSA-8953897	R-HSA-8953897	Cellular responses to stimuli	52.0000	15.1826	37.3678
+Cellular responses to stimuli	R-HSA-8953897	Cellular responses to stress	R-HSA-2262752	R-HSA-2262752	Cellular responses to stress	51.0000	14.7717	36.7459
+Cellular responses to stimuli	R-HSA-8953897	Cellular responses to stress	R-HSA-2262752	R-HSA-9711123	Cellular response to chemical stress	38.0000	13.7543	33.2977
+Cellular responses to stimuli	R-HSA-8953897	Cellular responses to stress	R-HSA-2262752	R-HSA-9707564	Cytoprotection by HMOX1	22.0000	8.7164	24.5974
+Cellular responses to stimuli	R-HSA-8953897	Cellular responses to stress	R-HSA-2262752	R-HSA-3299685	Detoxification of Reactive Oxygen Species	14.0000	4.8964	8.7558
+Cellular responses to stimuli	R-HSA-8953897	Cellular responses to stress	R-HSA-2262752	R-HSA-9841251	Mitochondrial unfolded protein response (UPRmt)	8.0000	3.1202	3.2669
+Cellular responses to stimuli	R-HSA-8953897	Cellular responses to stress	R-HSA-2262752	R-HSA-9840373	Cellular response to mitochondrial stress	5.0000	0.6397	1.6024
+Cellular responses to stimuli	R-HSA-8953897	Cellular responses to stress	R-HSA-2262752	R-HSA-9755511	KEAP1-NFE2L2 pathway	5.0000	1.1950	1.5274
+Cellular responses to stimuli	R-HSA-8953897	Cellular responses to stress	R-HSA-2262752	R-HSA-9759194	Nuclear events mediated by NFE2L2	4.0000	1.1667	1.4593
+Cellular responses to stimuli	R-HSA-8953897	Cellular responses to stress	R-HSA-2262752	R-HSA-9818030	NFE2L2 regulating tumorigenic genes	2.0000	0.1407	0.2650
+Cellular responses to stimuli	R-HSA-8953897	Cellular responses to stress	R-HSA-2262752	R-HSA-9818027	NFE2L2 regulating anti-oxidant/detoxification enzymes	2.0000	1.0260	1.1943
+Cellular responses to stimuli	R-HSA-8953897	Cellular responses to stress	R-HSA-2262752	R-HSA-1234158	Regulation of gene expression by Hypoxia-inducible Factor	1.0000	0.0429	0.1500
+Cellular responses to stimuli	R-HSA-8953897	Cellular responses to stress	R-HSA-2262752	R-HSA-1234174	Cellular response to hypoxia	1.0000	0.0429	0.1500
+Cellular responses to stimuli	R-HSA-8953897	Cellular responses to stress	R-HSA-2262752	R-HSA-3371453	Regulation of HSF1-mediated heat shock response	1.0000	0.2012	0.6030
+Cellular responses to stimuli	R-HSA-8953897	Cellular responses to stress	R-HSA-2262752	R-HSA-3371556	Cellular response to heat stress	1.0000	0.2012	0.6030
+Cellular responses to stimuli	R-HSA-8953897	Cellular responses to stress	R-HSA-2262752	R-HSA-381119	Unfolded Protein Response (UPR)	1.0000	0.0382	0.3351
+Cellular responses to stimuli	R-HSA-8953897	Cellular responses to stress	R-HSA-2262752	R-HSA-381070	IRE1alpha activates chaperones	1.0000	0.0382	0.3351
+Cellular responses to stimuli	R-HSA-8953897	Cellular responses to stress	R-HSA-2262752	R-HSA-381038	XBP1(S) activates chaperone genes	1.0000	0.0382	0.3351
+Circadian clock	R-HSA-9909396	BMAL1:CLOCK,NPAS2 activates circadian expression	R-HSA-1368108	R-HSA-1368108	BMAL1:CLOCK,NPAS2 activates circadian expression	1.0000	0.0956	0.1963
+Circadian clock	R-HSA-9909396	Circadian clock	R-HSA-9909396	R-HSA-9909396	Circadian clock	3.0000	0.2651	0.7742
+Circadian clock	R-HSA-9909396	Degradation of CRY and PER proteins	R-HSA-9932298	R-HSA-9932298	Degradation of CRY and PER proteins	1.0000	0.0951	0.1414
+Circadian clock	R-HSA-9909396	Phosphorylated BMAL1:CLOCK (ARNTL:CLOCK) activates expression of core clock genes	R-HSA-9931510	R-HSA-9931510	Phosphorylated BMAL1:CLOCK (ARNTL:CLOCK) activates expression of core clock genes	1.0000	0.0951	0.1414
+Circadian clock	R-HSA-9909396	Phosphorylation and nuclear translocation of the CRY:PER:kinase complex	R-HSA-9931530	R-HSA-9931530	Phosphorylation and nuclear translocation of the CRY:PER:kinase complex	1.0000	0.0951	0.1414
+Circadian clock	R-HSA-9909396	RORA,B,C and NR1D1 (REV-ERBA) regulate gene expression	R-HSA-9933387	R-HSA-9933387	RORA,B,C and NR1D1 (REV-ERBA) regulate gene expression	1.0000	0.0745	0.4365
+Circadian clock	R-HSA-9909396	The CRY:PER:kinase complex represses transactivation by the BMAL:CLOCK (ARNTL:CLOCK) complex	R-HSA-9931521	R-HSA-9931521	The CRY:PER:kinase complex represses transactivation by the BMAL:CLOCK (ARNTL:CLOCK) complex	1.0000	0.0951	0.1414
+DNA Repair	R-HSA-73894	Base Excision Repair	R-HSA-73884	R-HSA-73884	Base Excision Repair	7.0000	0.1385	0.7254
+DNA Repair	R-HSA-73894	Base Excision Repair	R-HSA-73884	R-HSA-73933	Resolution of Abasic Sites (AP sites)	7.0000	0.1385	0.7254
+DNA Repair	R-HSA-73894	Base Excision Repair	R-HSA-73884	R-HSA-110357	Displacement of DNA glycosylase by APEX1	5.0000	0.0378	0.5092
+DNA Repair	R-HSA-73894	Base Excision Repair	R-HSA-73884	R-HSA-73929	Base-Excision Repair, AP Site Formation	4.0000	0.0324	0.1669
+DNA Repair	R-HSA-73894	Base Excision Repair	R-HSA-73884	R-HSA-110381	Resolution of AP sites via the single-nucleotide replacement pathway	3.0000	0.1060	0.5584
+DNA Repair	R-HSA-73894	Base Excision Repair	R-HSA-73884	R-HSA-73928	Depyrimidination	3.0000	0.0315	0.1550
+DNA Repair	R-HSA-73894	Base Excision Repair	R-HSA-73884	R-HSA-110328	Recognition and association of DNA glycosylase with site containing an affected pyrimidine	3.0000	0.0315	0.1550
+DNA Repair	R-HSA-73894	Base Excision Repair	R-HSA-73884	R-HSA-110329	Cleavage of the damaged pyrimidine	3.0000	0.0315	0.1550
+DNA Repair	R-HSA-73894	Base Excision Repair	R-HSA-73884	R-HSA-5649702	APEX1-Independent Resolution of AP Sites via the Single Nucleotide Replacement Pathway	3.0000	0.1310	0.3258
+DNA Repair	R-HSA-73894	Base Excision Repair	R-HSA-73884	R-HSA-73927	Depurination	2.0000	0.0312	0.1216
+DNA Repair	R-HSA-73894	Base Excision Repair	R-HSA-73884	R-HSA-73930	Abasic sugar-phosphate removal via the single-nucleotide replacement pathway	2.0000	0.0850	0.4887
+DNA Repair	R-HSA-73894	Base Excision Repair	R-HSA-73884	R-HSA-110331	Cleavage of the damaged purine	2.0000	0.0312	0.1216
+DNA Repair	R-HSA-73894	Base Excision Repair	R-HSA-73884	R-HSA-110362	POLB-Dependent Long Patch Base Excision Repair	2.0000	0.0850	0.4887
+DNA Repair	R-HSA-73894	Base Excision Repair	R-HSA-73884	R-HSA-110373	Resolution of AP sites via the multiple-nucleotide patch replacement pathway	2.0000	0.0850	0.4887
+DNA Repair	R-HSA-73894	Base Excision Repair	R-HSA-73884	R-HSA-5651801	PCNA-Dependent Long Patch Base Excision Repair	2.0000	0.0850	0.4887
+DNA Repair	R-HSA-73894	Base Excision Repair	R-HSA-73884	R-HSA-110330	Recognition and association of DNA glycosylase with site containing an affected purine	2.0000	0.0312	0.1216
+DNA Repair	R-HSA-73894	DNA Double-Strand Break Repair	R-HSA-5693532	R-HSA-5693532	DNA Double-Strand Break Repair	4.0000	0.2658	0.4241
+DNA Repair	R-HSA-73894	DNA Double-Strand Break Repair	R-HSA-5693532	R-HSA-5693538	Homology Directed Repair	4.0000	0.2658	0.4241
+DNA Repair	R-HSA-73894	DNA Double-Strand Break Repair	R-HSA-5693532	R-HSA-5693579	Homologous DNA Pairing and Strand Exchange	2.0000	0.2307	0.3447
+DNA Repair	R-HSA-73894	DNA Double-Strand Break Repair	R-HSA-5693532	R-HSA-5693616	Presynaptic phase of homologous DNA pairing and strand exchange	2.0000	0.2307	0.3447
+DNA Repair	R-HSA-73894	DNA Double-Strand Break Repair	R-HSA-5693532	R-HSA-5693607	Processing of DNA double-strand break ends	2.0000	0.2307	0.3447
+DNA Repair	R-HSA-73894	DNA Double-Strand Break Repair	R-HSA-5693532	R-HSA-5693567	HDR through Homologous Recombination (HRR) or Single Strand Annealing (SSA)	2.0000	0.2307	0.3447
+DNA Repair	R-HSA-73894	DNA Double-Strand Break Repair	R-HSA-5693532	R-HSA-5693568	Resolution of D-loop Structures through Holliday Junction Intermediates	2.0000	0.2307	0.3447
+DNA Repair	R-HSA-73894	DNA Double-Strand Break Repair	R-HSA-5693532	R-HSA-5693554	Resolution of D-loop Structures through Synthesis-Dependent Strand Annealing (SDSA)	2.0000	0.2307	0.3447
+DNA Repair	R-HSA-73894	DNA Double-Strand Break Repair	R-HSA-5693532	R-HSA-5693537	Resolution of D-Loop Structures	2.0000	0.2307	0.3447
+DNA Repair	R-HSA-73894	DNA Double-Strand Break Repair	R-HSA-5693532	R-HSA-5685942	HDR through Homologous Recombination (HRR)	2.0000	0.2307	0.3447
+DNA Repair	R-HSA-73894	DNA Double-Strand Break Repair	R-HSA-5693532	R-HSA-5685938	HDR through Single Strand Annealing (SSA)	2.0000	0.2307	0.3447
+DNA Repair	R-HSA-73894	DNA Double-Strand Break Repair	R-HSA-5693532	R-HSA-5685939	HDR through MMEJ (alt-NHEJ)	2.0000	0.0351	0.0794
+DNA Repair	R-HSA-73894	DNA Repair	R-HSA-73894	R-HSA-73894	DNA Repair	10.0000	0.3833	1.0798
+DNA Repair	R-HSA-73894	Nucleotide Excision Repair	R-HSA-5696398	R-HSA-6782210	Gap-filling DNA repair synthesis and ligation in TC-NER	1.0000	0.0210	0.0697
+DNA Repair	R-HSA-73894	Nucleotide Excision Repair	R-HSA-5696398	R-HSA-6781827	Transcription-Coupled Nucleotide Excision Repair (TC-NER)	1.0000	0.0210	0.0697
+DNA Repair	R-HSA-73894	Nucleotide Excision Repair	R-HSA-5696398	R-HSA-5696399	Global Genome Nucleotide Excision Repair (GG-NER)	1.0000	0.0210	0.0697
+DNA Repair	R-HSA-73894	Nucleotide Excision Repair	R-HSA-5696398	R-HSA-5696398	Nucleotide Excision Repair	1.0000	0.0210	0.0697
+DNA Repair	R-HSA-73894	Nucleotide Excision Repair	R-HSA-5696398	R-HSA-5696397	Gap-filling DNA repair synthesis and ligation in GG-NER	1.0000	0.0210	0.0697
+DNA Replication	R-HSA-69306	DNA Replication	R-HSA-69306	R-HSA-69306	DNA Replication	11.0000	0.4963	1.6407
+DNA Replication	R-HSA-69306	Strand-asynchronous mitochondrial DNA replication	R-HSA-9913635	R-HSA-9913635	Strand-asynchronous mitochondrial DNA replication	10.0000	0.4748	1.6145
+DNA Replication	R-HSA-69306	Synthesis of DNA	R-HSA-69239	R-HSA-69239	Synthesis of DNA	1.0000	0.0215	0.0262
+DNA Replication	R-HSA-69306	Synthesis of DNA	R-HSA-69239	R-HSA-69190	DNA strand elongation	1.0000	0.0215	0.0262
+DNA Replication	R-HSA-69306	Synthesis of DNA	R-HSA-69239	R-HSA-69186	Lagging Strand Synthesis	1.0000	0.0215	0.0262
+DNA Replication	R-HSA-69306	Synthesis of DNA	R-HSA-69239	R-HSA-69183	Processive synthesis on the lagging strand	1.0000	0.0215	0.0262
+DNA Replication	R-HSA-69306	Synthesis of DNA	R-HSA-69239	R-HSA-69166	Removal of the Flap Intermediate	1.0000	0.0215	0.0262
+Developmental Biology	R-HSA-1266738	Adipogenesis	R-HSA-9843745	R-HSA-9843743	Transcriptional regulation of brown and beige adipocyte differentiation	2.0000	0.0002	0.0010
+Developmental Biology	R-HSA-1266738	Adipogenesis	R-HSA-9843745	R-HSA-9843745	Adipogenesis	2.0000	0.0002	0.0010
+Developmental Biology	R-HSA-1266738	Adipogenesis	R-HSA-9843745	R-HSA-9844594	Transcriptional regulation of brown and beige adipocyte differentiation by EBF2	2.0000	0.0002	0.0010
+Developmental Biology	R-HSA-1266738	Developmental Biology	R-HSA-1266738	R-HSA-1266738	Developmental Biology	8.0000	2.1764	2.0385
+Developmental Biology	R-HSA-1266738	MITF-M-regulated melanocyte development	R-HSA-9730414	R-HSA-9730414	MITF-M-regulated melanocyte development	4.0000	1.7643	1.4107
+Developmental Biology	R-HSA-1266738	MITF-M-regulated melanocyte development	R-HSA-9730414	R-HSA-9824594	Regulation of MITF-M-dependent genes involved in apoptosis	3.0000	1.7253	1.0840
+Developmental Biology	R-HSA-1266738	MITF-M-regulated melanocyte development	R-HSA-9730414	R-HSA-9856651	MITF-M-dependent gene expression	3.0000	1.7253	1.0840
+Developmental Biology	R-HSA-1266738	MITF-M-regulated melanocyte development	R-HSA-9730414	R-HSA-9856649	Transcriptional and post-translational regulation of MITF-M expression and activity	2.0000	0.0799	1.0384
+Developmental Biology	R-HSA-1266738	MITF-M-regulated melanocyte development	R-HSA-9730414	R-HSA-9825892	Regulation of MITF-M-dependent genes involved in cell cycle and proliferation	1.0000	0.0409	0.7117
+Developmental Biology	R-HSA-1266738	Maternal to zygotic transition (MZT)	R-HSA-9816359	R-HSA-9821002	Chromatin modifications during the maternal to zygotic transition (MZT)	1.0000	0.0009	0.0049
+Developmental Biology	R-HSA-1266738	Maternal to zygotic transition (MZT)	R-HSA-9816359	R-HSA-9816359	Maternal to zygotic transition (MZT)	1.0000	0.0009	0.0049
+Developmental Biology	R-HSA-1266738	Nervous system development	R-HSA-9675108	R-HSA-9675108	Nervous system development	1.0000	0.4109	0.6219
+Developmental Biology	R-HSA-1266738	Nervous system development	R-HSA-9675108	R-HSA-422475	Axon guidance	1.0000	0.4109	0.6219
+Developmental Biology	R-HSA-1266738	Nervous system development	R-HSA-9675108	R-HSA-9010642	ROBO receptors bind AKAP5	1.0000	0.4109	0.6219
+Developmental Biology	R-HSA-1266738	Nervous system development	R-HSA-9675108	R-HSA-8853659	RET signaling	1.0000	0.4109	0.6219
+Developmental Biology	R-HSA-1266738	Nervous system development	R-HSA-9675108	R-HSA-376176	Signaling by ROBO receptors	1.0000	0.4109	0.6219
+Disease	R-HSA-1643685	Disease	R-HSA-1643685	R-HSA-1643685	Disease	70.0000	11.0182	16.0346
+Disease	R-HSA-1643685	Diseases of DNA repair	R-HSA-9675135	R-HSA-9675135	Diseases of DNA repair	5.0000	0.2622	0.5067
+Disease	R-HSA-1643685	Diseases of DNA repair	R-HSA-9675135	R-HSA-9605308	Diseases of Base Excision Repair	3.0000	0.0315	0.1620
+Disease	R-HSA-1643685	Diseases of DNA repair	R-HSA-9675135	R-HSA-9675136	Diseases of DNA Double-Strand Break Repair	2.0000	0.2307	0.3447
+Disease	R-HSA-1643685	Diseases of DNA repair	R-HSA-9675135	R-HSA-9709603	Impaired BRCA2 binding to PALB2	2.0000	0.2307	0.3447
+Disease	R-HSA-1643685	Diseases of DNA repair	R-HSA-9675135	R-HSA-9709570	Impaired BRCA2 binding to RAD51	2.0000	0.2307	0.3447
+Disease	R-HSA-1643685	Diseases of DNA repair	R-HSA-9675135	R-HSA-9704646	Defective HDR through Homologous Recombination Repair (HRR) due to PALB2 loss of BRCA2/RAD51/RAD51C binding function	2.0000	0.2307	0.3447
+Disease	R-HSA-1643685	Diseases of DNA repair	R-HSA-9675135	R-HSA-9704331	Defective HDR through Homologous Recombination Repair (HRR) due to PALB2 loss of BRCA1 binding function	2.0000	0.2307	0.3447
+Disease	R-HSA-1643685	Diseases of DNA repair	R-HSA-9675135	R-HSA-9701193	Defective homologous recombination repair (HRR) due to PALB2 loss of function	2.0000	0.2307	0.3447
+Disease	R-HSA-1643685	Diseases of DNA repair	R-HSA-9675135	R-HSA-9701192	Defective homologous recombination repair (HRR) due to BRCA1 loss of function	2.0000	0.2307	0.3447
+Disease	R-HSA-1643685	Diseases of DNA repair	R-HSA-9675135	R-HSA-9701190	Defective homologous recombination repair (HRR) due to BRCA2 loss of function	2.0000	0.2307	0.3447
+Disease	R-HSA-1643685	Diseases of DNA repair	R-HSA-9675135	R-HSA-9630221	Defective NTHL1 substrate processing	1.0000	0.0003	0.0404
+Disease	R-HSA-1643685	Diseases of DNA repair	R-HSA-9675135	R-HSA-9616333	Defective Base Excision Repair Associated with NTHL1	1.0000	0.0003	0.0404
+Disease	R-HSA-1643685	Diseases of DNA repair	R-HSA-9675135	R-HSA-9630222	Defective NTHL1 substrate binding	1.0000	0.0003	0.0404
+Disease	R-HSA-1643685	Diseases of DNA repair	R-HSA-9675135	R-HSA-9657050	Defective OGG1 Localization	1.0000	0.0303	0.1096
+Disease	R-HSA-1643685	Diseases of DNA repair	R-HSA-9675135	R-HSA-9656256	Defective OGG1 Substrate Processing	1.0000	0.0303	0.1096
+Disease	R-HSA-1643685	Diseases of DNA repair	R-HSA-9675135	R-HSA-9656255	Defective OGG1 Substrate Binding	1.0000	0.0303	0.1096
+Disease	R-HSA-1643685	Diseases of DNA repair	R-HSA-9675135	R-HSA-9656249	Defective Base Excision Repair Associated with OGG1	1.0000	0.0303	0.1096
+Disease	R-HSA-1643685	Diseases of DNA repair	R-HSA-9675135	R-HSA-9608290	Defective MUTYH substrate processing	1.0000	0.0009	0.0119
+Disease	R-HSA-1643685	Diseases of DNA repair	R-HSA-9675135	R-HSA-9608287	Defective MUTYH substrate binding	1.0000	0.0009	0.0119
+Disease	R-HSA-1643685	Diseases of DNA repair	R-HSA-9675135	R-HSA-9605310	Defective Base Excision Repair Associated with MUTYH	1.0000	0.0009	0.0119
+Disease	R-HSA-1643685	Diseases of metabolism	R-HSA-5668914	R-HSA-5668914	Diseases of metabolism	37.0000	1.5174	4.1150
+Disease	R-HSA-1643685	Diseases of metabolism	R-HSA-5668914	R-HSA-9865118	Diseases of branched-chain amino acid catabolism	13.0000	0.5759	1.9676
+Disease	R-HSA-1643685	Diseases of metabolism	R-HSA-5668914	R-HSA-3296482	Defects in vitamin and cofactor metabolism	10.0000	0.4604	1.3095
+Disease	R-HSA-1643685	Diseases of metabolism	R-HSA-5668914	R-HSA-5579029	Metabolic disorders of biological oxidation enzymes	10.0000	0.4355	0.7840
+Disease	R-HSA-1643685	Diseases of metabolism	R-HSA-5668914	R-HSA-3371599	Defective HLCS causes multiple carboxylase deficiency	6.0000	0.0653	0.9229
+Disease	R-HSA-1643685	Diseases of metabolism	R-HSA-5668914	R-HSA-3323169	Defects in biotin (Btn) metabolism	6.0000	0.0653	0.9229
+Disease	R-HSA-1643685	Diseases of metabolism	R-HSA-5668914	R-HSA-9865114	Maple Syrup Urine Disease	5.0000	0.2106	0.5168
+Disease	R-HSA-1643685	Diseases of metabolism	R-HSA-5668914	R-HSA-9912481	Branched-chain ketoacid dehydrogenase kinase deficiency	5.0000	0.2597	0.7081
+Disease	R-HSA-1643685	Diseases of metabolism	R-HSA-5668914	R-HSA-9912529	H139Hfs13* PPM1K causes a mild variant of  MSUD	5.0000	0.2106	0.5168
+Disease	R-HSA-1643685	Diseases of metabolism	R-HSA-5668914	R-HSA-3296469	Defects in cobalamin (B12) metabolism	4.0000	0.3951	0.3866
+Disease	R-HSA-1643685	Diseases of metabolism	R-HSA-5668914	R-HSA-9955698	Diseases of the urea cycle	4.0000	0.0051	0.0172
+Disease	R-HSA-1643685	Diseases of metabolism	R-HSA-5668914	R-HSA-5579026	Defective CYP11A1 causes AICSR	4.0000	0.0078	0.2712
+Disease	R-HSA-1643685	Diseases of metabolism	R-HSA-5668914	R-HSA-9907570	Loss-of-function mutations in DLD cause MSUD3/DLDD	4.0000	0.2080	0.4420
+Disease	R-HSA-1643685	Diseases of metabolism	R-HSA-5668914	R-HSA-9865113	Loss-of-function mutations in DBT cause MSUD2	4.0000	0.2080	0.4420
+Disease	R-HSA-1643685	Diseases of metabolism	R-HSA-5668914	R-HSA-9865125	Loss-of-function mutations in BCKDHA or BCKDHB cause MSUD	3.0000	0.0230	0.1514
+Disease	R-HSA-1643685	Diseases of metabolism	R-HSA-5668914	R-HSA-9759774	Diseases of mitochondrial beta oxidation	2.0000	0.0300	0.0996
+Disease	R-HSA-1643685	Diseases of metabolism	R-HSA-5668914	R-HSA-9759785	Diseases of propionyl-CoA catabolism	2.0000	0.0300	0.0996
+Disease	R-HSA-1643685	Diseases of metabolism	R-HSA-5668914	R-HSA-9909438	3-Methylcrotonyl-CoA carboxylase deficiency	2.0000	0.0220	0.2525
+Disease	R-HSA-1643685	Diseases of metabolism	R-HSA-5668914	R-HSA-3359478	Defective MUT causes MMAM	2.0000	0.0300	0.0996
+Disease	R-HSA-1643685	Diseases of metabolism	R-HSA-5668914	R-HSA-3359475	Defective MMAA causes MMA, cblA type	2.0000	0.0300	0.0996
+Disease	R-HSA-1643685	Diseases of metabolism	R-HSA-5668914	R-HSA-5663084	Diseases of carbohydrate metabolism	2.0000	0.0624	0.2892
+Disease	R-HSA-1643685	Diseases of metabolism	R-HSA-5668914	R-HSA-9916720	Mitochondrial short-chain enoyl-CoA hydratase deficiency 1	1.0000	0.0035	0.2223
+Disease	R-HSA-1643685	Diseases of metabolism	R-HSA-5668914	R-HSA-9915355	Beta-ketothiolase deficiency	1.0000	0.0283	0.1529
+Disease	R-HSA-1643685	Diseases of metabolism	R-HSA-5668914	R-HSA-9914355	Isovaleric acidemia	1.0000	0.0117	0.0852
+Disease	R-HSA-1643685	Diseases of metabolism	R-HSA-5668914	R-HSA-9914274	3-methylglutaconic aciduria	1.0000	0.1675	0.3180
+Disease	R-HSA-1643685	Diseases of metabolism	R-HSA-5668914	R-HSA-9916722	3-hydroxyisobutyryl-CoA hydrolase deficiency	1.0000	0.0806	0.1539
+Disease	R-HSA-1643685	Diseases of metabolism	R-HSA-5668914	R-HSA-9956553	OTC main chain variants cause OTC deficiency	1.0000	0.0001	0.0003
+Disease	R-HSA-1643685	Diseases of metabolism	R-HSA-5668914	R-HSA-9956551	OTC leader sequence variants cause OTC deficiency	1.0000	0.0001	0.0003
+Disease	R-HSA-1643685	Diseases of metabolism	R-HSA-5668914	R-HSA-9956522	OTC variants cause OTC deficiency	1.0000	0.0001	0.0003
+Disease	R-HSA-1643685	Diseases of metabolism	R-HSA-5668914	R-HSA-9956508	SLC25A15 variants cause hyperornithinemia-hyperammonemia-homocitrullinemia syndrome	1.0000	0.0017	0.0096
+Disease	R-HSA-1643685	Diseases of metabolism	R-HSA-5668914	R-HSA-9955693	NAGS variants cause NAGS deficiency	1.0000	0.0002	0.0046
+Disease	R-HSA-1643685	Diseases of metabolism	R-HSA-5668914	R-HSA-9955542	CPS1 variants cause CPS1 deficiency	1.0000	0.0032	0.0026
+Disease	R-HSA-1643685	Diseases of metabolism	R-HSA-5668914	R-HSA-5578996	Defective CYP27A1 causes CTX	1.0000	0.0598	0.2021
+Disease	R-HSA-1643685	Diseases of metabolism	R-HSA-5668914	R-HSA-5579009	Defective CYP11B2 causes CMO-1 deficiency	1.0000	0.0001	0.0002
+Disease	R-HSA-1643685	Diseases of metabolism	R-HSA-5668914	R-HSA-5579010	Defective CYP24A1 causes HCAI	1.0000	0.0006	0.0006
+Disease	R-HSA-1643685	Diseases of metabolism	R-HSA-5668914	R-HSA-5579012	Defective MAOA causes BRUNS	1.0000	0.3670	0.3096
+Disease	R-HSA-1643685	Diseases of metabolism	R-HSA-5668914	R-HSA-5579014	Defective CYP27B1 causes VDDR1A	1.0000	0.0001	0.0002
+Disease	R-HSA-1643685	Diseases of metabolism	R-HSA-5668914	R-HSA-5659996	RPIA deficiency: failed conversion of R5P to RU5P	1.0000	0.0329	0.1195
+Disease	R-HSA-1643685	Diseases of metabolism	R-HSA-5668914	R-HSA-6791465	Pentose phosphate pathway disease	1.0000	0.0329	0.1195
+Disease	R-HSA-1643685	Diseases of metabolism	R-HSA-5668914	R-HSA-6791461	RPIA deficiency: failed conversion of RU5P to R5P	1.0000	0.0329	0.1195
+Disease	R-HSA-1643685	Diseases of metabolism	R-HSA-5668914	R-HSA-5662853	Essential pentosuria	1.0000	0.0295	0.1697
+Disease	R-HSA-1643685	Diseases of metabolism	R-HSA-5668914	R-HSA-5579017	Defective CYP11B1 causes AH4	1.0000	0.0001	0.0002
+Disease	R-HSA-1643685	Diseases of metabolism	R-HSA-5668914	R-HSA-3359471	Defective MMAB causes MMA, cblB type	1.0000	0.0040	0.0373
+Disease	R-HSA-1643685	Diseases of metabolism	R-HSA-5668914	R-HSA-3359473	Defective MMADHC causes MMAHCD	1.0000	0.3611	0.2497
+Disease	R-HSA-1643685	Diseases of programmed cell death	R-HSA-9645723	R-HSA-9645723	Diseases of programmed cell death	5.0000	3.1432	2.4843
+Disease	R-HSA-1643685	Diseases of programmed cell death	R-HSA-9645723	R-HSA-9734009	Defective Intrinsic Pathway for Apoptosis	4.0000	2.5434	2.0975
+Disease	R-HSA-1643685	Diseases of programmed cell death	R-HSA-9645723	R-HSA-8862803	Deregulated CDK5 triggers multiple neurodegenerative pathways in Alzheimer's disease models	3.0000	2.5401	1.7887
+Disease	R-HSA-1643685	Diseases of programmed cell death	R-HSA-9645723	R-HSA-8863678	Neurodegenerative Diseases	3.0000	2.5401	1.7887
+Disease	R-HSA-1643685	Diseases of programmed cell death	R-HSA-9645723	R-HSA-9645722	Defective Intrinsic Pathway for Apoptosis Due to p14ARF Loss of Function	1.0000	0.0033	0.3088
+Disease	R-HSA-1643685	Diseases of programmed cell death	R-HSA-9645723	R-HSA-9686347	Microbial modulation of RIPK1-mediated regulated necrosis	1.0000	0.5998	0.3868
+Disease	R-HSA-1643685	Diseases of programmed cell death	R-HSA-9645723	R-HSA-9693928	Defective RIPK1-mediated regulated necrosis	1.0000	0.5998	0.3868
+Disease	R-HSA-1643685	Diseases of signal transduction by growth factor receptors and second messengers	R-HSA-5663202	R-HSA-5663202	Diseases of signal transduction by growth factor receptors and second messengers	7.0000	4.3536	3.9195
+Disease	R-HSA-1643685	Diseases of signal transduction by growth factor receptors and second messengers	R-HSA-5663202	R-HSA-6802957	Oncogenic MAPK signaling	3.0000	0.2195	1.3951
+Disease	R-HSA-1643685	Diseases of signal transduction by growth factor receptors and second messengers	R-HSA-5663202	R-HSA-6802952	Signaling by BRAF and RAF1 fusions	3.0000	0.2195	1.3951
+Disease	R-HSA-1643685	Diseases of signal transduction by growth factor receptors and second messengers	R-HSA-5663202	R-HSA-9725370	Signaling by ALK fusions and activated point mutants	2.0000	3.9109	2.1812
+Disease	R-HSA-1643685	Diseases of signal transduction by growth factor receptors and second messengers	R-HSA-5663202	R-HSA-9700206	Signaling by ALK in cancer	2.0000	3.9109	2.1812
+Disease	R-HSA-1643685	Diseases of signal transduction by growth factor receptors and second messengers	R-HSA-5663202	R-HSA-9702518	STAT5 activation downstream of FLT3 ITD mutants	1.0000	0.1333	0.2124
+Disease	R-HSA-1643685	Diseases of signal transduction by growth factor receptors and second messengers	R-HSA-5663202	R-HSA-9703648	Signaling by FLT3 ITD and TKD mutants	1.0000	0.1333	0.2124
+Disease	R-HSA-1643685	Diseases of signal transduction by growth factor receptors and second messengers	R-HSA-5663202	R-HSA-9682385	FLT3 signaling in disease	1.0000	0.1333	0.2124
+Disease	R-HSA-1643685	Diseases of signal transduction by growth factor receptors and second messengers	R-HSA-5663202	R-HSA-9725371	Nuclear events stimulated by ALK signaling in cancer	1.0000	1.6770	0.3197
+Disease	R-HSA-1643685	Diseases of signal transduction by growth factor receptors and second messengers	R-HSA-5663202	R-HSA-5674400	Constitutive Signaling by AKT1 E17K in Cancer	1.0000	0.0899	0.1307
+Disease	R-HSA-1643685	Diseases of signal transduction by growth factor receptors and second messengers	R-HSA-5663202	R-HSA-2219528	PI3K/AKT Signaling in Cancer	1.0000	0.0899	0.1307
+Disease	R-HSA-1643685	Disorders of Developmental Biology	R-HSA-9675151	R-HSA-9697154	Disorders of Nervous System Development	1.0000	0.4109	0.6219
+Disease	R-HSA-1643685	Disorders of Developmental Biology	R-HSA-9675151	R-HSA-9675151	Disorders of Developmental Biology	1.0000	0.4109	0.6219
+Disease	R-HSA-1643685	Disorders of Developmental Biology	R-HSA-9675151	R-HSA-9022535	Loss of phosphorylation of MECP2 at T308	1.0000	0.4109	0.6219
+Disease	R-HSA-1643685	Disorders of Developmental Biology	R-HSA-9675151	R-HSA-9005895	Pervasive developmental disorders	1.0000	0.4109	0.6219
+Disease	R-HSA-1643685	Disorders of Developmental Biology	R-HSA-9675151	R-HSA-9005891	Loss of function of MECP2 in Rett syndrome	1.0000	0.4109	0.6219
+Disease	R-HSA-1643685	Disorders of transmembrane transporters	R-HSA-5619115	R-HSA-5619084	ABC transporter disorders	2.0000	0.0326	0.1333
+Disease	R-HSA-1643685	Disorders of transmembrane transporters	R-HSA-5619115	R-HSA-5619115	Disorders of transmembrane transporters	2.0000	0.0326	0.1333
+Disease	R-HSA-1643685	Disorders of transmembrane transporters	R-HSA-5619115	R-HSA-5683371	Defective ABCB6 causes MCOPCB7	1.0000	0.0013	0.0006
+Disease	R-HSA-1643685	Disorders of transmembrane transporters	R-HSA-5619115	R-HSA-5684045	Defective ABCD1 causes ALD	1.0000	0.0313	0.1327
+Disease	R-HSA-1643685	Infectious disease	R-HSA-5663205	R-HSA-5663205	Infectious disease	16.0000	1.9351	5.4393
+Disease	R-HSA-1643685	Infectious disease	R-HSA-5663205	R-HSA-9824446	Viral Infection Pathways	13.0000	0.6981	3.8588
+Disease	R-HSA-1643685	Infectious disease	R-HSA-5663205	R-HSA-9679506	SARS-CoV Infections	6.0000	0.4550	2.1190
+Disease	R-HSA-1643685	Infectious disease	R-HSA-5663205	R-HSA-9694516	SARS-CoV-2 Infection	4.0000	0.3129	1.2988
+Disease	R-HSA-1643685	Infectious disease	R-HSA-5663205	R-HSA-9839923	Dengue Virus Infection	4.0000	0.2581	0.6908
+Disease	R-HSA-1643685	Infectious disease	R-HSA-5663205	R-HSA-176033	Interactions of Vpr with host cellular proteins	3.0000	0.0669	0.9549
+Disease	R-HSA-1643685	Infectious disease	R-HSA-5663205	R-HSA-9918481	Dengue Virus-Host Interactions	3.0000	0.2575	0.6783
+Disease	R-HSA-1643685	Infectious disease	R-HSA-5663205	R-HSA-180897	Vpr-mediated induction of apoptosis by mitochondrial outer membrane permeabilization	3.0000	0.0669	0.9549
+Disease	R-HSA-1643685	Infectious disease	R-HSA-5663205	R-HSA-9705683	SARS-CoV-2-host interactions	3.0000	0.1478	0.9470
+Disease	R-HSA-1643685	Infectious disease	R-HSA-5663205	R-HSA-9678108	SARS-CoV-1 Infection	3.0000	0.2526	0.6645
+Disease	R-HSA-1643685	Infectious disease	R-HSA-5663205	R-HSA-9692914	SARS-CoV-1-host interactions	3.0000	0.2526	0.6645
+Disease	R-HSA-1643685	Infectious disease	R-HSA-5663205	R-HSA-162909	Host Interactions of HIV factors	3.0000	0.0669	0.9549
+Disease	R-HSA-1643685	Infectious disease	R-HSA-5663205	R-HSA-162906	HIV Infection	3.0000	0.0669	0.9549
+Disease	R-HSA-1643685	Infectious disease	R-HSA-5663205	R-HSA-9824443	Parasitic Infection Pathways	2.0000	0.5401	1.0158
+Disease	R-HSA-1643685	Infectious disease	R-HSA-5663205	R-HSA-9664433	Leishmania parasite growth and survival	2.0000	0.5401	1.0158
+Disease	R-HSA-1643685	Infectious disease	R-HSA-5663205	R-HSA-9664323	FCGR3A-mediated IL10 synthesis	2.0000	0.5401	1.0158
+Disease	R-HSA-1643685	Infectious disease	R-HSA-5663205	R-HSA-9662851	Anti-inflammatory response favouring Leishmania parasite infection	2.0000	0.5401	1.0158
+Disease	R-HSA-1643685	Infectious disease	R-HSA-5663205	R-HSA-9658195	Leishmania infection	2.0000	0.5401	1.0158
+Disease	R-HSA-1643685	Infectious disease	R-HSA-5663205	R-HSA-9918487	Dengue Virus Genome Translation and Replication	2.0000	0.0017	0.0403
+Disease	R-HSA-1643685	Infectious disease	R-HSA-5663205	R-HSA-9692916	SARS-CoV-1 activates/modulates innate immune responses	2.0000	0.1193	0.4520
+Disease	R-HSA-1643685	Infectious disease	R-HSA-5663205	R-HSA-9705671	SARS-CoV-2 activates/modulates innate and adaptive immune responses	2.0000	0.1193	0.4520
+Disease	R-HSA-1643685	Infectious disease	R-HSA-5663205	R-HSA-168255	Influenza Infection	2.0000	0.0297	0.3914
+Disease	R-HSA-1643685	Infectious disease	R-HSA-5663205	R-HSA-192823	Viral mRNA Translation	1.0000	0.0297	0.3914
+Disease	R-HSA-1643685	Infectious disease	R-HSA-5663205	R-HSA-9694676	Translation of Replicase and Assembly of the Replication Transcription Complex	1.0000	0.1651	0.3518
+Disease	R-HSA-1643685	Infectious disease	R-HSA-5663205	R-HSA-9679191	Potential therapeutics for SARS	1.0000	0.0088	0.6077
+Disease	R-HSA-1643685	Infectious disease	R-HSA-5663205	R-HSA-9660821	ADORA2B mediated anti-inflammatory cytokines production	1.0000	0.4109	0.6219
+Disease	R-HSA-1643685	Infectious disease	R-HSA-5663205	R-HSA-9692913	SARS-CoV-1-mediated effects on programmed cell death	1.0000	0.1333	0.2124
+Disease	R-HSA-1643685	Infectious disease	R-HSA-5663205	R-HSA-9694301	Maturation of replicase proteins	1.0000	0.1651	0.3518
+Disease	R-HSA-1643685	Infectious disease	R-HSA-5663205	R-HSA-9918432	Maturation of DENV proteins	1.0000	0.0006	0.0124
+Disease	R-HSA-1643685	Infectious disease	R-HSA-5663205	R-HSA-9920588	Dengue virus activates/modulates innate and adaptive immune responses	1.0000	0.1115	0.2973
+Disease	R-HSA-1643685	Infectious disease	R-HSA-5663205	R-HSA-9772572	Early SARS-CoV-2 Infection Events	1.0000	0.1651	0.3518
+Disease	R-HSA-1643685	Infectious disease	R-HSA-5663205	R-HSA-168273	Influenza Viral RNA Transcription and Replication	1.0000	0.0297	0.3914
+Disease	R-HSA-1643685	Infectious disease	R-HSA-5663205	R-HSA-9754560	SARS-CoV-2 modulates autophagy	1.0000	0.0285	0.4949
+Disease	R-HSA-1643685	Infectious disease	R-HSA-5663205	R-HSA-168277	Influenza Virus Induced Apoptosis	1.0000	0.0000	0.0000
+Disease	R-HSA-1643685	Infectious disease	R-HSA-5663205	R-HSA-9820952	Respiratory Syncytial Virus Infection Pathway	1.0000	0.1115	0.2973
+Disease	R-HSA-1643685	Infectious disease	R-HSA-5663205	R-HSA-9824439	Bacterial Infection Pathways	1.0000	0.6969	0.5647
+Disease	R-HSA-1643685	Infectious disease	R-HSA-5663205	R-HSA-9833110	RSV-host interactions	1.0000	0.1115	0.2973
+Disease	R-HSA-1643685	Infectious disease	R-HSA-5663205	R-HSA-9833109	Evasion by RSV of host interferon responses	1.0000	0.1115	0.2973
+Disease	R-HSA-1643685	Infectious disease	R-HSA-5663205	R-HSA-5336415	Uptake and function of diphtheria toxin	1.0000	0.6969	0.5647
+Disease	R-HSA-1643685	Infectious disease	R-HSA-5663205	R-HSA-5339562	Uptake and actions of bacterial toxins	1.0000	0.6969	0.5647
+Drug ADME	R-HSA-9748784	Aspirin ADME	R-HSA-9749641	R-HSA-9749641	Aspirin ADME	5.0000	0.0050	0.0037
+Drug ADME	R-HSA-9748784	Azathioprine ADME	R-HSA-9748787	R-HSA-9748787	Azathioprine ADME	1.0000	0.2218	0.6763
+Drug ADME	R-HSA-9748784	Drug ADME	R-HSA-9748784	R-HSA-9748784	Drug ADME	6.0000	0.2268	0.6799
+Extracellular matrix organization	R-HSA-1474244	Degradation of the extracellular matrix	R-HSA-1474228	R-HSA-1474228	Degradation of the extracellular matrix	1.0000	0.0973	0.1751
+Extracellular matrix organization	R-HSA-1474244	Extracellular matrix organization	R-HSA-1474244	R-HSA-1474244	Extracellular matrix organization	1.0000	0.0973	0.1751
+Gene expression (Transcription)	R-HSA-74160	Epigenetic regulation of gene expression	R-HSA-212165	R-HSA-9917777	Epigenetic regulation by WDR5-containing histone modifying complexes	4.0000	3.4706	2.5824
+Gene expression (Transcription)	R-HSA-74160	Epigenetic regulation of gene expression	R-HSA-212165	R-HSA-9841922	MLL4 and MLL3 complexes regulate expression of PPARG target genes in adipogenesis and hepatic steatosis	4.0000	3.4706	2.5824
+Gene expression (Transcription)	R-HSA-74160	Epigenetic regulation of gene expression	R-HSA-212165	R-HSA-212165	Epigenetic regulation of gene expression	4.0000	3.4706	2.5824
+Gene expression (Transcription)	R-HSA-74160	Epigenetic regulation of gene expression	R-HSA-212165	R-HSA-9851695	Epigenetic regulation of adipogenesis genes by MLL3 and MLL4 complexes	4.0000	3.4706	2.5824
+Gene expression (Transcription)	R-HSA-74160	Epigenetic regulation of gene expression	R-HSA-212165	R-HSA-9818564	Epigenetic regulation of gene expression by MLL3 and MLL4 complexes	4.0000	3.4706	2.5824
+Gene expression (Transcription)	R-HSA-74160	Gene Silencing by RNA	R-HSA-211000	R-HSA-211000	Gene Silencing by RNA	3.0000	0.0082	0.0987
+Gene expression (Transcription)	R-HSA-74160	Gene Silencing by RNA	R-HSA-211000	R-HSA-5601884	PIWI-interacting RNA (piRNA) biogenesis	2.0000	0.0039	0.0046
+Gene expression (Transcription)	R-HSA-74160	Gene Silencing by RNA	R-HSA-211000	R-HSA-9708296	tRNA-derived small RNA (tsRNA or tRNA-related fragment, tRF) biogenesis	1.0000	0.0043	0.0940
+Gene expression (Transcription)	R-HSA-74160	Gene expression (Transcription)	R-HSA-74160	R-HSA-74160	Gene expression (Transcription)	57.0000	20.1877	37.7068
+Gene expression (Transcription)	R-HSA-74160	RNA Polymerase II Transcription	R-HSA-73857	R-HSA-73857	RNA Polymerase II Transcription	47.0000	16.6023	34.5958
+Gene expression (Transcription)	R-HSA-74160	RNA Polymerase II Transcription	R-HSA-73857	R-HSA-212436	Generic Transcription Pathway	47.0000	16.6023	34.5958
+Gene expression (Transcription)	R-HSA-74160	RNA Polymerase II Transcription	R-HSA-73857	R-HSA-3700989	Transcriptional Regulation by TP53	39.0000	12.9828	31.1496
+Gene expression (Transcription)	R-HSA-74160	RNA Polymerase II Transcription	R-HSA-73857	R-HSA-5628897	TP53 Regulates Metabolic Genes	28.0000	10.7415	27.5352
+Gene expression (Transcription)	R-HSA-74160	RNA Polymerase II Transcription	R-HSA-73857	R-HSA-5633008	TP53 Regulates Transcription of Cell Death Genes	9.0000	2.0106	3.2697
+Gene expression (Transcription)	R-HSA-74160	RNA Polymerase II Transcription	R-HSA-73857	R-HSA-6803204	TP53 Regulates Transcription of Genes Involved in Cytochrome C Release	9.0000	2.0106	3.2697
+Gene expression (Transcription)	R-HSA-74160	RNA Polymerase II Transcription	R-HSA-73857	R-HSA-9614085	FOXO-mediated transcription	6.0000	3.2365	2.5471
+Gene expression (Transcription)	R-HSA-74160	RNA Polymerase II Transcription	R-HSA-73857	R-HSA-9615017	FOXO-mediated transcription of oxidative stress, metabolic and neuronal genes	3.0000	2.8402	1.9542
+Gene expression (Transcription)	R-HSA-74160	RNA Polymerase II Transcription	R-HSA-73857	R-HSA-9614657	FOXO-mediated transcription of cell death genes	3.0000	0.3963	0.5929
+Gene expression (Transcription)	R-HSA-74160	RNA Polymerase II Transcription	R-HSA-73857	R-HSA-6804756	Regulation of TP53 Activity through Phosphorylation	2.0000	0.2307	0.3447
+Gene expression (Transcription)	R-HSA-74160	RNA Polymerase II Transcription	R-HSA-73857	R-HSA-5633007	Regulation of TP53 Activity	2.0000	0.2307	0.3447
+Gene expression (Transcription)	R-HSA-74160	RNA Polymerase II Transcription	R-HSA-73857	R-HSA-9617629	Regulation of FOXO transcriptional activity by acetylation	1.0000	0.0166	0.0479
+Gene expression (Transcription)	R-HSA-74160	RNA Polymerase II Transcription	R-HSA-73857	R-HSA-6791312	TP53 Regulates Transcription of Cell Cycle Genes	1.0000	0.1142	0.5075
+Gene expression (Transcription)	R-HSA-74160	RNA Polymerase II Transcription	R-HSA-73857	R-HSA-6804114	TP53 Regulates Transcription of Genes Involved in G2 Cell Cycle Arrest	1.0000	0.1142	0.5075
+Gene expression (Transcription)	R-HSA-74160	RNA Polymerase II Transcription	R-HSA-73857	R-HSA-9022692	Regulation of MECP2 expression and activity	1.0000	0.4109	0.6219
+Gene expression (Transcription)	R-HSA-74160	RNA Polymerase II Transcription	R-HSA-73857	R-HSA-8931987	RUNX1 regulates estrogen receptor mediated transcription	1.0000	0.0032	0.0393
+Gene expression (Transcription)	R-HSA-74160	RNA Polymerase II Transcription	R-HSA-73857	R-HSA-8878171	Transcriptional regulation by RUNX1	1.0000	0.0032	0.0393
+Gene expression (Transcription)	R-HSA-74160	RNA Polymerase II Transcription	R-HSA-73857	R-HSA-8878166	Transcriptional regulation by RUNX2	1.0000	0.1142	0.5075
+Gene expression (Transcription)	R-HSA-74160	RNA Polymerase II Transcription	R-HSA-73857	R-HSA-8878159	Transcriptional regulation by RUNX3	1.0000	0.0925	0.3511
+Gene expression (Transcription)	R-HSA-74160	RNA Polymerase II Transcription	R-HSA-73857	R-HSA-8869496	TFAP2A acts as a transcriptional repressor during retinoic acid induced cell differentiation	1.0000	0.0430	0.3325
+Gene expression (Transcription)	R-HSA-74160	RNA Polymerase II Transcription	R-HSA-73857	R-HSA-8864260	Transcriptional regulation by the AP-2 (TFAP2) family of transcription factors	1.0000	0.0430	0.3325
+Gene expression (Transcription)	R-HSA-74160	RNA Polymerase II Transcription	R-HSA-73857	R-HSA-8986944	Transcriptional Regulation by MECP2	1.0000	0.4109	0.6219
+Gene expression (Transcription)	R-HSA-74160	RNA Polymerase II Transcription	R-HSA-73857	R-HSA-8952158	RUNX3 regulates BCL2L11 (BIM) transcription	1.0000	0.0925	0.3511
+Gene expression (Transcription)	R-HSA-74160	Transcription from mitochondrial promoters	R-HSA-75944	R-HSA-75944	Transcription from mitochondrial promoters	4.0000	0.1098	0.4692
+Gene expression (Transcription)	R-HSA-74160	Transcription from mitochondrial promoters	R-HSA-75944	R-HSA-163282	Mitochondrial transcription initiation	3.0000	0.0917	0.3907
+Gene expression (Transcription)	R-HSA-74160	Transcription from mitochondrial promoters	R-HSA-75944	R-HSA-163316	Mitochondrial transcription termination	1.0000	0.0181	0.0785
+Hemostasis	R-HSA-109582	Cell surface interactions at the vascular wall	R-HSA-202733	R-HSA-202733	Cell surface interactions at the vascular wall	1.0000	0.0103	0.2806
+Hemostasis	R-HSA-109582	Factors involved in megakaryocyte development and platelet production	R-HSA-983231	R-HSA-983231	Factors involved in megakaryocyte development and platelet production	6.0000	1.6213	1.8083
+Hemostasis	R-HSA-109582	Hemostasis	R-HSA-109582	R-HSA-109582	Hemostasis	10.0000	1.8056	2.6708
+Hemostasis	R-HSA-109582	Platelet activation, signaling and aggregation	R-HSA-76002	R-HSA-76002	Platelet activation, signaling and aggregation	2.0000	0.0536	0.5269
+Hemostasis	R-HSA-109582	Platelet activation, signaling and aggregation	R-HSA-76002	R-HSA-76005	Response to elevated platelet cytosolic Ca2+	2.0000	0.0536	0.5269
+Hemostasis	R-HSA-109582	Platelet activation, signaling and aggregation	R-HSA-76002	R-HSA-114608	Platelet degranulation	2.0000	0.0536	0.5269
+Hemostasis	R-HSA-109582	Platelet homeostasis	R-HSA-418346	R-HSA-418346	Platelet homeostasis	1.0000	0.1205	0.0550
+Hemostasis	R-HSA-109582	Platelet homeostasis	R-HSA-418346	R-HSA-418457	cGMP effects	1.0000	0.1205	0.0550
+Hemostasis	R-HSA-109582	Platelet homeostasis	R-HSA-418346	R-HSA-392154	Nitric oxide stimulates guanylate cyclase	1.0000	0.1205	0.0550
+Immune System	R-HSA-168256	Adaptive Immune System	R-HSA-1280218	R-HSA-1280218	Adaptive Immune System	6.0000	0.8273	1.5781
+Immune System	R-HSA-168256	Adaptive Immune System	R-HSA-1280218	R-HSA-983169	Class I MHC mediated antigen processing & presentation	2.0000	0.1411	0.2978
+Immune System	R-HSA-168256	Adaptive Immune System	R-HSA-1280218	R-HSA-983168	Antigen processing: Ubiquitination & Proteasome degradation	2.0000	0.1411	0.2978
+Immune System	R-HSA-168256	Adaptive Immune System	R-HSA-1280218	R-HSA-2132295	MHC class II antigen presentation	1.0000	0.1440	0.2423
+Immune System	R-HSA-168256	Adaptive Immune System	R-HSA-1280218	R-HSA-983705	Signaling by the B Cell Receptor (BCR)	1.0000	0.1292	0.3939
+Immune System	R-HSA-168256	Adaptive Immune System	R-HSA-1280218	R-HSA-983695	Antigen activates B Cell Receptor (BCR) leading to generation of second messengers	1.0000	0.1292	0.3939
+Immune System	R-HSA-168256	Adaptive Immune System	R-HSA-1280218	R-HSA-392517	Rap1 signalling	1.0000	0.4109	0.6219
+Immune System	R-HSA-168256	Adaptive Immune System	R-HSA-1280218	R-HSA-388841	Regulation of T cell activation by CD28 family	1.0000	0.0021	0.0222
+Immune System	R-HSA-168256	Adaptive Immune System	R-HSA-1280218	R-HSA-389356	Co-stimulation by CD28	1.0000	0.0021	0.0222
+Immune System	R-HSA-168256	Adaptive Immune System	R-HSA-1280218	R-HSA-389357	CD28 dependent PI3K/Akt signaling	1.0000	0.0021	0.0222
+Immune System	R-HSA-168256	Cytokine Signaling in Immune system	R-HSA-1280215	R-HSA-1280215	Cytokine Signaling in Immune system	15.0000	6.9784	6.8242
+Immune System	R-HSA-168256	Cytokine Signaling in Immune system	R-HSA-1280215	R-HSA-449147	Signaling by Interleukins	11.0000	6.6224	5.8776
+Immune System	R-HSA-168256	Cytokine Signaling in Immune system	R-HSA-1280215	R-HSA-6785807	Interleukin-4 and Interleukin-13 signaling	4.0000	2.7416	2.4361
+Immune System	R-HSA-168256	Cytokine Signaling in Immune system	R-HSA-1280215	R-HSA-447115	Interleukin-12 family signaling	3.0000	2.6870	2.2050
+Immune System	R-HSA-168256	Cytokine Signaling in Immune system	R-HSA-1280215	R-HSA-1169410	Antimicrobial mechanism of IFN-stimulated genes	3.0000	0.2635	0.5955
+Immune System	R-HSA-168256	Cytokine Signaling in Immune system	R-HSA-1280215	R-HSA-9020591	Interleukin-12 signaling	3.0000	2.6870	2.2050
+Immune System	R-HSA-168256	Cytokine Signaling in Immune system	R-HSA-1280215	R-HSA-913531	Interferon Signaling	3.0000	0.2635	0.5955
+Immune System	R-HSA-168256	Cytokine Signaling in Immune system	R-HSA-1280215	R-HSA-8950505	Gene and protein expression by JAK-STAT signaling after Interleukin-12 stimulation	3.0000	2.6870	2.2050
+Immune System	R-HSA-168256	Cytokine Signaling in Immune system	R-HSA-1280215	R-HSA-9833482	PKR-mediated signaling	2.0000	0.2339	0.4620
+Immune System	R-HSA-168256	Cytokine Signaling in Immune system	R-HSA-1280215	R-HSA-9020702	Interleukin-1 signaling	2.0000	0.6856	0.4395
+Immune System	R-HSA-168256	Cytokine Signaling in Immune system	R-HSA-1280215	R-HSA-446652	Interleukin-1 family signaling	2.0000	0.6856	0.4395
+Immune System	R-HSA-168256	Cytokine Signaling in Immune system	R-HSA-1280215	R-HSA-449836	Other interleukin signaling	1.0000	0.0973	0.1751
+Immune System	R-HSA-168256	Cytokine Signaling in Immune system	R-HSA-1280215	R-HSA-512988	Interleukin-3, Interleukin-5 and GM-CSF signaling	1.0000	0.4109	0.6219
+Immune System	R-HSA-168256	Cytokine Signaling in Immune system	R-HSA-1280215	R-HSA-9607240	FLT3 Signaling	1.0000	0.0925	0.3511
+Immune System	R-HSA-168256	Cytokine Signaling in Immune system	R-HSA-1280215	R-HSA-8983711	OAS antiviral response	1.0000	0.0296	0.1335
+Immune System	R-HSA-168256	Immune System	R-HSA-168256	R-HSA-168256	Immune System	39.0000	13.0506	16.3506
+Immune System	R-HSA-168256	Innate Immune System	R-HSA-168249	R-HSA-168249	Innate Immune System	27.0000	7.2311	10.7630
+Immune System	R-HSA-168256	Innate Immune System	R-HSA-168249	R-HSA-6798695	Neutrophil degranulation	15.0000	5.5488	7.8221
+Immune System	R-HSA-168256	Innate Immune System	R-HSA-168249	R-HSA-168643	Nucleotide-binding domain, leucine rich repeat containing receptor (NLR) signaling pathways	4.0000	0.8304	0.7825
+Immune System	R-HSA-168256	Innate Immune System	R-HSA-168249	R-HSA-168928	DDX58/IFIH1-mediated induction of interferon-alpha/beta	4.0000	0.8049	0.8915
+Immune System	R-HSA-168256	Innate Immune System	R-HSA-168249	R-HSA-168142	Toll Like Receptor 10 (TLR10) Cascade	3.0000	0.6916	0.5933
+Immune System	R-HSA-168256	Innate Immune System	R-HSA-168249	R-HSA-181438	Toll Like Receptor 2 (TLR2) Cascade	3.0000	0.6916	0.5933
+Immune System	R-HSA-168256	Innate Immune System	R-HSA-168249	R-HSA-5621481	C-type lectin receptors (CLRs)	3.0000	1.1398	1.4026
+Immune System	R-HSA-168256	Innate Immune System	R-HSA-168249	R-HSA-166016	Toll Like Receptor 4 (TLR4) Cascade	3.0000	0.6916	0.5933
+Immune System	R-HSA-168256	Innate Immune System	R-HSA-168249	R-HSA-168176	Toll Like Receptor 5 (TLR5) Cascade	3.0000	0.6916	0.5933
+Immune System	R-HSA-168256	Innate Immune System	R-HSA-168249	R-HSA-168179	Toll Like Receptor TLR1:TLR2 Cascade	3.0000	0.6916	0.5933
+Immune System	R-HSA-168256	Innate Immune System	R-HSA-168249	R-HSA-168181	Toll Like Receptor 7/8 (TLR7/8) Cascade	3.0000	0.6916	0.5933
+Immune System	R-HSA-168256	Innate Immune System	R-HSA-168249	R-HSA-168188	Toll Like Receptor TLR6:TLR2 Cascade	3.0000	0.6916	0.5933
+Immune System	R-HSA-168256	Innate Immune System	R-HSA-168249	R-HSA-168138	Toll Like Receptor 9 (TLR9) Cascade	3.0000	0.6916	0.5933
+Immune System	R-HSA-168256	Innate Immune System	R-HSA-168249	R-HSA-975155	MyD88 dependent cascade initiated on endosome	3.0000	0.6916	0.5933
+Immune System	R-HSA-168256	Innate Immune System	R-HSA-168249	R-HSA-975138	TRAF6 mediated induction of NFkB and MAP kinases upon TLR7/8 or 9 activation	3.0000	0.6916	0.5933
+Immune System	R-HSA-168256	Innate Immune System	R-HSA-168249	R-HSA-975871	MyD88 cascade initiated on plasma membrane	3.0000	0.6916	0.5933
+Immune System	R-HSA-168256	Innate Immune System	R-HSA-168249	R-HSA-168898	Toll-like Receptor Cascades	3.0000	0.6916	0.5933
+Immune System	R-HSA-168256	Innate Immune System	R-HSA-168249	R-HSA-166058	MyD88:MAL(TIRAP) cascade initiated on plasma membrane	3.0000	0.6916	0.5933
+Immune System	R-HSA-168256	Innate Immune System	R-HSA-168249	R-HSA-622312	Inflammasomes	2.0000	0.1407	0.2650
+Immune System	R-HSA-168256	Innate Immune System	R-HSA-168249	R-HSA-937061	TRIF (TICAM1)-mediated TLR4 signaling	2.0000	0.6856	0.4395
+Immune System	R-HSA-168256	Innate Immune System	R-HSA-168249	R-HSA-936440	Negative regulators of DDX58/IFIH1 signaling	2.0000	0.1974	0.3500
+Immune System	R-HSA-168256	Innate Immune System	R-HSA-168249	R-HSA-933543	NF-kB activation through FADD/RIP-1 pathway mediated by caspase-8 and -10	2.0000	0.7113	0.6841
+Immune System	R-HSA-168256	Innate Immune System	R-HSA-168249	R-HSA-9758274	Regulation of NF-kappa B signaling	2.0000	0.6856	0.4395
+Immune System	R-HSA-168256	Innate Immune System	R-HSA-168249	R-HSA-844455	The NLRP1 inflammasome	2.0000	0.1407	0.2650
+Immune System	R-HSA-168256	Innate Immune System	R-HSA-168249	R-HSA-5607764	CLEC7A (Dectin-1) signaling	2.0000	0.7289	0.7807
+Immune System	R-HSA-168256	Innate Immune System	R-HSA-168249	R-HSA-445989	TAK1-dependent IKK and NF-kappa-B activation	2.0000	0.6856	0.4395
+Immune System	R-HSA-168256	Innate Immune System	R-HSA-168249	R-HSA-168638	NOD1/2 Signaling Pathway	2.0000	0.6896	0.5175
+Immune System	R-HSA-168256	Innate Immune System	R-HSA-168249	R-HSA-168164	Toll Like Receptor 3 (TLR3) Cascade	2.0000	0.6856	0.4395
+Immune System	R-HSA-168256	Innate Immune System	R-HSA-168249	R-HSA-166166	MyD88-independent TLR4 cascade	2.0000	0.6856	0.4395
+Immune System	R-HSA-168256	Innate Immune System	R-HSA-168249	R-HSA-2029485	Role of phospholipids in phagocytosis	1.0000	0.1292	0.3939
+Immune System	R-HSA-168256	Innate Immune System	R-HSA-168249	R-HSA-2029480	Fcgamma receptor (FCGR) dependent phagocytosis	1.0000	0.1292	0.3939
+Immune System	R-HSA-168256	Innate Immune System	R-HSA-168249	R-HSA-9686114	Non-canonical inflammasome activation	1.0000	0.0973	0.1751
+Immune System	R-HSA-168256	Innate Immune System	R-HSA-168249	R-HSA-9855719	Regulation of FXIIa and plasma kallikrein activity	1.0000	0.0033	0.3088
+Immune System	R-HSA-168256	Innate Immune System	R-HSA-168249	R-HSA-9970672	FXIIa activates plasma kallikrein-kinin system	1.0000	0.0033	0.3088
+Immune System	R-HSA-168256	Innate Immune System	R-HSA-168249	R-HSA-9960525	CASP5-mediated substrate cleavage	1.0000	0.0973	0.1751
+Immune System	R-HSA-168256	Innate Immune System	R-HSA-168249	R-HSA-9960519	CASP4-mediated substrate cleavage	1.0000	0.0973	0.1751
+Immune System	R-HSA-168256	Innate Immune System	R-HSA-168249	R-HSA-2454202	Fc epsilon receptor (FCERI) signaling	1.0000	0.1292	0.3939
+Immune System	R-HSA-168256	Innate Immune System	R-HSA-168249	R-HSA-5660668	CLEC7A/inflammasome pathway	1.0000	0.5998	0.3868
+Immune System	R-HSA-168256	Innate Immune System	R-HSA-168249	R-HSA-5621575	CD209 (DC-SIGN) signaling	1.0000	0.4109	0.6219
+Immune System	R-HSA-168256	Innate Immune System	R-HSA-168249	R-HSA-5607763	CLEC7A (Dectin-1) induces NFAT activation	1.0000	0.1292	0.3939
+Immune System	R-HSA-168256	Innate Immune System	R-HSA-168249	R-HSA-2871809	FCERI mediated Ca+2 mobilization	1.0000	0.1292	0.3939
+Immune System	R-HSA-168256	Innate Immune System	R-HSA-168249	R-HSA-9013957	TLR3-mediated TICAM1-dependent programmed cell death	1.0000	0.5998	0.3868
+Immune System	R-HSA-168256	Innate Immune System	R-HSA-168249	R-HSA-933541	TRAF6 mediated IRF7 activation	1.0000	0.1115	0.2973
+Immune System	R-HSA-168256	Innate Immune System	R-HSA-168249	R-HSA-933542	TRAF6 mediated NF-kB activation	1.0000	0.1115	0.2973
+Immune System	R-HSA-168256	Innate Immune System	R-HSA-168249	R-HSA-918233	TRAF3-dependent IRF activation pathway	1.0000	0.1115	0.2973
+Immune System	R-HSA-168256	Innate Immune System	R-HSA-168249	R-HSA-2562578	TRIF-mediated programmed cell death	1.0000	0.5998	0.3868
+Metabolism	R-HSA-1430728	Aerobic respiration and respiratory electron transport	R-HSA-1428517	R-HSA-1428517	Aerobic respiration and respiratory electron transport	228.0000	36.3556	114.0264
+Metabolism	R-HSA-1430728	Aerobic respiration and respiratory electron transport	R-HSA-1428517	R-HSA-611105	Respiratory electron transport	152.0000	27.1189	84.1197
+Metabolism	R-HSA-1430728	Aerobic respiration and respiratory electron transport	R-HSA-1428517	R-HSA-6799198	Complex I biogenesis	68.0000	11.9476	36.9851
+Metabolism	R-HSA-1430728	Aerobic respiration and respiratory electron transport	R-HSA-1428517	R-HSA-9864848	Complex IV assembly	47.0000	10.8266	30.9327
+Metabolism	R-HSA-1430728	Aerobic respiration and respiratory electron transport	R-HSA-1428517	R-HSA-71403	Citric acid cycle (TCA cycle)	33.0000	2.5456	8.2801
+Metabolism	R-HSA-1430728	Aerobic respiration and respiratory electron transport	R-HSA-1428517	R-HSA-70268	Pyruvate metabolism	27.0000	1.7442	4.5039
+Metabolism	R-HSA-1430728	Aerobic respiration and respiratory electron transport	R-HSA-1428517	R-HSA-9865881	Complex III assembly	23.0000	3.5596	12.5725
+Metabolism	R-HSA-1430728	Aerobic respiration and respiratory electron transport	R-HSA-1428517	R-HSA-9854311	Maturation of TCA enzymes and regulation of TCA cycle	20.0000	1.3621	3.9926
+Metabolism	R-HSA-1430728	Aerobic respiration and respiratory electron transport	R-HSA-1428517	R-HSA-163210	Formation of ATP by chemiosmotic coupling	18.0000	5.7136	19.2505
+Metabolism	R-HSA-1430728	Aerobic respiration and respiratory electron transport	R-HSA-1428517	R-HSA-9861718	Regulation of pyruvate metabolism	16.0000	1.0562	2.3428
+Metabolism	R-HSA-1430728	Aerobic respiration and respiratory electron transport	R-HSA-1428517	R-HSA-204174	Regulation of pyruvate dehydrogenase (PDH) complex	15.0000	1.0548	2.2951
+Metabolism	R-HSA-1430728	Aerobic respiration and respiratory electron transport	R-HSA-1428517	R-HSA-9856872	Malate-aspartate shuttle	7.0000	0.4424	1.6228
+Metabolism	R-HSA-1430728	Aerobic respiration and respiratory electron transport	R-HSA-1428517	R-HSA-9861559	PDH complex synthesizes acetyl-CoA from PYR	6.0000	0.2718	0.8523
+Metabolism	R-HSA-1430728	Aerobic respiration and respiratory electron transport	R-HSA-1428517	R-HSA-166187	Mitochondrial Uncoupling	6.0000	0.0885	0.6254
+Metabolism	R-HSA-1430728	Aerobic respiration and respiratory electron transport	R-HSA-1428517	R-HSA-167826	The fatty acid cycling model	5.0000	0.0884	0.6249
+Metabolism	R-HSA-1430728	Aerobic respiration and respiratory electron transport	R-HSA-1428517	R-HSA-9853506	OGDH complex synthesizes succinyl-CoA from 2-OG	3.0000	0.7156	1.2773
+Metabolism	R-HSA-1430728	Aerobic respiration and respiratory electron transport	R-HSA-1428517	R-HSA-880009	Interconversion of 2-oxoglutarate and 2-hydroxyglutarate	3.0000	0.0422	0.1439
+Metabolism	R-HSA-1430728	Biological oxidations	R-HSA-211859	R-HSA-211859	Biological oxidations	33.0000	1.3197	6.0921
+Metabolism	R-HSA-1430728	Biological oxidations	R-HSA-211859	R-HSA-211945	Phase I - Functionalization of compounds	20.0000	1.1356	3.0689
+Metabolism	R-HSA-1430728	Biological oxidations	R-HSA-211859	R-HSA-156580	Phase II - Conjugation of compounds	12.0000	0.1789	2.8676
+Metabolism	R-HSA-1430728	Biological oxidations	R-HSA-211859	R-HSA-211897	Cytochrome P450 - arranged by substrate type	9.0000	0.0685	0.4744
+Metabolism	R-HSA-1430728	Biological oxidations	R-HSA-211859	R-HSA-211976	Endogenous sterols	7.0000	0.0678	0.4736
+Metabolism	R-HSA-1430728	Biological oxidations	R-HSA-211859	R-HSA-159424	Conjugation of carboxylic acids	6.0000	0.0071	0.0063
+Metabolism	R-HSA-1430728	Biological oxidations	R-HSA-211859	R-HSA-156587	Amino Acid conjugation	6.0000	0.0071	0.0063
+Metabolism	R-HSA-1430728	Biological oxidations	R-HSA-211859	R-HSA-177128	Conjugation of salicylate with glycine	5.0000	0.0050	0.0037
+Metabolism	R-HSA-1430728	Biological oxidations	R-HSA-211859	R-HSA-156590	Glutathione conjugation	4.0000	0.1505	2.1623
+Metabolism	R-HSA-1430728	Biological oxidations	R-HSA-211859	R-HSA-177135	Conjugation of benzoate with glycine	3.0000	0.0026	0.0040
+Metabolism	R-HSA-1430728	Biological oxidations	R-HSA-211859	R-HSA-5423646	Aflatoxin activation and detoxification	3.0000	0.0277	1.4817
+Metabolism	R-HSA-1430728	Biological oxidations	R-HSA-211859	R-HSA-71384	Ethanol oxidation	3.0000	0.1494	1.2041
+Metabolism	R-HSA-1430728	Biological oxidations	R-HSA-211859	R-HSA-141333	Biogenic amines are oxidatively deaminated to aldehydes by MAOA and MAOB	2.0000	0.3676	0.3105
+Metabolism	R-HSA-1430728	Biological oxidations	R-HSA-211859	R-HSA-140179	Amine Oxidase reactions	2.0000	0.3676	0.3105
+Metabolism	R-HSA-1430728	Biological oxidations	R-HSA-211859	R-HSA-177162	Conjugation of phenylacetate with glutamine	2.0000	0.0023	0.0033
+Metabolism	R-HSA-1430728	Biological oxidations	R-HSA-211859	R-HSA-211916	Vitamins	2.0000	0.0007	0.0008
+Metabolism	R-HSA-1430728	Biological oxidations	R-HSA-211859	R-HSA-156581	Methylation	1.0000	0.0088	0.6077
+Metabolism	R-HSA-1430728	Biological oxidations	R-HSA-211859	R-HSA-156588	Glucuronidation	1.0000	0.0125	0.0913
+Metabolism	R-HSA-1430728	Cytosolic iron-sulfur cluster assembly	R-HSA-2564830	R-HSA-2564830	Cytosolic iron-sulfur cluster assembly	1.0000	0.0228	0.3325
+Metabolism	R-HSA-1430728	Integration of energy metabolism	R-HSA-163685	R-HSA-163685	Integration of energy metabolism	6.0000	0.6962	1.6448
+Metabolism	R-HSA-1430728	Integration of energy metabolism	R-HSA-163685	R-HSA-163765	ChREBP activates metabolic gene expression	4.0000	0.1561	0.6290
+Metabolism	R-HSA-1430728	Integration of energy metabolism	R-HSA-163685	R-HSA-422356	Regulation of insulin secretion	2.0000	0.5401	1.0158
+Metabolism	R-HSA-1430728	Integration of energy metabolism	R-HSA-163685	R-HSA-163358	PKA-mediated phosphorylation of key metabolic factors	1.0000	0.4109	0.6219
+Metabolism	R-HSA-1430728	Integration of energy metabolism	R-HSA-163685	R-HSA-163359	Glucagon signaling in metabolic regulation	1.0000	0.4109	0.6219
+Metabolism	R-HSA-1430728	Integration of energy metabolism	R-HSA-163685	R-HSA-164378	PKA activation in glucagon signalling	1.0000	0.4109	0.6219
+Metabolism	R-HSA-1430728	Integration of energy metabolism	R-HSA-163685	R-HSA-381676	Glucagon-like Peptide-1 (GLP1) regulates insulin secretion	1.0000	0.4109	0.6219
+Metabolism	R-HSA-1430728	Metabolism	R-HSA-1430728	R-HSA-1430728	Metabolism	509.0000	64.4041	164.7684
+Metabolism	R-HSA-1430728	Metabolism of amino acids and derivatives	R-HSA-71291	R-HSA-71291	Metabolism of amino acids and derivatives	87.0000	5.4298	10.6932
+Metabolism	R-HSA-1430728	Metabolism of amino acids and derivatives	R-HSA-71291	R-HSA-70895	Branched-chain amino acid catabolism	22.0000	0.9478	2.7623
+Metabolism	R-HSA-1430728	Metabolism of amino acids and derivatives	R-HSA-71291	R-HSA-389661	Glyoxylate metabolism and glycine degradation	14.0000	0.7749	1.7458
+Metabolism	R-HSA-1430728	Metabolism of amino acids and derivatives	R-HSA-71291	R-HSA-1614558	Degradation of cysteine and homocysteine	9.0000	0.7079	1.5018
+Metabolism	R-HSA-1430728	Metabolism of amino acids and derivatives	R-HSA-71291	R-HSA-1614635	Sulfur amino acid metabolism	9.0000	0.7079	1.5018
+Metabolism	R-HSA-1430728	Metabolism of amino acids and derivatives	R-HSA-71291	R-HSA-8964539	Glutamate and glutamine metabolism	9.0000	0.7436	1.4464
+Metabolism	R-HSA-1430728	Metabolism of amino acids and derivatives	R-HSA-71291	R-HSA-71064	Lysine catabolism	8.0000	0.5208	0.7380
+Metabolism	R-HSA-1430728	Metabolism of amino acids and derivatives	R-HSA-71291	R-HSA-70635	Urea cycle	6.0000	0.3040	0.1583
+Metabolism	R-HSA-1430728	Metabolism of amino acids and derivatives	R-HSA-71291	R-HSA-1614517	Sulfide oxidation to sulfate	6.0000	0.6284	0.9342
+Metabolism	R-HSA-1430728	Metabolism of amino acids and derivatives	R-HSA-71291	R-HSA-6783984	Glycine degradation	6.0000	0.7215	1.2954
+Metabolism	R-HSA-1430728	Metabolism of amino acids and derivatives	R-HSA-71291	R-HSA-71288	Creatine metabolism	4.0000	0.0015	0.0027
+Metabolism	R-HSA-1430728	Metabolism of amino acids and derivatives	R-HSA-71291	R-HSA-6798163	Choline catabolism	4.0000	0.0200	0.0365
+Metabolism	R-HSA-1430728	Metabolism of amino acids and derivatives	R-HSA-71291	R-HSA-8963693	Aspartate and asparagine metabolism	4.0000	0.3451	0.8752
+Metabolism	R-HSA-1430728	Metabolism of amino acids and derivatives	R-HSA-71291	R-HSA-9859138	BCKDH synthesizes BCAA-CoA from KIC, KMVA, KIV	4.0000	0.2080	0.4420
+Metabolism	R-HSA-1430728	Metabolism of amino acids and derivatives	R-HSA-71291	R-HSA-71240	Tryptophan catabolism	3.0000	0.1107	0.2310
+Metabolism	R-HSA-1430728	Metabolism of amino acids and derivatives	R-HSA-71291	R-HSA-2408522	Selenoamino acid metabolism	3.0000	1.0650	1.5209
+Metabolism	R-HSA-1430728	Metabolism of amino acids and derivatives	R-HSA-71291	R-HSA-70688	Proline catabolism	3.0000	0.0170	0.0724
+Metabolism	R-HSA-1430728	Metabolism of amino acids and derivatives	R-HSA-71291	R-HSA-9858328	OADH complex synthesizes glutaryl-CoA from 2-OA	3.0000	0.5066	0.6453
+Metabolism	R-HSA-1430728	Metabolism of amino acids and derivatives	R-HSA-71291	R-HSA-71262	Carnitine synthesis	2.0000	0.3550	0.4752
+Metabolism	R-HSA-1430728	Metabolism of amino acids and derivatives	R-HSA-71291	R-HSA-8963691	Phenylalanine and tyrosine metabolism	2.0000	0.0196	0.1910
+Metabolism	R-HSA-1430728	Metabolism of amino acids and derivatives	R-HSA-71291	R-HSA-8849175	Threonine catabolism	2.0000	0.0044	0.0530
+Metabolism	R-HSA-1430728	Metabolism of amino acids and derivatives	R-HSA-71291	R-HSA-2408550	Metabolism of ingested H2SeO4 and H2SeO3 into H2Se	2.0000	1.0260	1.1943
+Metabolism	R-HSA-1430728	Metabolism of amino acids and derivatives	R-HSA-71291	R-HSA-977347	Serine metabolism	1.0000	0.0002	0.0142
+Metabolism	R-HSA-1430728	Metabolism of amino acids and derivatives	R-HSA-71291	R-HSA-5263617	Metabolism of ingested MeSeO2H into MeSeH	1.0000	0.6969	0.5647
+Metabolism	R-HSA-1430728	Metabolism of amino acids and derivatives	R-HSA-71291	R-HSA-351143	Agmatine biosynthesis	1.0000	0.0013	0.0035
+Metabolism	R-HSA-1430728	Metabolism of amino acids and derivatives	R-HSA-71291	R-HSA-8964208	Phenylalanine metabolism	1.0000	0.0025	0.0837
+Metabolism	R-HSA-1430728	Metabolism of amino acids and derivatives	R-HSA-71291	R-HSA-351202	Metabolism of polyamines	1.0000	0.0013	0.0035
+Metabolism	R-HSA-1430728	Metabolism of amino acids and derivatives	R-HSA-71291	R-HSA-8964540	Alanine metabolism	1.0000	0.0051	0.0135
+Metabolism	R-HSA-1430728	Metabolism of amino acids and derivatives	R-HSA-71291	R-HSA-8963684	Tyrosine catabolism	1.0000	0.0171	0.1072
+Metabolism	R-HSA-1430728	Metabolism of carbohydrates and carbohydrate derivatives	R-HSA-71387	R-HSA-71387	Metabolism of carbohydrates and carbohydrate derivatives	6.0000	0.5015	1.0750
+Metabolism	R-HSA-1430728	Metabolism of carbohydrates and carbohydrate derivatives	R-HSA-71387	R-HSA-70326	Glucose metabolism	3.0000	0.4160	0.7124
+Metabolism	R-HSA-1430728	Metabolism of carbohydrates and carbohydrate derivatives	R-HSA-71387	R-HSA-70263	Gluconeogenesis	2.0000	0.0051	0.0905
+Metabolism	R-HSA-1430728	Metabolism of carbohydrates and carbohydrate derivatives	R-HSA-71387	R-HSA-9634600	Regulation of glycolysis by fructose 2,6-bisphosphate metabolism	1.0000	0.4109	0.6219
+Metabolism	R-HSA-1430728	Metabolism of carbohydrates and carbohydrate derivatives	R-HSA-71387	R-HSA-71336	Pentose phosphate pathway	1.0000	0.0329	0.1195
+Metabolism	R-HSA-1430728	Metabolism of carbohydrates and carbohydrate derivatives	R-HSA-71387	R-HSA-5652084	Fructose metabolism	1.0000	0.0231	0.0734
+Metabolism	R-HSA-1430728	Metabolism of carbohydrates and carbohydrate derivatives	R-HSA-71387	R-HSA-5661270	Formation of xylulose-5-phosphate	1.0000	0.0295	0.1697
+Metabolism	R-HSA-1430728	Metabolism of carbohydrates and carbohydrate derivatives	R-HSA-71387	R-HSA-70350	Fructose catabolism	1.0000	0.0231	0.0734
+Metabolism	R-HSA-1430728	Metabolism of carbohydrates and carbohydrate derivatives	R-HSA-71387	R-HSA-70171	Glycolysis	1.0000	0.4109	0.6219
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-556833	Metabolism of lipids	110.0000	15.6908	27.3172
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-8978868	Fatty acid metabolism	63.0000	6.0436	15.6830
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-77289	Mitochondrial Fatty Acid Beta-Oxidation	31.0000	1.7916	6.2346
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-8957322	Metabolism of steroids	21.0000	3.1443	5.0531
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-1483257	Phospholipid metabolism	19.0000	3.8909	6.0825
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-1483206	Glycerophospholipid biosynthesis	19.0000	3.8909	6.0825
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-390918	Peroxisomal lipid metabolism	14.0000	0.4637	2.2123
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-77286	mitochondrial fatty acid beta-oxidation of saturated fatty acids	10.0000	0.6360	2.7077
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-1483166	Synthesis of PA	9.0000	0.3846	1.3598
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-75105	Fatty acyl-CoA biosynthesis	9.0000	3.3353	3.1959
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-400206	Regulation of lipid metabolism by PPARalpha	8.0000	3.9945	3.5063
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-196071	Metabolism of steroid hormones	8.0000	1.8407	2.4531
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-1989781	PPARA activates gene expression	8.0000	3.9945	3.5063
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-74182	Ketone body metabolism	7.0000	0.4256	0.3348
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-196108	Pregnenolone biosynthesis	6.0000	1.8405	2.4528
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-200425	Carnitine shuttle	6.0000	0.2273	0.9143
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-77346	Beta oxidation of decanoyl-CoA to octanoyl-CoA-CoA	6.0000	0.5785	2.2490
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-77288	mitochondrial fatty acid beta-oxidation of unsaturated fatty acids	6.0000	1.1902	2.7690
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-390247	Beta-oxidation of very long chain fatty acids	6.0000	0.3221	1.1359
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-1655829	Regulation of cholesterol biosynthesis by SREBP (SREBF)	6.0000	0.9632	1.0655
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-2426168	Activation of gene expression by SREBF (SREBP)	6.0000	0.9632	1.0655
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-71032	Propionyl-CoA catabolism	5.0000	0.0591	0.6154
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-2046106	alpha-linolenic acid (ALA) metabolism	5.0000	3.5054	3.7763
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-2046104	alpha-linolenic (omega3) and linoleic (omega6) acid metabolism	5.0000	3.5054	3.7763
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-8979227	Triglyceride metabolism	5.0000	0.6292	1.2729
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-77111	Synthesis of Ketone Bodies	5.0000	0.4198	0.3086
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-428157	Sphingolipid metabolism	5.0000	1.4852	1.9973
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-192105	Synthesis of bile acids and bile salts	5.0000	0.3397	1.5337
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-194068	Bile acid and bile salt metabolism	5.0000	0.3397	1.5337
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-77310	Beta oxidation of lauroyl-CoA to decanoyl-CoA-CoA	5.0000	0.5495	2.0619
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-77350	Beta oxidation of hexanoyl-CoA to butanoyl-CoA	5.0000	0.5536	2.1663
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-77348	Beta oxidation of octanoyl-CoA to hexanoyl-CoA	5.0000	0.5775	2.2174
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-389887	Beta-oxidation of pristanoyl-CoA	5.0000	0.1434	1.2023
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-77108	Utilization of Ketone Bodies	4.0000	0.0428	0.1923
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-77352	Beta oxidation of butanoyl-CoA to acetyl-CoA	4.0000	0.0258	0.3954
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-2142753	Arachidonate metabolism	4.0000	0.2509	3.3468
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-193368	Synthesis of bile acids and bile salts via 7alpha-hydroxycholesterol	4.0000	0.1957	1.2914
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-75876	Synthesis of very long-chain fatty acyl-CoAs	3.0000	3.1246	2.3721
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-77285	Beta oxidation of myristoyl-CoA to lauroyl-CoA	3.0000	0.5428	1.7899
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-77305	Beta oxidation of palmitoyl-CoA to myristoyl-CoA	3.0000	0.5808	2.1247
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-163560	Triglyceride catabolism	3.0000	0.6258	1.2296
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-1660661	Sphingolipid de novo biosynthesis	3.0000	1.4687	1.8081
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-1483148	Synthesis of PG	3.0000	1.2569	0.7223
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-9969896	Lanosterol biosynthesis	2.0000	0.8690	0.7062
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-9018677	Biosynthesis of DHA-derived SPMs	2.0000	0.0534	0.9226
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-9018678	Biosynthesis of specialized proresolving mediators (SPMs)	2.0000	0.0534	0.9226
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-75109	Triglyceride biosynthesis	2.0000	0.0034	0.0433
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-1483191	Synthesis of PC	2.0000	0.5984	1.0389
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-1482798	Acyl chain remodeling of CL	2.0000	0.5426	1.7895
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-196791	Vitamin D (calciferol) metabolism	2.0000	0.0007	0.0008
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-194002	Glucocorticoid biosynthesis	2.0000	0.0002	0.0004
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-191273	Cholesterol biosynthesis	2.0000	0.8690	0.7062
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-389599	Alpha-oxidation of phytanate	2.0000	0.0188	0.2433
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-193775	Synthesis of bile acids and bile salts via 24-hydroxycholesterol	2.0000	0.0622	0.2033
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-2142712	Synthesis of 12-eicosatetraenoic acid derivatives	2.0000	0.2457	3.2163
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-2046105	Linoleic acid (LA) metabolism	2.0000	3.1378	2.3320
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-2142688	Synthesis of 5-eicosatetraenoic acids	2.0000	0.2457	3.2163
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-2142770	Synthesis of 15-eicosatetraenoic acid derivatives	2.0000	0.2457	3.2163
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-193807	Synthesis of bile acids and bile salts via 27-hydroxycholesterol	1.0000	0.0598	0.2021
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-193993	Mineralocorticoid biosynthesis	1.0000	0.0001	0.0002
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-2142670	Synthesis of epoxy (EET) and dihydroxyeicosatrienoic acids (DHET)	1.0000	0.0005	0.0010
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-9845614	Sphingolipid catabolism	1.0000	0.0165	0.1861
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-1660662	Glycosphingolipid metabolism	1.0000	0.0000	0.0031
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-1482788	Acyl chain remodelling of PC	1.0000	0.7758	0.6602
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-9840310	Glycosphingolipid catabolism	1.0000	0.0000	0.0031
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-1482839	Acyl chain remodelling of PE	1.0000	0.7758	0.6602
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-1482925	Acyl chain remodelling of PG	1.0000	0.0103	0.0752
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-1483076	Synthesis of CL	1.0000	0.0103	0.0752
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-1483213	Synthesis of PE	1.0000	0.3226	0.3405
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-75896	Plasmalogen biosynthesis	1.0000	0.3174	0.3230
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-9020265	Biosynthesis of aspirin-triggered D-series resolvins	1.0000	0.0529	0.9216
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-9018896	Biosynthesis of E-series 18(S)-resolvins	1.0000	0.0529	0.9216
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-9018682	Biosynthesis of maresins	1.0000	0.0005	0.0010
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-9018679	Biosynthesis of EPA-derived SPMs	1.0000	0.0529	0.9216
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-9018676	Biosynthesis of D-series resolvins	1.0000	0.0529	0.9216
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-2162123	Synthesis of Prostaglandins (PG) and Thromboxanes (TX)	1.0000	0.0047	0.1294
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-9023661	Biosynthesis of E-series 18(R)-resolvins	1.0000	0.0529	0.9216
+Metabolism	R-HSA-1430728	Metabolism of lipids	R-HSA-556833	R-HSA-8848584	Wax and plasmalogen biosynthesis	1.0000	0.3174	0.3230
+Metabolism	R-HSA-1430728	Metabolism of nitric oxide: NOS3 activation and regulation	R-HSA-202131	R-HSA-203615	eNOS activation	3.0000	0.5312	1.0321
+Metabolism	R-HSA-1430728	Metabolism of nitric oxide: NOS3 activation and regulation	R-HSA-202131	R-HSA-202131	Metabolism of nitric oxide: NOS3 activation and regulation	3.0000	0.5312	1.0321
+Metabolism	R-HSA-1430728	Metabolism of nucleotides	R-HSA-15869	R-HSA-15869	Metabolism of nucleotides	19.0000	2.3728	3.9753
+Metabolism	R-HSA-1430728	Metabolism of nucleotides	R-HSA-15869	R-HSA-499943	Interconversion of nucleotide di- and triphosphates	11.0000	1.4086	2.9192
+Metabolism	R-HSA-1430728	Metabolism of nucleotides	R-HSA-15869	R-HSA-8956319	Nucleotide catabolism	4.0000	0.6201	0.2842
+Metabolism	R-HSA-1430728	Metabolism of nucleotides	R-HSA-15869	R-HSA-8956320	Nucleotide biosynthesis	2.0000	0.0112	0.1298
+Metabolism	R-HSA-1430728	Metabolism of nucleotides	R-HSA-15869	R-HSA-8956321	Nucleotide salvage	2.0000	0.3329	0.6421
+Metabolism	R-HSA-1430728	Metabolism of nucleotides	R-HSA-15869	R-HSA-73621	Pyrimidine catabolism	2.0000	0.0015	0.0122
+Metabolism	R-HSA-1430728	Metabolism of nucleotides	R-HSA-15869	R-HSA-74259	Purine catabolism	2.0000	0.6186	0.2720
+Metabolism	R-HSA-1430728	Metabolism of nucleotides	R-HSA-15869	R-HSA-2393930	Phosphate bond hydrolysis by NUDT proteins	2.0000	0.6186	0.2720
+Metabolism	R-HSA-1430728	Metabolism of nucleotides	R-HSA-15869	R-HSA-500753	Pyrimidine biosynthesis	1.0000	0.0033	0.0149
+Metabolism	R-HSA-1430728	Metabolism of nucleotides	R-HSA-15869	R-HSA-73817	Purine ribonucleoside monophosphate biosynthesis	1.0000	0.0080	0.1149
+Metabolism	R-HSA-1430728	Metabolism of nucleotides	R-HSA-15869	R-HSA-73614	Pyrimidine salvage	1.0000	0.1656	0.2849
+Metabolism	R-HSA-1430728	Metabolism of nucleotides	R-HSA-15869	R-HSA-74217	Purine salvage	1.0000	0.1673	0.3573
+Metabolism	R-HSA-1430728	Metabolism of porphyrins	R-HSA-189445	R-HSA-189445	Metabolism of porphyrins	8.0000	0.1263	0.4840
+Metabolism	R-HSA-1430728	Metabolism of porphyrins	R-HSA-189445	R-HSA-189451	Heme biosynthesis	7.0000	0.1262	0.4840
+Metabolism	R-HSA-1430728	Metabolism of porphyrins	R-HSA-189445	R-HSA-189483	Heme degradation	1.0000	0.0001	0.0000
+Metabolism	R-HSA-1430728	Metabolism of vitamins and cofactors	R-HSA-196854	R-HSA-196854	Metabolism of vitamins and cofactors	55.0000	2.6462	6.1984
+Metabolism	R-HSA-1430728	Metabolism of vitamins and cofactors	R-HSA-196854	R-HSA-196849	Metabolism of water-soluble vitamins and cofactors	39.0000	1.8101	4.3773
+Metabolism	R-HSA-1430728	Metabolism of vitamins and cofactors	R-HSA-196854	R-HSA-8978934	Metabolism of cofactors	14.0000	0.8276	1.8078
+Metabolism	R-HSA-1430728	Metabolism of vitamins and cofactors	R-HSA-196854	R-HSA-2142789	Ubiquinol biosynthesis	13.0000	0.8275	1.7845
+Metabolism	R-HSA-1430728	Metabolism of vitamins and cofactors	R-HSA-196854	R-HSA-196757	Metabolism of folate and pterines	9.0000	0.4740	0.8988
+Metabolism	R-HSA-1430728	Metabolism of vitamins and cofactors	R-HSA-196854	R-HSA-199220	Vitamin B5 (pantothenate) metabolism	7.0000	0.6139	1.0625
+Metabolism	R-HSA-1430728	Metabolism of vitamins and cofactors	R-HSA-196854	R-HSA-196780	Biotin transport and metabolism	7.0000	0.1298	0.9941
+Metabolism	R-HSA-1430728	Metabolism of vitamins and cofactors	R-HSA-196854	R-HSA-196807	Nicotinate metabolism	5.0000	0.0252	0.2982
+Metabolism	R-HSA-1430728	Metabolism of vitamins and cofactors	R-HSA-196854	R-HSA-196741	Cobalamin (Cbl, vitamin B12) transport and metabolism	4.0000	0.3951	0.3866
+Metabolism	R-HSA-1430728	Metabolism of vitamins and cofactors	R-HSA-196854	R-HSA-9759218	Cobalamin (Cbl) metabolism	4.0000	0.3951	0.3866
+Metabolism	R-HSA-1430728	Metabolism of vitamins and cofactors	R-HSA-196854	R-HSA-196783	Coenzyme A biosynthesis	3.0000	0.5388	0.7563
+Metabolism	R-HSA-1430728	Metabolism of vitamins and cofactors	R-HSA-196854	R-HSA-6806667	Metabolism of fat-soluble vitamins	2.0000	0.0084	0.0134
+Metabolism	R-HSA-1430728	Metabolism of vitamins and cofactors	R-HSA-196854	R-HSA-947581	Molybdenum cofactor biosynthesis	2.0000	0.0188	0.0519
+Metabolism	R-HSA-1430728	Metabolism of vitamins and cofactors	R-HSA-196854	R-HSA-975634	Retinoid metabolism and transport	2.0000	0.0084	0.0134
+Metabolism	R-HSA-1430728	Metabolism of vitamins and cofactors	R-HSA-196854	R-HSA-196843	Vitamin B2 (riboflavin) metabolism	2.0000	0.0302	0.2209
+Metabolism	R-HSA-1430728	Metabolism of vitamins and cofactors	R-HSA-196854	R-HSA-964975	Vitamin B6 activation to pyridoxal phosphate	1.0000	0.0006	0.0536
+Metabolism	R-HSA-1430728	Metabolism of vitamins and cofactors	R-HSA-196854	R-HSA-196836	Vitamin C (ascorbate) metabolism	1.0000	0.1152	0.3598
+Metabolism	R-HSA-1430728	Metabolism of vitamins and cofactors	R-HSA-196854	R-HSA-196819	Vitamin B1 (thiamin) metabolism	1.0000	0.0074	0.0509
+Metabolism	R-HSA-1430728	Metabolism of vitamins and cofactors	R-HSA-196854	R-HSA-1474151	Tetrahydrobiopterin (BH4) synthesis, recycling, salvage and regulation	1.0000	0.0001	0.0233
+Metabolism	R-HSA-1430728	Mitochondrial iron-sulfur cluster biogenesis	R-HSA-1362409	R-HSA-1362409	Mitochondrial iron-sulfur cluster biogenesis	13.0000	3.2070	2.5040
+Metabolism	R-HSA-1430728	Mitochondrial iron-sulfur cluster biogenesis	R-HSA-1362409	R-HSA-2395516	Electron transport from NADPH to Ferredoxin	3.0000	0.0064	0.2708
+Metabolism	R-HSA-1430728	Pyrophosphate hydrolysis	R-HSA-71737	R-HSA-71737	Pyrophosphate hydrolysis	1.0000	0.2311	0.3822
+Metabolism	R-HSA-1430728	Reversible hydration of carbon dioxide	R-HSA-1475029	R-HSA-1475029	Reversible hydration of carbon dioxide	2.0000	0.0520	0.2733
+Metabolism of RNA	R-HSA-8953854	Metabolism of RNA	R-HSA-8953854	R-HSA-8953854	Metabolism of RNA	42.0000	0.7701	5.1712
+Metabolism of RNA	R-HSA-8953854	Mitochondrial RNA degradation	R-HSA-9836573	R-HSA-9836573	Mitochondrial RNA degradation	10.0000	0.2552	2.0828
+Metabolism of RNA	R-HSA-8953854	Mitochondrial RNA degradation	R-HSA-9836573	R-HSA-9837092	FASTK family proteins regulate processing and stability of mitochondrial RNAs	4.0000	0.0793	0.4630
+Metabolism of RNA	R-HSA-8953854	Mitochondrial mRNA modification	R-HSA-9937008	R-HSA-9937008	Mitochondrial mRNA modification	11.0000	0.1569	1.6663
+Metabolism of RNA	R-HSA-8953854	rRNA processing	R-HSA-72312	R-HSA-8868766	rRNA processing in the mitochondrion	17.0000	0.1655	1.4388
+Metabolism of RNA	R-HSA-8953854	rRNA processing	R-HSA-72312	R-HSA-72312	rRNA processing	17.0000	0.1655	1.4388
+Metabolism of RNA	R-HSA-8953854	rRNA processing	R-HSA-72312	R-HSA-6793080	rRNA modification in the mitochondrion	13.0000	0.1338	0.9670
+Metabolism of RNA	R-HSA-8953854	tRNA processing	R-HSA-72306	R-HSA-72306	tRNA processing	19.0000	0.3779	2.0971
+Metabolism of RNA	R-HSA-8953854	tRNA processing	R-HSA-72306	R-HSA-6787450	tRNA modification in the mitochondrion	11.0000	0.1350	1.0081
+Metabolism of RNA	R-HSA-8953854	tRNA processing	R-HSA-72306	R-HSA-6782315	tRNA modification in the nucleus and cytosol	8.0000	0.1793	1.0200
+Metabolism of RNA	R-HSA-8953854	tRNA processing	R-HSA-72306	R-HSA-6785470	tRNA processing in the mitochondrion	5.0000	0.0976	0.6507
+Metabolism of RNA	R-HSA-8953854	tRNA processing	R-HSA-72306	R-HSA-6784531	tRNA processing in the nucleus	2.0000	0.0703	0.2729
+Metabolism of RNA	R-HSA-8953854	tRNA processing	R-HSA-72306	R-HSA-6782861	Synthesis of wybutosine at G37 of tRNA(Phe)	1.0000	0.0018	0.0269
+Metabolism of proteins	R-HSA-392499	Amyloid fiber formation	R-HSA-977225	R-HSA-977225	Amyloid fiber formation	1.0000	0.0163	0.0593
+Metabolism of proteins	R-HSA-392499	Metabolism of proteins	R-HSA-392499	R-HSA-392499	Metabolism of proteins	249.0000	31.4782	96.5509
+Metabolism of proteins	R-HSA-392499	Mitochondrial protein degradation	R-HSA-9837999	R-HSA-9837999	Mitochondrial protein degradation	97.0000	17.2977	52.0913
+Metabolism of proteins	R-HSA-392499	Post-translational protein modification	R-HSA-597592	R-HSA-597592	Post-translational protein modification	32.0000	2.6307	7.9390
+Metabolism of proteins	R-HSA-392499	Post-translational protein modification	R-HSA-597592	R-HSA-5688426	Deubiquitination	14.0000	1.8485	4.6440
+Metabolism of proteins	R-HSA-392499	Post-translational protein modification	R-HSA-597592	R-HSA-5689880	Ub-specific processing proteases	12.0000	1.7206	4.2874
+Metabolism of proteins	R-HSA-392499	Post-translational protein modification	R-HSA-597592	R-HSA-9857492	Protein lipoylation	10.0000	0.2007	1.2894
+Metabolism of proteins	R-HSA-392499	Post-translational protein modification	R-HSA-597592	R-HSA-446203	Asparagine N-linked glycosylation	3.0000	0.1797	0.5993
+Metabolism of proteins	R-HSA-392499	Post-translational protein modification	R-HSA-597592	R-HSA-8951664	Neddylation	2.0000	0.1531	0.3066
+Metabolism of proteins	R-HSA-392499	Post-translational protein modification	R-HSA-597592	R-HSA-948021	Transport to the Golgi and subsequent modification	2.0000	0.1797	0.5962
+Metabolism of proteins	R-HSA-392499	Post-translational protein modification	R-HSA-597592	R-HSA-8876725	Protein methylation	2.0000	0.0637	0.3819
+Metabolism of proteins	R-HSA-392499	Post-translational protein modification	R-HSA-597592	R-HSA-199977	ER to Golgi Anterograde Transport	2.0000	0.1797	0.5962
+Metabolism of proteins	R-HSA-392499	Post-translational protein modification	R-HSA-597592	R-HSA-204005	COPII-mediated vesicle transport	1.0000	0.0256	0.1218
+Metabolism of proteins	R-HSA-392499	Post-translational protein modification	R-HSA-597592	R-HSA-446193	Biosynthesis of the N-glycan precursor (dolichol lipid-linked oligosaccharide, LLO) and transfer to a nascent protein	1.0000	0.0000	0.0031
+Metabolism of proteins	R-HSA-392499	Post-translational protein modification	R-HSA-597592	R-HSA-446219	Synthesis of substrates in N-glycan biosythesis	1.0000	0.0000	0.0031
+Metabolism of proteins	R-HSA-392499	Post-translational protein modification	R-HSA-597592	R-HSA-4085001	Sialic acid metabolism	1.0000	0.0000	0.0031
+Metabolism of proteins	R-HSA-392499	Post-translational protein modification	R-HSA-597592	R-HSA-5689877	Josephin domain DUBs	1.0000	0.0163	0.0593
+Metabolism of proteins	R-HSA-392499	Post-translational protein modification	R-HSA-597592	R-HSA-5689896	Ovarian tumor domain proteases	1.0000	0.1115	0.2973
+Metabolism of proteins	R-HSA-392499	Post-translational protein modification	R-HSA-597592	R-HSA-6807878	COPI-mediated anterograde transport	1.0000	0.1541	0.4744
+Metabolism of proteins	R-HSA-392499	Post-translational protein modification	R-HSA-597592	R-HSA-2990846	SUMOylation	1.0000	0.1187	0.6925
+Metabolism of proteins	R-HSA-392499	Post-translational protein modification	R-HSA-597592	R-HSA-3108232	SUMO E3 ligases SUMOylate target proteins	1.0000	0.1187	0.6925
+Metabolism of proteins	R-HSA-392499	Post-translational protein modification	R-HSA-597592	R-HSA-8873719	RAB geranylgeranylation	1.0000	0.0946	0.0936
+Metabolism of proteins	R-HSA-392499	Post-translational protein modification	R-HSA-597592	R-HSA-3899300	SUMOylation of transcription cofactors	1.0000	0.1187	0.6925
+Metabolism of proteins	R-HSA-392499	Protein folding	R-HSA-391251	R-HSA-389977	Post-chaperonin tubulin folding pathway	1.0000	0.0058	0.0974
+Metabolism of proteins	R-HSA-392499	Protein folding	R-HSA-391251	R-HSA-391251	Protein folding	1.0000	0.0058	0.0974
+Metabolism of proteins	R-HSA-392499	Protein repair	R-HSA-5676934	R-HSA-5676934	Protein repair	3.0000	0.8954	0.6416
+Metabolism of proteins	R-HSA-392499	Translation	R-HSA-72766	R-HSA-72766	Translation	130.0000	19.7738	56.0906
+Metabolism of proteins	R-HSA-392499	Translation	R-HSA-72766	R-HSA-5368287	Mitochondrial translation	110.0000	18.7176	52.9565
+Metabolism of proteins	R-HSA-392499	Translation	R-HSA-72766	R-HSA-5419276	Mitochondrial translation termination	100.0000	18.2443	50.8312
+Metabolism of proteins	R-HSA-392499	Translation	R-HSA-72766	R-HSA-9937383	Mitochondrial ribosome-associated quality control	87.0000	2.0235	16.8897
+Metabolism of proteins	R-HSA-392499	Translation	R-HSA-72766	R-HSA-5389840	Mitochondrial translation elongation	86.0000	1.9959	16.9026
+Metabolism of proteins	R-HSA-392499	Translation	R-HSA-72766	R-HSA-5368286	Mitochondrial translation initiation	86.0000	2.2897	16.8173
+Metabolism of proteins	R-HSA-392499	Translation	R-HSA-72766	R-HSA-379724	tRNA Aminoacylation	20.0000	1.0562	3.1341
+Metabolism of proteins	R-HSA-392499	Translation	R-HSA-72766	R-HSA-379726	Mitochondrial tRNA aminoacylation	20.0000	1.0562	3.1341
+Metabolism of proteins	R-HSA-392499	Translation	R-HSA-72766	R-HSA-379716	Cytosolic tRNA aminoacylation	2.0000	0.1365	0.6272
+Muscle contraction	R-HSA-397014	Cardiac conduction	R-HSA-5576891	R-HSA-5578775	Ion homeostasis	3.0000	0.5457	1.0207
+Muscle contraction	R-HSA-397014	Cardiac conduction	R-HSA-5576891	R-HSA-5576891	Cardiac conduction	3.0000	0.5457	1.0207
+Muscle contraction	R-HSA-397014	Muscle contraction	R-HSA-397014	R-HSA-397014	Muscle contraction	4.0000	0.6881	2.1429
+Muscle contraction	R-HSA-397014	Smooth Muscle Contraction	R-HSA-445355	R-HSA-445355	Smooth Muscle Contraction	1.0000	0.1424	1.1222
+Neuronal System	R-HSA-112316	Neuronal System	R-HSA-112316	R-HSA-112316	Neuronal System	9.0000	1.6155	3.7186
+Neuronal System	R-HSA-112316	Transmission across Chemical Synapses	R-HSA-112315	R-HSA-112315	Transmission across Chemical Synapses	9.0000	1.6155	3.7186
+Neuronal System	R-HSA-112316	Transmission across Chemical Synapses	R-HSA-112315	R-HSA-112310	Neurotransmitter release cycle	5.0000	1.0430	1.0861
+Neuronal System	R-HSA-112316	Transmission across Chemical Synapses	R-HSA-112315	R-HSA-112311	Neurotransmitter clearance	3.0000	0.5183	2.0395
+Neuronal System	R-HSA-112316	Transmission across Chemical Synapses	R-HSA-112315	R-HSA-916853	Degradation of GABA	2.0000	0.1859	0.2358
+Neuronal System	R-HSA-112316	Transmission across Chemical Synapses	R-HSA-112315	R-HSA-888590	GABA synthesis, release, reuptake and degradation	2.0000	0.1859	0.2358
+Neuronal System	R-HSA-112316	Transmission across Chemical Synapses	R-HSA-112315	R-HSA-112314	Neurotransmitter receptors and postsynaptic signal transmission	2.0000	0.4212	0.9025
+Neuronal System	R-HSA-112316	Transmission across Chemical Synapses	R-HSA-112315	R-HSA-380615	Serotonin clearance from the synaptic cleft	2.0000	0.5094	1.4318
+Neuronal System	R-HSA-112316	Transmission across Chemical Synapses	R-HSA-112315	R-HSA-380612	Metabolism of serotonin	2.0000	0.5094	1.4318
+Neuronal System	R-HSA-112316	Transmission across Chemical Synapses	R-HSA-112315	R-HSA-379401	Dopamine clearance from the synaptic cleft	2.0000	0.3758	0.9173
+Neuronal System	R-HSA-112316	Transmission across Chemical Synapses	R-HSA-112315	R-HSA-379398	Enzymatic degradation of Dopamine by monoamine oxidase	2.0000	0.3758	0.9173
+Neuronal System	R-HSA-112316	Transmission across Chemical Synapses	R-HSA-112315	R-HSA-379397	Enzymatic degradation of dopamine by COMT	2.0000	0.3758	0.9173
+Neuronal System	R-HSA-112316	Transmission across Chemical Synapses	R-HSA-112315	R-HSA-210500	Glutamate Neurotransmitter Release Cycle	2.0000	0.4901	0.5407
+Neuronal System	R-HSA-112316	Transmission across Chemical Synapses	R-HSA-112315	R-HSA-181430	Norepinephrine Neurotransmitter Release Cycle	1.0000	0.3670	0.3096
+Neuronal System	R-HSA-112316	Transmission across Chemical Synapses	R-HSA-112315	R-HSA-416993	Trafficking of GluR2-containing AMPA receptors	1.0000	0.0103	0.2806
+Neuronal System	R-HSA-112316	Transmission across Chemical Synapses	R-HSA-112315	R-HSA-438064	Post NMDA receptor activation events	1.0000	0.4109	0.6219
+Neuronal System	R-HSA-112316	Transmission across Chemical Synapses	R-HSA-112315	R-HSA-442720	CREB1 phosphorylation through the activation of Adenylate Cyclase	1.0000	0.4109	0.6219
+Neuronal System	R-HSA-112316	Transmission across Chemical Synapses	R-HSA-112315	R-HSA-442755	Activation of NMDA receptors and postsynaptic events	1.0000	0.4109	0.6219
+Neuronal System	R-HSA-112316	Transmission across Chemical Synapses	R-HSA-112315	R-HSA-399721	Glutamate binding, activation of AMPA receptors and synaptic plasticity	1.0000	0.0103	0.2806
+Neuronal System	R-HSA-112316	Transmission across Chemical Synapses	R-HSA-112315	R-HSA-399719	Trafficking of AMPA receptors	1.0000	0.0103	0.2806
+Organelle biogenesis and maintenance	R-HSA-1852241	Cilium Assembly	R-HSA-5617833	R-HSA-9975921	Assembly of the 9+0 primary cilium	2.0000	0.4258	0.6727
+Organelle biogenesis and maintenance	R-HSA-1852241	Cilium Assembly	R-HSA-5617833	R-HSA-5620912	Anchoring of the basal body to the plasma membrane	2.0000	0.4258	0.6727
+Organelle biogenesis and maintenance	R-HSA-1852241	Cilium Assembly	R-HSA-5617833	R-HSA-5617833	Cilium Assembly	2.0000	0.4258	0.6727
+Organelle biogenesis and maintenance	R-HSA-1852241	Mitochondrial biogenesis	R-HSA-1592230	R-HSA-1592230	Mitochondrial biogenesis	48.0000	9.5471	26.4890
+Organelle biogenesis and maintenance	R-HSA-1852241	Mitochondrial biogenesis	R-HSA-1592230	R-HSA-8949613	Cristae formation	31.0000	6.4017	22.7350
+Organelle biogenesis and maintenance	R-HSA-1852241	Mitochondrial biogenesis	R-HSA-1592230	R-HSA-2151201	Transcriptional activation of mitochondrial biogenesis	18.0000	3.2846	4.6611
+Organelle biogenesis and maintenance	R-HSA-1852241	Organelle biogenesis and maintenance	R-HSA-1852241	R-HSA-1852241	Organelle biogenesis and maintenance	50.0000	9.9729	27.1617
+Programmed Cell Death	R-HSA-5357801	Apoptosis	R-HSA-109581	R-HSA-109581	Apoptosis	18.0000	2.2604	4.5448
+Programmed Cell Death	R-HSA-5357801	Apoptosis	R-HSA-109581	R-HSA-109606	Intrinsic Pathway for Apoptosis	15.0000	2.0481	3.4411
+Programmed Cell Death	R-HSA-5357801	Apoptosis	R-HSA-109581	R-HSA-111471	Apoptotic factor-mediated response	8.0000	0.3696	1.6339
+Programmed Cell Death	R-HSA-5357801	Apoptosis	R-HSA-109581	R-HSA-111453	BH3-only proteins associate with and inactivate anti-apoptotic BCL-2 members	6.0000	1.0788	1.4204
+Programmed Cell Death	R-HSA-5357801	Apoptosis	R-HSA-109581	R-HSA-111469	SMAC, XIAP-regulated apoptotic response	5.0000	0.2336	0.7261
+Programmed Cell Death	R-HSA-5357801	Apoptosis	R-HSA-109581	R-HSA-114452	Activation of BH3-only proteins	5.0000	0.9455	1.2079
+Programmed Cell Death	R-HSA-5357801	Apoptosis	R-HSA-109581	R-HSA-111457	Release of apoptotic factors from the mitochondria	5.0000	0.1791	1.0192
+Programmed Cell Death	R-HSA-5357801	Apoptosis	R-HSA-109581	R-HSA-111464	SMAC(DIABLO)-mediated dissociation of IAP:caspase complexes	4.0000	0.2332	0.7188
+Programmed Cell Death	R-HSA-5357801	Apoptosis	R-HSA-109581	R-HSA-111461	Cytochrome c-mediated apoptotic response	4.0000	0.2332	0.7188
+Programmed Cell Death	R-HSA-5357801	Apoptosis	R-HSA-109581	R-HSA-111463	SMAC (DIABLO) binds to IAPs	4.0000	0.2332	0.7188
+Programmed Cell Death	R-HSA-5357801	Apoptosis	R-HSA-109581	R-HSA-75153	Apoptotic execution phase	3.0000	0.7536	0.9937
+Programmed Cell Death	R-HSA-5357801	Apoptosis	R-HSA-109581	R-HSA-111458	Formation of apoptosome	3.0000	0.1359	0.5437
+Programmed Cell Death	R-HSA-5357801	Apoptosis	R-HSA-109581	R-HSA-5357769	Caspase activation via extrinsic apoptotic signalling pathway	3.0000	0.7870	0.6926
+Programmed Cell Death	R-HSA-5357801	Apoptosis	R-HSA-109581	R-HSA-111459	Activation of caspases through apoptosome-mediated cleavage	3.0000	0.2147	0.6945
+Programmed Cell Death	R-HSA-5357801	Apoptosis	R-HSA-109581	R-HSA-9627069	Regulation of the apoptosome activity	3.0000	0.1359	0.5437
+Programmed Cell Death	R-HSA-5357801	Apoptosis	R-HSA-109581	R-HSA-75108	Activation, myristolyation of BID and translocation to mitochondria	2.0000	1.3440	1.0511
+Programmed Cell Death	R-HSA-5357801	Apoptosis	R-HSA-109581	R-HSA-264870	Caspase-mediated cleavage of cytoskeletal proteins	2.0000	0.6971	0.5619
+Programmed Cell Death	R-HSA-5357801	Apoptosis	R-HSA-109581	R-HSA-114294	Activation, translocation and oligomerization of BAX	2.0000	0.8584	1.1718
+Programmed Cell Death	R-HSA-5357801	Apoptosis	R-HSA-109581	R-HSA-169911	Regulation of Apoptosis	2.0000	0.1557	0.6719
+Programmed Cell Death	R-HSA-5357801	Apoptosis	R-HSA-109581	R-HSA-418889	Caspase activation via Dependence Receptors in the absence of ligand	2.0000	0.1872	0.3059
+Programmed Cell Death	R-HSA-5357801	Apoptosis	R-HSA-109581	R-HSA-111447	Activation of BAD and translocation to mitochondria	2.0000	0.7516	0.7168
+Programmed Cell Death	R-HSA-5357801	Apoptosis	R-HSA-109581	R-HSA-111465	Apoptotic cleavage of cellular proteins	2.0000	0.6971	0.5619
+Programmed Cell Death	R-HSA-5357801	Apoptosis	R-HSA-109581	R-HSA-111452	Activation and oligomerization of BAK protein	2.0000	0.7626	0.7558
+Programmed Cell Death	R-HSA-5357801	Apoptosis	R-HSA-109581	R-HSA-211736	Stimulation of the cell death response by PAK-2p34	1.0000	0.0973	0.1751
+Programmed Cell Death	R-HSA-5357801	Apoptosis	R-HSA-109581	R-HSA-139915	Activation of PUMA and translocation to mitochondria	1.0000	0.0741	0.0946
+Programmed Cell Death	R-HSA-5357801	Apoptosis	R-HSA-109581	R-HSA-140342	Apoptosis induced DNA fragmentation	1.0000	0.0973	0.1751
+Programmed Cell Death	R-HSA-5357801	Apoptosis	R-HSA-109581	R-HSA-111448	Activation of NOXA and translocation to mitochondria	1.0000	0.0273	0.0455
+Programmed Cell Death	R-HSA-5357801	Apoptosis	R-HSA-109581	R-HSA-111446	Activation of BIM and translocation to mitochondria	1.0000	0.0925	0.3511
+Programmed Cell Death	R-HSA-5357801	Apoptosis	R-HSA-109581	R-HSA-140534	Caspase activation via Death Receptors in the presence of ligand	1.0000	0.5998	0.3868
+Programmed Cell Death	R-HSA-5357801	Apoptosis	R-HSA-109581	R-HSA-69416	Dimerization of procaspase-8	1.0000	0.5998	0.3868
+Programmed Cell Death	R-HSA-5357801	Apoptosis	R-HSA-109581	R-HSA-3371378	Regulation by c-FLIP	1.0000	0.5998	0.3868
+Programmed Cell Death	R-HSA-5357801	Apoptosis	R-HSA-109581	R-HSA-351906	Apoptotic cleavage of cell adhesion  proteins	1.0000	0.0973	0.1751
+Programmed Cell Death	R-HSA-5357801	Programmed Cell Death	R-HSA-5357801	R-HSA-5357801	Programmed Cell Death	19.0000	2.2767	4.6041
+Programmed Cell Death	R-HSA-5357801	Regulated Necrosis	R-HSA-5218859	R-HSA-5218859	Regulated Necrosis	6.0000	0.8736	1.6088
+Programmed Cell Death	R-HSA-5357801	Regulated Necrosis	R-HSA-5218859	R-HSA-5620971	Pyroptosis	4.0000	0.2575	1.1627
+Programmed Cell Death	R-HSA-5357801	Regulated Necrosis	R-HSA-5218859	R-HSA-5213460	RIPK1-mediated regulated necrosis	2.0000	0.6161	0.4461
+Programmed Cell Death	R-HSA-5357801	Regulated Necrosis	R-HSA-5218859	R-HSA-5675482	Regulation of necroptotic cell death	2.0000	0.6161	0.4461
+Programmed Cell Death	R-HSA-5357801	Regulated Necrosis	R-HSA-5218859	R-HSA-5218900	CASP8 activity is inhibited	1.0000	0.5998	0.3868
+Protein localization	R-HSA-9609507	Class I peroxisomal membrane protein import	R-HSA-9603798	R-HSA-9603798	Class I peroxisomal membrane protein import	10.0000	0.2998	1.4557
+Protein localization	R-HSA-9609507	Insertion of tail-anchored proteins into the endoplasmic reticulum membrane	R-HSA-9609523	R-HSA-9609523	Insertion of tail-anchored proteins into the endoplasmic reticulum membrane	1.0000	0.0165	0.1861
+Protein localization	R-HSA-9609507	Mitochondrial protein import	R-HSA-1268020	R-HSA-1268020	Mitochondrial protein import	64.0000	3.1259	17.1486
+Protein localization	R-HSA-9609507	Peroxisomal protein import	R-HSA-9033241	R-HSA-9033241	Peroxisomal protein import	22.0000	0.9756	4.3745
+Protein localization	R-HSA-9609507	Peroxisomal protein import	R-HSA-9033241	R-HSA-9033500	TYSND1 cleaves peroxisomal proteins	4.0000	0.3700	1.5015
+Protein localization	R-HSA-9609507	Protein localization	R-HSA-9609507	R-HSA-9609507	Protein localization	96.0000	4.4013	22.9787
+Reproduction	R-HSA-1474165	Reproduction	R-HSA-1474165	R-HSA-1474165	Reproduction	1.0000	0.2092	0.3185
+Sensory Perception	R-HSA-9709957	Sensory Perception	R-HSA-9709957	R-HSA-9709957	Sensory Perception	2.0000	0.0084	0.0134
+Sensory Perception	R-HSA-9709957	Visual phototransduction	R-HSA-2187338	R-HSA-2187338	Visual phototransduction	2.0000	0.0084	0.0134
+Signal Transduction	R-HSA-162582	Death Receptor Signaling	R-HSA-73887	R-HSA-73887	Death Receptor Signaling	3.0000	0.7896	0.9129
+Signal Transduction	R-HSA-162582	Death Receptor Signaling	R-HSA-73887	R-HSA-193704	p75 NTR receptor-mediated signalling	2.0000	0.1898	0.5262
+Signal Transduction	R-HSA-162582	Death Receptor Signaling	R-HSA-73887	R-HSA-204998	Cell death signalling via NRAGE, NRIF and NADE	2.0000	0.1898	0.5262
+Signal Transduction	R-HSA-162582	Death Receptor Signaling	R-HSA-73887	R-HSA-193648	NRAGE signals death through JNK	1.0000	0.0925	0.3511
+Signal Transduction	R-HSA-162582	Death Receptor Signaling	R-HSA-73887	R-HSA-205025	NADE modulates death signalling	1.0000	0.0973	0.1751
+Signal Transduction	R-HSA-162582	Death Receptor Signaling	R-HSA-73887	R-HSA-5357786	TNFR1-induced proapoptotic signaling	1.0000	0.5998	0.3868
+Signal Transduction	R-HSA-162582	Death Receptor Signaling	R-HSA-73887	R-HSA-5357905	Regulation of TNFR1 signaling	1.0000	0.5998	0.3868
+Signal Transduction	R-HSA-162582	Death Receptor Signaling	R-HSA-73887	R-HSA-75893	TNF signaling	1.0000	0.5998	0.3868
+Signal Transduction	R-HSA-162582	Death Receptor Signaling	R-HSA-73887	R-HSA-75158	TRAIL  signaling	1.0000	0.5998	0.3868
+Signal Transduction	R-HSA-162582	Death Receptor Signaling	R-HSA-73887	R-HSA-75157	FasL/ CD95L signaling	1.0000	0.5998	0.3868
+Signal Transduction	R-HSA-162582	Intracellular signaling by second messengers	R-HSA-9006925	R-HSA-9006925	Intracellular signaling by second messengers	4.0000	0.6320	1.1687
+Signal Transduction	R-HSA-162582	Intracellular signaling by second messengers	R-HSA-9006925	R-HSA-1489509	DAG and IP3 signaling	2.0000	0.5401	1.0158
+Signal Transduction	R-HSA-162582	Intracellular signaling by second messengers	R-HSA-9006925	R-HSA-1257604	PIP3 activates AKT signaling	2.0000	0.0920	0.1529
+Signal Transduction	R-HSA-162582	Intracellular signaling by second messengers	R-HSA-9006925	R-HSA-199418	Negative regulation of the PI3K/AKT network	1.0000	0.0021	0.0222
+Signal Transduction	R-HSA-162582	Intracellular signaling by second messengers	R-HSA-9006925	R-HSA-198323	AKT phosphorylates targets in the cytosol	1.0000	0.0899	0.1307
+Signal Transduction	R-HSA-162582	Intracellular signaling by second messengers	R-HSA-9006925	R-HSA-111931	PKA-mediated phosphorylation of CREB	1.0000	0.4109	0.6219
+Signal Transduction	R-HSA-162582	Intracellular signaling by second messengers	R-HSA-9006925	R-HSA-111933	Calmodulin induced events	1.0000	0.4109	0.6219
+Signal Transduction	R-HSA-162582	Intracellular signaling by second messengers	R-HSA-9006925	R-HSA-111997	CaM pathway	1.0000	0.4109	0.6219
+Signal Transduction	R-HSA-162582	Intracellular signaling by second messengers	R-HSA-9006925	R-HSA-163615	PKA activation	1.0000	0.4109	0.6219
+Signal Transduction	R-HSA-162582	MAPK family signaling cascades	R-HSA-5683057	R-HSA-5683057	MAPK family signaling cascades	4.0000	1.0583	1.7960
+Signal Transduction	R-HSA-162582	MAPK family signaling cascades	R-HSA-5683057	R-HSA-9648002	RAS processing	3.0000	0.6474	1.1741
+Signal Transduction	R-HSA-162582	MAPK family signaling cascades	R-HSA-5683057	R-HSA-5684996	MAPK1/MAPK3 signaling	3.0000	0.6474	1.1741
+Signal Transduction	R-HSA-162582	MAPK family signaling cascades	R-HSA-5683057	R-HSA-5673001	RAF/MAP kinase cascade	3.0000	0.6474	1.1741
+Signal Transduction	R-HSA-162582	MAPK family signaling cascades	R-HSA-5683057	R-HSA-5687128	MAPK6/MAPK4 signaling	1.0000	0.4109	0.6219
+Signal Transduction	R-HSA-162582	Signal Transduction	R-HSA-162582	R-HSA-162582	Signal Transduction	52.0000	5.9263	11.5828
+Signal Transduction	R-HSA-162582	Signaling by GPCR	R-HSA-372790	R-HSA-372790	Signaling by GPCR	5.0000	0.6734	1.5530
+Signal Transduction	R-HSA-162582	Signaling by GPCR	R-HSA-372790	R-HSA-388396	GPCR downstream signalling	4.0000	0.6679	1.3294
+Signal Transduction	R-HSA-162582	Signaling by GPCR	R-HSA-372790	R-HSA-418594	G alpha (i) signalling events	3.0000	0.5474	1.2744
+Signal Transduction	R-HSA-162582	Signaling by GPCR	R-HSA-372790	R-HSA-500792	GPCR ligand binding	2.0000	0.0129	0.4822
+Signal Transduction	R-HSA-162582	Signaling by GPCR	R-HSA-372790	R-HSA-375276	Peptide ligand-binding receptors	2.0000	0.0129	0.4822
+Signal Transduction	R-HSA-162582	Signaling by GPCR	R-HSA-372790	R-HSA-418555	G alpha (s) signalling events	2.0000	0.5314	0.6769
+Signal Transduction	R-HSA-162582	Signaling by GPCR	R-HSA-372790	R-HSA-373076	Class A/1 (Rhodopsin-like receptors)	2.0000	0.0129	0.4822
+Signal Transduction	R-HSA-162582	Signaling by GPCR	R-HSA-372790	R-HSA-112043	PLC beta mediated events	2.0000	0.5401	1.0158
+Signal Transduction	R-HSA-162582	Signaling by GPCR	R-HSA-372790	R-HSA-112040	G-protein mediated events	2.0000	0.5401	1.0158
+Signal Transduction	R-HSA-162582	Signaling by GPCR	R-HSA-372790	R-HSA-111885	Opioid Signalling	2.0000	0.5401	1.0158
+Signal Transduction	R-HSA-162582	Signaling by GPCR	R-HSA-372790	R-HSA-180024	DARPP-32 events	1.0000	0.4109	0.6219
+Signal Transduction	R-HSA-162582	Signaling by GPCR	R-HSA-372790	R-HSA-9634597	GPER1 signaling	1.0000	0.4109	0.6219
+Signal Transduction	R-HSA-162582	Signaling by GPCR	R-HSA-372790	R-HSA-111996	Ca-dependent events	1.0000	0.4109	0.6219
+Signal Transduction	R-HSA-162582	Signaling by GPCR	R-HSA-372790	R-HSA-444473	Formyl peptide receptors bind formyl peptides and many other ligands	1.0000	0.0074	0.2585
+Signal Transduction	R-HSA-162582	Signaling by Hedgehog	R-HSA-5358351	R-HSA-5358351	Signaling by Hedgehog	2.0000	0.4198	0.6258
+Signal Transduction	R-HSA-162582	Signaling by Hedgehog	R-HSA-5358351	R-HSA-5610787	Hedgehog 'off' state	2.0000	0.4198	0.6258
+Signal Transduction	R-HSA-162582	Signaling by Hedgehog	R-HSA-5358351	R-HSA-5610780	Degradation of GLI1 by the proteasome	1.0000	0.4109	0.6219
+Signal Transduction	R-HSA-162582	Signaling by Hedgehog	R-HSA-5358351	R-HSA-5610783	Degradation of GLI2 by the proteasome	1.0000	0.4109	0.6219
+Signal Transduction	R-HSA-162582	Signaling by Hedgehog	R-HSA-5358351	R-HSA-5610785	GLI3 is processed to GLI3R by the proteasome	1.0000	0.4109	0.6219
+Signal Transduction	R-HSA-162582	Signaling by Hippo	R-HSA-2028269	R-HSA-2028269	Signaling by Hippo	1.0000	0.0973	0.1751
+Signal Transduction	R-HSA-162582	Signaling by Nuclear Receptors	R-HSA-9006931	R-HSA-9006931	Signaling by Nuclear Receptors	16.0000	0.9723	2.0900
+Signal Transduction	R-HSA-162582	Signaling by Nuclear Receptors	R-HSA-9006931	R-HSA-5362517	Signaling by Retinoic Acid	13.0000	0.9606	1.9703
+Signal Transduction	R-HSA-162582	Signaling by Nuclear Receptors	R-HSA-9006931	R-HSA-5365859	RA biosynthesis pathway	3.0000	0.0055	0.2088
+Signal Transduction	R-HSA-162582	Signaling by Nuclear Receptors	R-HSA-9006931	R-HSA-8939211	ESR-mediated signaling	2.0000	0.0106	0.0919
+Signal Transduction	R-HSA-162582	Signaling by Nuclear Receptors	R-HSA-9006931	R-HSA-9018519	Estrogen-dependent gene expression	2.0000	0.0106	0.0919
+Signal Transduction	R-HSA-162582	Signaling by Nuclear Receptors	R-HSA-9006931	R-HSA-9634638	Estrogen-dependent nuclear events downstream of ESR-membrane signaling	1.0000	0.0074	0.0525
+Signal Transduction	R-HSA-162582	Signaling by Nuclear Receptors	R-HSA-9006931	R-HSA-9029558	NR1H2 & NR1H3 regulate gene expression linked to lipogenesis	1.0000	0.0011	0.0278
+Signal Transduction	R-HSA-162582	Signaling by Nuclear Receptors	R-HSA-9006931	R-HSA-9024446	NR1H2 and NR1H3-mediated signaling	1.0000	0.0011	0.0278
+Signal Transduction	R-HSA-162582	Signaling by Nuclear Receptors	R-HSA-9006931	R-HSA-9009391	Extra-nuclear estrogen signaling	1.0000	0.0074	0.0525
+Signal Transduction	R-HSA-162582	Signaling by Receptor Tyrosine Kinases	R-HSA-9006934	R-HSA-9006934	Signaling by Receptor Tyrosine Kinases	5.0000	0.6818	1.8284
+Signal Transduction	R-HSA-162582	Signaling by Receptor Tyrosine Kinases	R-HSA-9006934	R-HSA-4420097	VEGFA-VEGFR2 Pathway	3.0000	0.5422	1.0380
+Signal Transduction	R-HSA-162582	Signaling by Receptor Tyrosine Kinases	R-HSA-9006934	R-HSA-194138	Signaling by VEGF	3.0000	0.5422	1.0380
+Signal Transduction	R-HSA-162582	Signaling by Receptor Tyrosine Kinases	R-HSA-9006934	R-HSA-74752	Signaling by Insulin receptor	2.0000	0.0275	0.3051
+Signal Transduction	R-HSA-162582	Signaling by Receptor Tyrosine Kinases	R-HSA-9006934	R-HSA-112399	IRS-mediated signalling	1.0000	0.0021	0.0222
+Signal Transduction	R-HSA-162582	Signaling by Receptor Tyrosine Kinases	R-HSA-9006934	R-HSA-109704	PI3K Cascade	1.0000	0.0021	0.0222
+Signal Transduction	R-HSA-162582	Signaling by Receptor Tyrosine Kinases	R-HSA-9006934	R-HSA-165158	Activation of AKT2	1.0000	0.0021	0.0222
+Signal Transduction	R-HSA-162582	Signaling by Receptor Tyrosine Kinases	R-HSA-9006934	R-HSA-166520	Signaling by NTRKs	1.0000	0.1142	0.5075
+Signal Transduction	R-HSA-162582	Signaling by Receptor Tyrosine Kinases	R-HSA-9006934	R-HSA-5218920	VEGFR2 mediated vascular permeability	1.0000	0.0021	0.0222
+Signal Transduction	R-HSA-162582	Signaling by Receptor Tyrosine Kinases	R-HSA-9006934	R-HSA-5218921	VEGFR2 mediated cell proliferation	1.0000	0.1292	0.3939
+Signal Transduction	R-HSA-162582	Signaling by Receptor Tyrosine Kinases	R-HSA-9006934	R-HSA-74751	Insulin receptor signalling cascade	1.0000	0.0021	0.0222
+Signal Transduction	R-HSA-162582	Signaling by Receptor Tyrosine Kinases	R-HSA-9006934	R-HSA-9603505	NTRK3 as a dependence receptor	1.0000	0.1142	0.5075
+Signal Transduction	R-HSA-162582	Signaling by Receptor Tyrosine Kinases	R-HSA-9006934	R-HSA-2404192	Signaling by Type 1 Insulin-like Growth Factor 1 Receptor (IGF1R)	1.0000	0.0021	0.0222
+Signal Transduction	R-HSA-162582	Signaling by Receptor Tyrosine Kinases	R-HSA-9006934	R-HSA-2428924	IGF1R signaling cascade	1.0000	0.0021	0.0222
+Signal Transduction	R-HSA-162582	Signaling by Receptor Tyrosine Kinases	R-HSA-9006934	R-HSA-2428928	IRS-related events triggered by IGF1R	1.0000	0.0021	0.0222
+Signal Transduction	R-HSA-162582	Signaling by Receptor Tyrosine Kinases	R-HSA-9006934	R-HSA-9034015	Signaling by NTRK3 (TRKC)	1.0000	0.1142	0.5075
+Signal Transduction	R-HSA-162582	Signaling by Receptor Tyrosine Kinases	R-HSA-9006934	R-HSA-77387	Insulin receptor recycling	1.0000	0.0254	0.2829
+Signal Transduction	R-HSA-162582	Signaling by Rho GTPases, Miro GTPases and RHOBTB3	R-HSA-9716542	R-HSA-9716542	Signaling by Rho GTPases, Miro GTPases and RHOBTB3	20.0000	2.6030	4.9056
+Signal Transduction	R-HSA-162582	Signaling by Rho GTPases, Miro GTPases and RHOBTB3	R-HSA-9716542	R-HSA-9012999	RHO GTPase cycle	15.0000	1.2640	3.4198
+Signal Transduction	R-HSA-162582	Signaling by Rho GTPases, Miro GTPases and RHOBTB3	R-HSA-9716542	R-HSA-194315	Signaling by Rho GTPases	15.0000	1.2640	3.4198
+Signal Transduction	R-HSA-162582	Signaling by Rho GTPases, Miro GTPases and RHOBTB3	R-HSA-9716542	R-HSA-9013408	RHOG GTPase cycle	5.0000	0.0668	0.9749
+Signal Transduction	R-HSA-162582	Signaling by Rho GTPases, Miro GTPases and RHOBTB3	R-HSA-9716542	R-HSA-9715370	Miro GTPase Cycle	5.0000	1.3390	1.4859
+Signal Transduction	R-HSA-162582	Signaling by Rho GTPases, Miro GTPases and RHOBTB3	R-HSA-9716542	R-HSA-9013419	RHOT2 GTPase cycle	4.0000	0.7377	0.7064
+Signal Transduction	R-HSA-162582	Signaling by Rho GTPases, Miro GTPases and RHOBTB3	R-HSA-9716542	R-HSA-8980692	RHOA GTPase cycle	3.0000	0.8953	1.0015
+Signal Transduction	R-HSA-162582	Signaling by Rho GTPases, Miro GTPases and RHOBTB3	R-HSA-9716542	R-HSA-9013106	RHOC GTPase cycle	3.0000	0.8953	1.0015
+Signal Transduction	R-HSA-162582	Signaling by Rho GTPases, Miro GTPases and RHOBTB3	R-HSA-9716542	R-HSA-9013404	RAC2 GTPase cycle	3.0000	0.1894	0.4935
+Signal Transduction	R-HSA-162582	Signaling by Rho GTPases, Miro GTPases and RHOBTB3	R-HSA-9716542	R-HSA-9013407	RHOH GTPase cycle	3.0000	0.9437	1.1541
+Signal Transduction	R-HSA-162582	Signaling by Rho GTPases, Miro GTPases and RHOBTB3	R-HSA-9716542	R-HSA-9013409	RHOJ GTPase cycle	2.0000	0.9306	1.0603
+Signal Transduction	R-HSA-162582	Signaling by Rho GTPases, Miro GTPases and RHOBTB3	R-HSA-9716542	R-HSA-9013425	RHOT1 GTPase cycle	2.0000	0.6248	0.8770
+Signal Transduction	R-HSA-162582	Signaling by Rho GTPases, Miro GTPases and RHOBTB3	R-HSA-9716542	R-HSA-9696273	RND1 GTPase cycle	1.0000	0.0165	0.1861
+Signal Transduction	R-HSA-162582	Signaling by Rho GTPases, Miro GTPases and RHOBTB3	R-HSA-9716542	R-HSA-9696270	RND2 GTPase cycle	1.0000	0.0165	0.1861
+Signal Transduction	R-HSA-162582	Signaling by Rho GTPases, Miro GTPases and RHOBTB3	R-HSA-9716542	R-HSA-9013406	RHOQ GTPase cycle	1.0000	0.8480	0.4209
+Signal Transduction	R-HSA-162582	Signaling by Rho GTPases, Miro GTPases and RHOBTB3	R-HSA-9716542	R-HSA-9013405	RHOD GTPase cycle	1.0000	0.0002	0.0306
+Signal Transduction	R-HSA-162582	Signaling by Rho GTPases, Miro GTPases and RHOBTB3	R-HSA-9716542	R-HSA-9013148	CDC42 GTPase cycle	1.0000	0.8480	0.4209
+Signal Transduction	R-HSA-162582	Signaling by Rho GTPases, Miro GTPases and RHOBTB3	R-HSA-9716542	R-HSA-9013026	RHOB GTPase cycle	1.0000	0.8480	0.4209
+Transport of small molecules	R-HSA-382551	ABC-family protein mediated transport	R-HSA-382556	R-HSA-382556	ABC-family protein mediated transport	8.0000	0.1282	0.9703
+Transport of small molecules	R-HSA-382551	ABC-family protein mediated transport	R-HSA-382556	R-HSA-1369007	Mitochondrial ABC transporters	4.0000	0.0514	0.5628
+Transport of small molecules	R-HSA-382551	ABC-family protein mediated transport	R-HSA-382556	R-HSA-1369062	ABC transporters in lipid homeostasis	4.0000	0.0768	0.4075
+Transport of small molecules	R-HSA-382551	Aquaporin-mediated transport	R-HSA-445717	R-HSA-445717	Aquaporin-mediated transport	1.0000	0.4109	0.6219
+Transport of small molecules	R-HSA-382551	Aquaporin-mediated transport	R-HSA-445717	R-HSA-432040	Vasopressin regulates renal water homeostasis via Aquaporins	1.0000	0.4109	0.6219
+Transport of small molecules	R-HSA-382551	Ion channel transport	R-HSA-983712	R-HSA-983712	Ion channel transport	1.0000	0.8480	0.4209
+Transport of small molecules	R-HSA-382551	Ion channel transport	R-HSA-983712	R-HSA-2672351	Stimuli-sensing channels	1.0000	0.8480	0.4209
+Transport of small molecules	R-HSA-382551	Iron uptake and transport	R-HSA-917937	R-HSA-917937	Iron uptake and transport	2.0000	3.3309	3.1988
+Transport of small molecules	R-HSA-382551	Miscellaneous transport and binding events	R-HSA-5223345	R-HSA-5223345	Miscellaneous transport and binding events	1.0000	0.0083	0.0984
+Transport of small molecules	R-HSA-382551	Mitochondrial calcium ion transport	R-HSA-8949215	R-HSA-8949215	Mitochondrial calcium ion transport	21.0000	3.1239	7.7310
+Transport of small molecules	R-HSA-382551	Mitochondrial calcium ion transport	R-HSA-8949215	R-HSA-8949664	Processing of SMDT1	15.0000	2.8007	6.0438
+Transport of small molecules	R-HSA-382551	Plasma lipoprotein assembly, remodeling, and clearance	R-HSA-174824	R-HSA-174824	Plasma lipoprotein assembly, remodeling, and clearance	1.0000	0.4109	0.6219
+Transport of small molecules	R-HSA-382551	Plasma lipoprotein assembly, remodeling, and clearance	R-HSA-174824	R-HSA-8963898	Plasma lipoprotein assembly	1.0000	0.4109	0.6219
+Transport of small molecules	R-HSA-382551	Plasma lipoprotein assembly, remodeling, and clearance	R-HSA-174824	R-HSA-8963896	HDL assembly	1.0000	0.4109	0.6219
+Transport of small molecules	R-HSA-382551	SLC-mediated transmembrane transport	R-HSA-425407	R-HSA-425407	SLC-mediated transmembrane transport	12.0000	0.3204	1.9840
+Transport of small molecules	R-HSA-382551	SLC-mediated transmembrane transport	R-HSA-425407	R-HSA-425397	Transport of vitamins, nucleosides, and related molecules	4.0000	0.0727	1.0523
+Transport of small molecules	R-HSA-382551	SLC-mediated transmembrane transport	R-HSA-425407	R-HSA-83936	Transport of nucleosides and free purine and pyrimidine bases across the plasma membrane	4.0000	0.0727	1.0523
+Transport of small molecules	R-HSA-382551	SLC-mediated transmembrane transport	R-HSA-425407	R-HSA-9955298	SLC-mediated transport of organic anions	3.0000	0.0660	0.3691
+Transport of small molecules	R-HSA-382551	SLC-mediated transmembrane transport	R-HSA-425407	R-HSA-428643	Organic anion transport by SLC5/17/25 transporters	3.0000	0.0660	0.3691
+Transport of small molecules	R-HSA-382551	SLC-mediated transmembrane transport	R-HSA-425407	R-HSA-442660	SLC-mediated transport of neurotransmitters	2.0000	0.0023	0.0183
+Transport of small molecules	R-HSA-382551	SLC-mediated transmembrane transport	R-HSA-425407	R-HSA-9958863	SLC-mediated transport of amino acids	1.0000	0.0150	0.0956
+Transport of small molecules	R-HSA-382551	SLC-mediated transmembrane transport	R-HSA-425407	R-HSA-549127	SLC-mediated transport of organic cations	1.0000	0.0172	0.2203
+Transport of small molecules	R-HSA-382551	SLC-mediated transmembrane transport	R-HSA-425407	R-HSA-425410	Metal ion SLC transporters	1.0000	0.1472	0.2283
+Transport of small molecules	R-HSA-382551	SLC-mediated transmembrane transport	R-HSA-425407	R-HSA-425561	Sodium/Calcium exchangers	1.0000	0.1472	0.2283
+Transport of small molecules	R-HSA-382551	SLC-mediated transmembrane transport	R-HSA-425407	R-HSA-352230	Amino acid transport across the plasma membrane	1.0000	0.0150	0.0956
+Transport of small molecules	R-HSA-382551	Transport of small molecules	R-HSA-382551	R-HSA-382551	Transport of small molecules	45.0000	8.0234	14.7970
+Vesicle-mediated transport	R-HSA-5653656	Binding and Uptake of Ligands by Scavenger Receptors	R-HSA-2173782	R-HSA-3000480	Scavenging by Class A Receptors	1.0000	3.3309	3.1988
+Vesicle-mediated transport	R-HSA-5653656	Binding and Uptake of Ligands by Scavenger Receptors	R-HSA-2173782	R-HSA-2173782	Binding and Uptake of Ligands by Scavenger Receptors	1.0000	3.3309	3.1988
+Vesicle-mediated transport	R-HSA-5653656	Membrane Trafficking	R-HSA-199991	R-HSA-199991	Membrane Trafficking	5.0000	4.3903	5.0321
+Vesicle-mediated transport	R-HSA-5653656	Membrane Trafficking	R-HSA-199991	R-HSA-6811442	Intra-Golgi and retrograde Golgi-to-ER traffic	2.0000	0.2969	0.7853
+Vesicle-mediated transport	R-HSA-5653656	Membrane Trafficking	R-HSA-199991	R-HSA-199992	trans-Golgi Network Vesicle Budding	2.0000	4.0678	4.1250
+Vesicle-mediated transport	R-HSA-5653656	Membrane Trafficking	R-HSA-199991	R-HSA-432722	Golgi Associated Vesicle Biogenesis	2.0000	4.0678	4.1250
+Vesicle-mediated transport	R-HSA-5653656	Membrane Trafficking	R-HSA-199991	R-HSA-432720	Lysosome Vesicle Biogenesis	1.0000	0.7369	0.9262
+Vesicle-mediated transport	R-HSA-5653656	Membrane Trafficking	R-HSA-199991	R-HSA-6811434	COPI-dependent Golgi-to-ER retrograde traffic	1.0000	0.1541	0.4744
+Vesicle-mediated transport	R-HSA-5653656	Membrane Trafficking	R-HSA-199991	R-HSA-6811438	Intra-Golgi traffic	1.0000	0.1428	0.3109
+Vesicle-mediated transport	R-HSA-5653656	Membrane Trafficking	R-HSA-199991	R-HSA-8856688	Golgi-to-ER retrograde transport	1.0000	0.1541	0.4744
+Vesicle-mediated transport	R-HSA-5653656	Vesicle-mediated transport	R-HSA-5653656	R-HSA-5653656	Vesicle-mediated transport	5.0000	4.3903	5.0321

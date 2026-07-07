@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Flux Speed + CI Bands — TCA Cycle</title>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<style>
+  body { font-family: system-ui, sans-serif; background: #f8fafc; margin: 0; padding: 24px; }
+  h2   { font-size: 16px; color: #1e293b; margin-bottom: 4px; }
+  p    { font-size: 13px; color: #64748b; margin-bottom: 20px; max-width: 660px; }
+  .card { display: inline-block; background: #fff; border: 1px solid #e2e8f0;
+           border-radius: 10px; padding: 14px; }
+
+  .slider-block {
+    background: #fff; border: 1px solid #e2e8f0; border-radius: 10px;
+    padding: 14px 18px; margin-bottom: 20px; max-width: 520px;
+  }
+  .slider-title { font-size: 11px; font-weight: 700; color: #1e293b;
+                  letter-spacing: .05em; text-transform: uppercase; margin-bottom: 10px; }
+  .slider-row   { display: flex; align-items: center; gap: 12px; }
+  .slider-row label { font-size: 11px; color: #475569; white-space: nowrap; }
+  input[type=range] { flex: 1; accent-color: #0369a1; cursor: pointer; }
+  .flux-val { font-size: 12px; font-weight: 600; color: #0369a1; white-space: nowrap; min-width: 210px; }
+  .flux-note { font-size: 10px; color: #94a3b8; margin-top: 8px;
+               border-top: 1px solid #f1f5f9; padding-top: 7px; }
+
+  .legend { display: flex; flex-direction: column; gap: 8px;
+            font-size: 11px; color: #475569; margin-top: 18px; }
+  .li { display: flex; align-items: center; gap: 10px; }
+
+  .tip {
+    position: fixed; background: rgba(15,23,42,.92); color: #f1f5f9;
+    padding: 8px 12px; border-radius: 7px; font-size: 11px; line-height: 1.6;
+    pointer-events: none; z-index: 99; white-space: pre-line; max-width: 240px;
+    transition: opacity .1s;
+  }
+</style>
+</head>
+<body>
+
+<h2>Flux Speed + CI Bands — TCA Cycle</h2>
+<p>
+  <strong>Arc width</strong> is the same for every reaction — 3 uniform layers:
+  halo (10 px, 2× inner), best-estimate line (5 px), lower-bound line (1.5 px, "actual expression could be lower").<br>
+  <strong>Particle speed</strong> encodes the flux hypothesis.
+  At k = 0 all particles flow at the same speed. At k = 1 speed ∝ blood PSM.
+</p>
+
+<div class="slider-block">
+  <div class="slider-title">Flux coupling  k</div>
+  <div class="slider-row">
+    <label>Equal (k = 0)</label>
+    <input type="range" id="fluxSlider" min="0" max="1" step="0.01" value="0">
+    <label>∝ Protein (k = 1)</label>
+    <span class="flux-val" id="fluxVal"></span>
+  </div>
+  <div class="flux-note">
+    ⚠ Flux requires ¹³C-MFA or FBA — not derivable from proteomics. This slider is an explicit epistemic device.
+  </div>
+</div>
+
+<div class="card">
+  <div id="viz"></div>
+</div>
+
+<div class="legend">
+  <div class="li">
+    <svg width="54" height="14">
+      <line x1="2" y1="7" x2="52" y2="7" stroke="#64748b" stroke-width="10" opacity=".10"/>
+      <line x1="2" y1="7" x2="52" y2="7" stroke="#64748b" stroke-width="5"  opacity=".55"/>
+      <line x1="2" y1="7" x2="52" y2="7" stroke="#64748b" stroke-width="1.5" opacity="1"/>
+    </svg>
+    Uniform 3-layer arc: halo 10 px (2×) · best estimate 5 px · lower bound 1.5 px
+  </div>
+  <div class="li">
+    <svg width="54" height="14">
+      <circle cx="11" cy="7" r="3.5" fill="#64748b" opacity=".85"/>
+      <circle cx="43" cy="7" r="3.5" fill="#64748b" opacity=".85"/>
+    </svg>
+    Particles (2 per arc) — speed = flux hypothesis at current k
+  </div>
+  <div class="li">
+    <svg width="54" height="14">
+      <line x1="2" y1="7" x2="52" y2="7" stroke="#d97706" stroke-width="10" opacity=".10"/>
+      <line x1="2" y1="7" x2="52" y2="7" stroke="#d97706" stroke-width="5"  opacity=".55"/>
+      <line x1="2" y1="7" x2="52" y2="7" stroke="#d97706" stroke-width="1.5" opacity="1"/>
+      <circle cx="30" cy="7" r="3.5" fill="#d97706" opacity=".85"/>
+    </svg>
+    SDHA ✦ — amber · at k = 1: second-fastest (PSM 220), noticeably faster than SUCLA2 (PSM 80)
+  </div>
+</div>
+
+<div class="tip" id="tip" style="opacity:0"></div>
+
+<script>
+// ── Tooltip ──────────────────────────────────────────────────────────────
+const tip = document.getElementById('tip');
+function show(e, h){ tip.innerHTML = h; tip.style.opacity = 1; mv(e); }
+function mv(e){
+  tip.style.left = Math.min(e.clientX+14, window.innerWidth-256)+'px';
+  tip.style.top  = Math.max(e.clientY-10, 6)+'px';
+}
+function hide(){ tip.style.opacity = 0; }
+
+// ── Data ─────────────────────────────────────────────────────────────────
+const maxPSM = 300;
+const rxns = [
+  { s:'OAA',  t:'Cit',  enz:'CS',     psm:150,
+    note:'Citrate synthase\nBlood PSM: 150' },
+  { s:'Cit',  t:'Iso',  enz:'ACO2',   psm:200,
+    note:'Aconitase 2\nBlood PSM: 200' },
+  { s:'Iso',  t:'aKG',  enz:'IDH2',   psm:150,
+    note:'Isocitrate DH 2\nBlood PSM: 150' },
+  { s:'aKG',  t:'SCoA', enz:'OGDH',   psm:100,
+    note:'α-KG dehydrogenase\nBlood PSM: 100' },
+  { s:'SCoA', t:'Suc',  enz:'SUCLA2', psm:80,
+    note:'Succinyl-CoA synthetase\nBlood PSM: 80 (lowest)' },
+  { s:'Suc',  t:'Fum',  enz:'SDHA ✦', psm:220, hero:true,
+    note:'Succinate dehydrogenase\nBlood PSM: 220\nSDHA = Complex II — definitively mitochondrial' },
+  { s:'Fum',  t:'Mal',  enz:'FH',     psm:180,
+    note:'Fumarate hydratase\nBlood PSM: 180' },
+  { s:'Mal',  t:'OAA',  enz:'MDH2',   psm:300,
+    note:'Malate DH 2\nBlood PSM: 300 (highest)' },
+];
+
+const mets = [
+  {id:'OAA',  lines:['Oxalo-','acetate']},
+  {id:'Cit',  lines:['Citrate']},
+  {id:'Iso',  lines:['Iso-','citrate']},
+  {id:'aKG',  lines:['α-Keto-','glutarate']},
+  {id:'SCoA', lines:['Succinyl-','CoA']},
+  {id:'Suc',  lines:['Succinate']},
+  {id:'Fum',  lines:['Fumarate']},
+  {id:'Mal',  lines:['Malate']},
+];
+
+// ── Visual constants (UNIFORM — no PSM in arc width) ─────────────────────
+const HALO_W = 10;    // outer = 2× MID_W
+const MID_W  = 5;     // best estimate
+const LOW_W  = 1.5;   // lower bound
+
+// ── Speed formula ─────────────────────────────────────────────────────────
+// k=0 → all same speed; k=1 → speed ∝ PSM
+// factor at k=1: 0.4 (min PSM) – 2.0 (max PSM)  (5× range)
+const BASE_SPD = 0.28; // cycles / sec at k = 0
+
+function getSpeed(norm, k) {
+  const f = 0.4 + norm * 1.6;   // 0.4 → 2.0
+  return BASE_SPD * (1 + (f - 1) * k);
+}
+
+// ── Animation state ───────────────────────────────────────────────────────
+const allParticles  = [];   // {t, speed, pathNode, dotSel}
+const arcParticles  = [];   // arcParticles[rxnIndex] = [p, p]
+// trackNodes collected during arc pass, dots created after nodes are drawn
+const pendingDots = [];     // {ri, t_init, trackNode}
+
+// ── DRAW ──────────────────────────────────────────────────────────────────
+(function () {
+  const W = 500, H = 460;
+  const cx = W/2, cy = H/2;
+  const R = 148, Rl = R * 1.42, nodeR = 28;
+  const PPA = 2; // particles per arc
+
+  const svg = d3.select('#viz').append('svg')
+    .attr('width', W).attr('height', H);
+
+  // Markers
+  const defs = svg.append('defs');
+  [['arr','#94a3b8'],['arrH','#d97706']].forEach(([id,col]) => {
+    defs.append('marker').attr('id', id)
+      .attr('viewBox','0 -4 8 8').attr('refX',6).attr('refY',0)
+      .attr('markerWidth',5).attr('markerHeight',5).attr('orient','auto')
+      .append('path').attr('d','M0,-4L8,0L0,4').attr('fill',col);
+  });
+
+  // Node positions
+  mets.forEach((m, i) => {
+    m.a = -Math.PI/2 + i * 2 * Math.PI / 8;
+    m.x = cx + R * Math.cos(m.a);
+    m.y = cy + R * Math.sin(m.a);
+  });
+  const byId = Object.fromEntries(mets.map(m => [m.id, m]));
+  const colE = d3.scaleSequential(d3.interpolate('#93c5fd','#1a3c6e')).domain([0,1]);
+
+  // ── 1. Arc layers ────────────────────────────────────────────────────────
+  rxns.forEach((r, ri) => {
+    const src  = byId[r.s], tgt = byId[r.t];
+    const norm = r.psm / maxPSM;
+    const col  = r.hero ? '#d97706' : colE(norm);
+    const arrId = r.hero ? 'arrH' : 'arr';
+    const d = `M${src.x} ${src.y} A${R} ${R} 0 0 1 ${tgt.x} ${tgt.y}`;
+
+    // Halo (2× inner)
+    svg.append('path').attr('d', d)
+      .attr('fill','none').attr('stroke', col)
+      .attr('stroke-width', HALO_W).attr('opacity', 0.10)
+      .attr('stroke-linecap','round');
+
+    // Best estimate
+    svg.append('path').attr('d', d)
+      .attr('fill','none').attr('stroke', col)
+      .attr('stroke-width', MID_W).attr('opacity', 0.55)
+      .attr('stroke-linecap','round')
+      .attr('marker-end', `url(#${arrId})`);
+
+    // Lower bound ("could be lower")
+    svg.append('path').attr('d', d)
+      .attr('fill','none').attr('stroke', col)
+      .attr('stroke-width', LOW_W).attr('opacity', 1.0)
+      .attr('stroke-linecap','round');
+
+    // Invisible track path for particle getPointAtLength()
+    const trackNode = svg.append('path').attr('d', d)
+      .attr('fill','none').attr('stroke','none').node();
+
+    // Tooltip hit area
+    svg.append('path').attr('d', d)
+      .attr('fill','none').attr('stroke','transparent')
+      .attr('stroke-width', HALO_W + 8).style('cursor','pointer')
+      .on('mouseover', e => {
+        const k   = +document.getElementById('fluxSlider').value;
+        const spd = getSpeed(norm, k);
+        show(e, r.note +
+          `\n\n① Flux k = ${k.toFixed(2)}\n` +
+          `   Speed: ${spd.toFixed(3)} cyc/s  (${(1/spd).toFixed(1)} s/cycle)\n` +
+          `② Lower bound: actual protein level may be lower than blood PSM`);
+      })
+      .on('mousemove', mv).on('mouseout', hide);
+
+    // Queue particle creation (dots drawn after nodes)
+    arcParticles.push([]);
+    for (let i = 0; i < PPA; i++) {
+      pendingDots.push({ ri, t_init: i / PPA, trackNode });
+    }
+  });
+
+  // ── 2. Metabolite nodes ───────────────────────────────────────────────
+  mets.forEach(m => {
+    const g = svg.append('g').attr('transform',`translate(${m.x},${m.y})`);
+    g.append('circle').attr('r', nodeR).attr('fill','#f0f9ff')
+      .attr('stroke','#0369a1').attr('stroke-width',1.8);
+    m.lines.forEach((ln, i, arr) => {
+      g.append('text').attr('text-anchor','middle').attr('font-size',8).attr('fill','#0f172a')
+        .attr('y',(i-(arr.length-1)/2)*10+3.5).text(ln);
+    });
+  });
+
+  // ── 3. Enzyme labels ──────────────────────────────────────────────────
+  rxns.forEach((r, ri) => {
+    const src = byId[r.s], tgt = byId[r.t];
+    const norm = r.psm / maxPSM;
+    let a1 = src.a, a2 = tgt.a;
+    if (a1 > a2) a2 += 2*Math.PI;
+    const midA = (a1+a2)/2;
+    const lx = cx + Rl * Math.cos(midA), ly = cy + Rl * Math.sin(midA);
+
+    const lg = svg.append('g').style('cursor','pointer')
+      .on('mouseover', e => {
+        const k   = +document.getElementById('fluxSlider').value;
+        const spd = getSpeed(norm, k);
+        show(e, r.note +
+          `\n\n① Flux k = ${k.toFixed(2)}\n` +
+          `   Speed: ${spd.toFixed(3)} cyc/s  (${(1/spd).toFixed(1)} s/cycle)\n` +
+          `② Lower bound: actual protein level may be lower than blood PSM`);
+      })
+      .on('mousemove',mv).on('mouseout',hide);
+
+    if (r.hero) {
+      lg.append('rect').attr('x',lx-26).attr('y',ly-10).attr('width',52).attr('height',20)
+        .attr('rx',4).attr('fill','#fef3c7').attr('stroke','#d97706').attr('stroke-width',1.5);
+    }
+    lg.append('text').attr('x',lx).attr('y',ly+4.5)
+      .attr('text-anchor','middle')
+      .attr('font-size', r.hero ? 10.5 : 9)
+      .attr('font-weight', r.hero ? '700' : '500')
+      .attr('fill', r.hero ? '#92400e' : '#1e293b')
+      .text(r.enz);
+  });
+
+  // ── 4. Particle dots (drawn last — on top of everything) ─────────────
+  pendingDots.forEach(pd => {
+    const r   = rxns[pd.ri];
+    const col = r.hero ? '#d97706' : colE(r.psm / maxPSM);
+    const dot = svg.append('circle')
+      .attr('r', 3.5).attr('fill', col).attr('opacity', 0.88)
+      .attr('pointer-events','none');
+    const pObj = { t: pd.t_init, speed: BASE_SPD, pathNode: pd.trackNode, dotSel: dot };
+    allParticles.push(pObj);
+    arcParticles[pd.ri].push(pObj);
+  });
+
+  // Panel subtitle
+  svg.append('text').attr('x',cx).attr('y',18).attr('text-anchor','middle')
+    .attr('font-size',10.5).attr('font-weight','600').attr('fill','#334155')
+    .text('Width = expression range (uniform) · speed = flux hypothesis (slider)');
+})();
+
+// ── ANIMATION LOOP ────────────────────────────────────────────────────────
+let lastTs = null;
+function animLoop(ts) {
+  if (lastTs !== null) {
+    const dt = Math.min((ts - lastTs) / 1000, 0.05);
+    allParticles.forEach(p => {
+      p.t = (p.t + p.speed * dt) % 1.0;
+      const len = p.pathNode.getTotalLength();
+      const pt  = p.pathNode.getPointAtLength(p.t * len);
+      p.dotSel.attr('cx', pt.x).attr('cy', pt.y);
+    });
+  }
+  lastTs = ts;
+  requestAnimationFrame(animLoop);
+}
+requestAnimationFrame(animLoop);
+
+// ── SLIDER ────────────────────────────────────────────────────────────────
+const fluxVal = document.getElementById('fluxVal');
+
+function fluxLabel(k) {
+  if (k < 0.02) return 'k = 0.00 — equal speed (no flux claim)';
+  if (k < 0.25) return `k = ${k.toFixed(2)} — slight PSM bias`;
+  if (k < 0.55) return `k = ${k.toFixed(2)} — moderate coupling`;
+  if (k < 0.85) return `k = ${k.toFixed(2)} — strong coupling`;
+  return              `k = ${k.toFixed(2)} — speed ∝ PSM (max)`;
+}
+
+function updateSpeeds(k) {
+  fluxVal.textContent = fluxLabel(k);
+  rxns.forEach((r, ri) => {
+    const spd = getSpeed(r.psm / maxPSM, k);
+    arcParticles[ri].forEach(p => p.speed = spd);
+  });
+}
+
+document.getElementById('fluxSlider').addEventListener('input', e => updateSpeeds(+e.target.value));
+updateSpeeds(0);
+</script>
+</body>
+</html>

@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pathway Constellation Panel · Interactive Healthy Blood</title>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<style>
+:root {
+  --hero: #d97706;
+  --hero-lt: #fef3c7;
+  --hero-dk: #92400e;
+  --bg: #f8fafc;
+  --surf: #ffffff;
+  --bdr: #e2e8f0;
+  --text: #1e293b;
+  --muted: #64748b;
+  --accent: #2563eb;
+  --panel-w: 220px;
+  --canvas-bg: #f1f5f9;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-family: system-ui, -apple-system, sans-serif; font-size: 14px; background: var(--bg); color: var(--text); }
+body { display: flex; height: 100vh; overflow: hidden; }
+
+/* ── LEFT SCALE NAV ── */
+#scale-nav {
+  width: 190px;
+  min-width: 190px;
+  background: var(--surf);
+  border-right: 1px solid var(--bdr);
+  display: flex;
+  flex-direction: column;
+  padding: 20px 12px 16px;
+  gap: 4px;
+  z-index: 10;
+}
+#scale-nav h2 {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+.scale-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 9px 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background .15s;
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--text);
+  border: none;
+  background: transparent;
+  text-align: left;
+  width: 100%;
+}
+.scale-item:hover { background: #f0f4ff; }
+.scale-item.active { background: #e8f0fe; color: var(--accent); font-weight: 600; }
+.scale-dot {
+  width: 22px;
+  height: 22px;
+  min-width: 22px;
+  border-radius: 50%;
+  background: var(--bdr);
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+  transition: background .15s, color .15s;
+}
+.scale-item.active .scale-dot { background: var(--accent); color: #fff; }
+.scale-connector {
+  width: 2px;
+  height: 10px;
+  background: var(--bdr);
+  margin-left: 19px;
+  border-radius: 1px;
+}
+
+/* ── MAIN CANVAS ── */
+#canvas-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--canvas-bg);
+  position: relative;
+}
+
+#canvas-header {
+  background: var(--surf);
+  border-bottom: 1px solid var(--bdr);
+  padding: 14px 22px 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+#canvas-header .level-badge {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  background: var(--hero);
+  color: #fff;
+  padding: 3px 9px;
+  border-radius: 20px;
+}
+#canvas-header h1 {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text);
+}
+#canvas-header p {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+#canvas-body {
+  flex: 1;
+  overflow: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+}
+
+.mock-viz {
+  background: var(--surf);
+  border: 1px solid var(--bdr);
+  border-radius: 12px;
+  padding: 32px 40px;
+  max-width: 640px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 1px 4px rgba(0,0,0,.06);
+}
+.mock-viz .level-icon {
+  font-size: 48px;
+  margin-bottom: 14px;
+  opacity: .7;
+}
+.mock-viz h2 {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.mock-viz p {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.65;
+  max-width: 440px;
+  margin: 0 auto 20px;
+}
+.mock-bar-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  text-align: left;
+}
+.mock-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 11px;
+}
+.mock-bar-label {
+  width: 100px;
+  flex-shrink: 0;
+  color: var(--muted);
+  font-weight: 500;
+}
+.mock-bar-track {
+  flex: 1;
+  height: 10px;
+  background: var(--bdr);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.mock-bar-fill {
+  height: 100%;
+  border-radius: 6px;
+  background: var(--accent);
+  transition: width .6s ease;
+}
+.mock-bar-val {
+  width: 36px;
+  text-align: right;
+  color: var(--text);
+  font-weight: 600;
+  font-size: 11px;
+}
+
+.pinned-note {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--hero-lt);
+  border-left: 3px solid var(--hero);
+  border-radius: 0 8px 8px 0;
+  padding: 9px 13px;
+  font-size: 11px;
+  line-height: 1.55;
+  color: var(--hero-dk);
+  text-align: left;
+}
+#pinned-list-note { font-weight: 600; }
+
+/* ── RIGHT CONSTELLATION PANEL ── */
+#constellation-panel {
+  width: var(--panel-w);
+  min-width: var(--panel-w);
+  background: var(--surf);
+  border-left: 1px solid var(--bdr);
+  display: flex;
+  flex-direction: column;
+  z-index: 10;
+}
+
+#panel-header {
+  padding: 14px 14px 10px;
+  border-bottom: 1px solid var(--bdr);
+  flex-shrink: 0;
+}
+#panel-header h2 {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+#panel-header p {
+  font-size: 10px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.panel-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--bdr);
+  flex-shrink: 0;
+}
+.legend-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 10px;
+  color: var(--muted);
+}
+.legend-swatch {
+  width: 32px;
+  height: 10px;
+  border-radius: 3px;
+}
+.legend-ring-demo {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+#token-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px 10px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+#token-list::-webkit-scrollbar { width: 4px; }
+#token-list::-webkit-scrollbar-track { background: transparent; }
+#token-list::-webkit-scrollbar-thumb { background: var(--bdr); border-radius: 2px; }
+
+.token-row {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 6px 7px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background .12s;
+  border: 1px solid transparent;
+  user-select: none;
+}
+.token-row:hover { background: #f8fafc; }
+.token-row.pinned {
+  background: #fffbeb;
+  border-color: #fcd34d;
+}
+.token-row.pinned .token-name { color: var(--hero-dk); font-weight: 700; }
+
+.token-badge-wrap {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+}
+.token-badge-wrap svg {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.token-info {
+  flex: 1;
+  min-width: 0;
+}
+.token-name {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color .2s;
+}
+.token-meta {
+  display: flex;
+  gap: 6px;
+  margin-top: 2px;
+}
+.token-meta span {
+  font-size: 9px;
+  color: var(--muted);
+  background: #f1f5f9;
+  border-radius: 3px;
+  padding: 1px 4px;
+  font-weight: 500;
+}
+.token-meta span.conf-high { background: #dcfce7; color: #15803d; }
+.token-meta span.conf-mid  { background: #fef9c3; color: #92400e; }
+.token-meta span.conf-low  { background: #fee2e2; color: #991b1b; }
+
+.pin-icon {
+  font-size: 12px;
+  opacity: 0;
+  transition: opacity .15s;
+  flex-shrink: 0;
+}
+.token-row.pinned .pin-icon { opacity: 1; }
+
+/* panel footer */
+#panel-footer {
+  padding: 10px 14px;
+  border-top: 1px solid var(--bdr);
+  font-size: 10px;
+  color: var(--muted);
+  flex-shrink: 0;
+  line-height: 1.5;
+}
+#panel-footer strong { color: var(--hero); }
+
+/* transition overlay hint */
+.scale-transition-flash {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  background: rgba(248, 250, 252, .7);
+  z-index: 5;
+  opacity: 0;
+  transition: opacity .25s;
+}
+.scale-transition-flash.active { opacity: 1; }
+
+/* tooltip */
+#tooltip {
+  position: fixed;
+  background: rgba(15, 23, 42, .93);
+  color: #f1f5f9;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 11px;
+  line-height: 1.6;
+  pointer-events: none;
+  z-index: 999;
+  max-width: 200px;
+  white-space: pre-line;
+  opacity: 0;
+  transition: opacity .1s;
+}
+</style>
+</head>
+<body>
+
+<!-- LEFT: scale navigation -->
+<nav id="scale-nav">
+  <h2>Scale Levels</h2>
+  <button class="scale-item active" data-level="1" onclick="switchLevel(1)">
+    <span class="scale-dot">1</span>Genome → Gene
+  </button>
+  <div class="scale-connector"></div>
+  <button class="scale-item" data-level="2" onclick="switchLevel(2)">
+    <span class="scale-dot">2</span>Gene → Pathway
+  </button>
+  <div class="scale-connector"></div>
+  <button class="scale-item" data-level="3" onclick="switchLevel(3)">
+    <span class="scale-dot">3</span>Organelle Interior
+  </button>
+  <div class="scale-connector"></div>
+  <button class="scale-item" data-level="4" onclick="switchLevel(4)">
+    <span class="scale-dot">4</span>Organelle in Cell
+  </button>
+  <div class="scale-connector"></div>
+  <button class="scale-item" data-level="5" onclick="switchLevel(5)">
+    <span class="scale-dot">5</span>Across Cell Types
+  </button>
+  <div style="flex:1"></div>
+  <div style="font-size:10px;color:var(--muted);line-height:1.7">
+    <strong style="color:var(--hero)">Pathway Constellation</strong><br>
+    Prototype Panel<br>Interactive Healthy Blood
+  </div>
+</nav>
+
+<!-- CENTER: main canvas -->
+<div id="canvas-wrap">
+  <div id="canvas-header">
+    <div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:3px">
+        <span class="level-badge" id="level-badge">Level 1</span>
+        <h1 id="canvas-title">Genome → Chromosome → Gene</h1>
+      </div>
+      <p id="canvas-desc">Locating the gene of interest at chromosomal resolution, identifying locus, exon structure, and expression context in blood.</p>
+    </div>
+  </div>
+
+  <div id="canvas-body">
+    <div class="mock-viz" id="mock-viz-inner">
+      <div class="level-icon" id="viz-icon">🧬</div>
+      <h2 id="viz-title">Genome Browser Placeholder</h2>
+      <p id="viz-desc">At this scale you would see the chromosomal ideogram, gene locus, and read-depth track. Pathway activity tokens in the sidebar reflect enrichment at <strong>genome-wide</strong> expression.</p>
+      <div class="mock-bar-wrap" id="mock-bars"></div>
+      <div class="pinned-note" id="pinned-note" style="display:none">
+        <span>📌</span>
+        <span>Pinned pathways follow you here: <span id="pinned-list-note">—</span></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="scale-transition-flash" id="flash"></div>
+</div>
+
+<!-- RIGHT: constellation panel -->
+<div id="constellation-panel">
+  <div id="panel-header">
+    <h2>Pathway Constellation</h2>
+    <p>Persistent across all scale levels. Click to pin a pathway.</p>
+  </div>
+
+  <div class="panel-legend">
+    <div class="legend-row">
+      <div class="legend-swatch" id="activity-swatch"></div>
+      <span>Fill: activity score (gray → amber)</span>
+    </div>
+    <div class="legend-row">
+      <div class="legend-ring-demo" id="ring-demo"></div>
+      <span>Ring: confidence (thin → thick)</span>
+    </div>
+  </div>
+
+  <div id="token-list">
+    <!-- populated by JS -->
+  </div>
+
+  <div id="panel-footer">
+    <strong id="pinned-count">0 pinned</strong> · tokens stay highlighted<br>
+    as you navigate between scales
+  </div>
+</div>
+
+<div id="tooltip"></div>
+
+<script>
+// ═══════════════════════════════════════════
+//  DATA
+// ═══════════════════════════════════════════
+
+const PATHWAYS = [
+  { id: "OxPhos",        label: "OxPhos",       category: "Metabolism" },
+  { id: "IFN-alpha",     label: "IFN-α",        category: "Immune" },
+  { id: "TCR-sig",       label: "TCR-sig",       category: "Immune" },
+  { id: "HSP-stress",    label: "HSP-stress",    category: "Stress" },
+  { id: "Circ-core",     label: "Circ-core",     category: "Cell cycle" },
+  { id: "Neut-fraction", label: "Neut-frac",     category: "Immune" },
+  { id: "Apoptosis",     label: "Apoptosis",     category: "Stress" },
+  { id: "mTORC1",        label: "mTORC1",        category: "Signaling" },
+  { id: "IL6-JAK-STAT3", label: "IL6-JAK",       category: "Immune" },
+  { id: "PI3K-AKT-mTOR", label: "PI3K-AKT",      category: "Signaling" },
+  { id: "Hypoxia",       label: "Hypoxia",       category: "Metabolism" },
+  { id: "p53",           label: "p53",           category: "Stress" },
+  { id: "KRAS",          label: "KRAS",          category: "Signaling" },
+  { id: "MYC",           label: "MYC",           category: "Cell cycle" },
+  { id: "TNF-alpha",     label: "TNF-α",         category: "Immune" },
+  { id: "NF-kB",         label: "NF-κB",         category: "Immune" },
+  { id: "Complement",    label: "Complement",    category: "Immune" },
+  { id: "Coagulation",   label: "Coagulation",   category: "Blood" },
+  { id: "Glycolysis",    label: "Glycolysis",    category: "Metabolism" },
+  { id: "FA-Metab",      label: "FA-Metab",      category: "Metabolism" },
+];
+
+// Per-level base scores — realistic biological story for blood
+const LEVEL_SCORES = {
+  1: [.82,.25,.18,.31,.55,.72,.22,.44,.29,.38,.19,.27,.21,.48,.31,.34,.62,.71,.51,.39],
+  2: [.79,.33,.28,.38,.52,.68,.28,.51,.38,.44,.24,.31,.25,.53,.38,.41,.59,.67,.56,.42],
+  3: [.91,.21,.15,.44,.49,.61,.35,.58,.21,.39,.31,.29,.18,.42,.27,.35,.55,.59,.48,.35],
+  4: [.75,.41,.48,.29,.57,.74,.19,.47,.52,.55,.16,.24,.28,.55,.46,.50,.65,.72,.43,.41],
+  5: [.68,.59,.65,.22,.61,.81,.24,.39,.67,.61,.12,.19,.31,.51,.58,.62,.71,.66,.38,.45],
+};
+
+// ═══════════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════════
+let currentLevel = 1;
+const pinnedSet = new Set();
+let tokenData = []; // {id, label, category, activity, confidence}
+
+function buildTokenData(level) {
+  const base = LEVEL_SCORES[level];
+  return PATHWAYS.map((p, i) => {
+    // Add small random jitter each visit to simulate live data
+    const noise = (Math.random() - .5) * .12;
+    const activity = Math.min(1, Math.max(0, base[i] + noise));
+    // Confidence: semi-random but stable per pathway id
+    const confSeed = hashStr(p.id) / 2147483647;
+    const conf = .2 + confSeed * .8; // 0.2 → 1.0
+    return { ...p, activity, confidence: conf };
+  });
+}
+
+function hashStr(s) {
+  let h = 1779033703;
+  for (let i = 0; i < s.length; i++) {
+    h = Math.imul(h ^ s.charCodeAt(i), 3432918353);
+    h = (h << 13) | (h >>> 19);
+  }
+  return Math.abs(h);
+}
+
+// ═══════════════════════════════════════════
+//  COLOR SCALE
+// ═══════════════════════════════════════════
+const activityColor = d3.scaleSequential()
+  .domain([0, 1])
+  .interpolator(d3.interpolateLab("#94a3b8", "#d97706")); // slate-gray → amber
+
+const activityColorPinned = d3.scaleSequential()
+  .domain([0, 1])
+  .interpolator(d3.interpolateLab("#c2410c", "#fbbf24")); // amber-warm for pinned
+
+// ═══════════════════════════════════════════
+//  LEVEL METADATA
+// ═══════════════════════════════════════════
+const LEVEL_META = {
+  1: {
+    badge: "Level 1",
+    title: "Genome → Chromosome → Gene",
+    desc: "Locating the gene of interest at chromosomal resolution — locus, exon structure, and expression context in blood.",
+    icon: "🧬",
+    vizTitle: "Genome Browser Placeholder",
+    vizDesc: "At this scale you would see the chromosomal ideogram, gene locus, and read-depth track. Token scores reflect <strong>genome-wide</strong> pathway enrichment.",
+    bars: [
+      { label: "Coverage", key: "cov" },
+      { label: "GC content", key: "gc" },
+      { label: "Conservation", key: "cons" },
+    ]
+  },
+  2: {
+    badge: "Level 2",
+    title: "Gene → Pathway Map",
+    desc: "Connecting transcript expression levels to pathway membership and functional annotation networks.",
+    icon: "🔗",
+    vizTitle: "Pathway Network Placeholder",
+    vizDesc: "At this scale: force-directed graph of pathway membership. Node size = gene count, edge weight = co-expression. Token scores update to <strong>pathway-level</strong> enrichment.",
+    bars: [
+      { label: "Enrichment p", key: "enr" },
+      { label: "Gene set size", key: "gs" },
+      { label: "Edge density", key: "dens" },
+    ]
+  },
+  3: {
+    badge: "Level 3",
+    title: "Organelle Interior",
+    desc: "Zooming into the mitochondrial interior — ETC complexes, TCA cycle enzymes, and cristae membrane architecture.",
+    icon: "⚡",
+    vizTitle: "Mitochondrion Cross-section Placeholder",
+    vizDesc: "At this scale: structural layout of the inner membrane complexes. Token scores skew toward <strong>energy-metabolism</strong> pathways.",
+    bars: [
+      { label: "ETC flux", key: "etc" },
+      { label: "TCA turnover", key: "tca" },
+      { label: "ROS index", key: "ros" },
+    ]
+  },
+  4: {
+    badge: "Level 4",
+    title: "Organelle in Cell",
+    desc: "Placing the mitochondria in its cellular context — spatial distribution, ER contacts, cytoskeletal anchoring.",
+    icon: "🔵",
+    vizTitle: "Cell Anatomy Placeholder",
+    vizDesc: "At this scale: 2-D cell diagram with organelle overlays. Token scores blend <strong>organelle and signaling</strong> pathway activity.",
+    bars: [
+      { label: "Mito density", key: "md" },
+      { label: "ER contacts", key: "er" },
+      { label: "Cytoskeletal", key: "cy" },
+    ]
+  },
+  5: {
+    badge: "Level 5",
+    title: "Across Cell Types",
+    desc: "Comparing expression and pathway activity across 22 blood cell types from Tabula Sapiens single-cell data.",
+    icon: "🩸",
+    vizTitle: "Cell-Type Dotplot Placeholder",
+    vizDesc: "At this scale: dotplot or heatmap across cell types. Token scores reflect <strong>cell-type-resolved</strong> pathway enrichment.",
+    bars: [
+      { label: "Cell breadth", key: "cb" },
+      { label: "Mean expr", key: "me" },
+      { label: "Specificity", key: "sp" },
+    ]
+  },
+};
+
+// ═══════════════════════════════════════════
+//  RENDER LEGEND
+// ═══════════════════════════════════════════
+function renderLegend() {
+  // Activity gradient swatch
+  const swatchEl = document.getElementById("activity-swatch");
+  const ns = "http://www.w3.org/2000/svg";
+  const svgEl = document.createElementNS(ns, "svg");
+  svgEl.setAttribute("width", "32");
+  svgEl.setAttribute("height", "10");
+  const defs = document.createElementNS(ns, "defs");
+  const grad = document.createElementNS(ns, "linearGradient");
+  grad.setAttribute("id", "lgnd-grad");
+  grad.setAttribute("x1", "0%"); grad.setAttribute("x2", "100%");
+  grad.setAttribute("y1", "0%"); grad.setAttribute("y2", "0%");
+  [0, .25, .5, .75, 1].forEach(t => {
+    const stop = document.createElementNS(ns, "stop");
+    stop.setAttribute("offset", `${t * 100}%`);
+    stop.setAttribute("stop-color", activityColor(t));
+    grad.appendChild(stop);
+  });
+  defs.appendChild(grad);
+  svgEl.appendChild(defs);
+  const rect = document.createElementNS(ns, "rect");
+  rect.setAttribute("width", "32"); rect.setAttribute("height", "10");
+  rect.setAttribute("rx", "3"); rect.setAttribute("fill", "url(#lgnd-grad)");
+  svgEl.appendChild(rect);
+  swatchEl.replaceWith(svgEl);
+  svgEl.id = "activity-swatch";
+
+  // Ring thickness demo
+  const demoEl = document.getElementById("ring-demo");
+  [1.5, 2.5, 4].forEach((thick, i) => {
+    const s = document.createElementNS(ns, "svg");
+    s.setAttribute("width", "18"); s.setAttribute("height", "18");
+    const c = document.createElementNS(ns, "circle");
+    c.setAttribute("cx", "9"); c.setAttribute("cy", "9"); c.setAttribute("r", `${6 - thick / 2}`);
+    c.setAttribute("fill", "#94a3b8");
+    c.setAttribute("stroke", "#475569"); c.setAttribute("stroke-width", `${thick}`);
+    s.appendChild(c);
+    demoEl.appendChild(s);
+  });
+}
+
+// ═══════════════════════════════════════════
+//  RENDER TOKENS
+// ═══════════════════════════════════════════
+function renderTokens(animate = false) {
+  const list = document.getElementById("token-list");
+
+  // For each pathway, update or create a row
+  tokenData.forEach((d, i) => {
+    let row = document.getElementById(`tok-row-${d.id}`);
+    const isPinned = pinnedSet.has(d.id);
+
+    if (!row) {
+      // Create row
+      row = document.createElement("div");
+      row.className = "token-row" + (isPinned ? " pinned" : "");
+      row.id = `tok-row-${d.id}`;
+      row.title = "";
+      row.addEventListener("click", () => togglePin(d.id));
+      row.addEventListener("mouseenter", e => showTooltip(e, d));
+      row.addEventListener("mousemove", e => moveTooltip(e));
+      row.addEventListener("mouseleave", hideTooltip);
+
+      row.innerHTML = `
+        <div class="token-badge-wrap" id="badge-${d.id}"></div>
+        <div class="token-info">
+          <div class="token-name">${d.label}</div>
+          <div class="token-meta">
+            <span class="cat-tag">${d.category}</span>
+            <span class="conf-tag"></span>
+          </div>
+        </div>
+        <span class="pin-icon">📌</span>
+      `;
+      list.appendChild(row);
+    }
+
+    // Update pinned class
+    row.classList.toggle("pinned", isPinned);
+
+    // Re-draw SVG badge
+    drawBadge(d, isPinned);
+
+    // Update confidence label
+    const confTag = row.querySelector(".conf-tag");
+    if (d.confidence > .75) { confTag.textContent = "high conf"; confTag.className = "conf-tag conf-high"; }
+    else if (d.confidence > .45) { confTag.textContent = "mid conf"; confTag.className = "conf-tag conf-mid"; }
+    else { confTag.textContent = "low conf"; confTag.className = "conf-tag conf-low"; }
+  });
+
+  updatePinnedCount();
+  updatePinnedNote();
+}
+
+function drawBadge(d, isPinned) {
+  const wrap = document.getElementById(`badge-${d.id}`);
+  if (!wrap) return;
+  wrap.innerHTML = "";
+
+  const size = 36;
+  const cx = size / 2, cy = size / 2;
+  const innerR = 13;
+  // Ring thickness: confidence maps 0.2→1.0 to 1→5px
+  const ringThick = 1 + d.confidence * 4.5;
+  const outerR = innerR + ringThick / 2 + 1;
+
+  const svg = d3.select(wrap).append("svg")
+    .attr("width", size).attr("height", size)
+    .style("overflow", "visible");
+
+  // Outer glow for pinned
+  if (isPinned) {
+    svg.append("circle")
+      .attr("cx", cx).attr("cy", cy)
+      .attr("r", outerR + 4)
+      .attr("fill", "none")
+      .attr("stroke", "#fbbf24")
+      .attr("stroke-width", 6)
+      .attr("opacity", .45);
+  }
+
+  // Confidence ring (outer)
+  svg.append("circle")
+    .attr("cx", cx).attr("cy", cy)
+    .attr("r", outerR - ringThick / 2)
+    .attr("fill", "none")
+    .attr("stroke", isPinned ? "#f59e0b" : "#475569")
+    .attr("stroke-width", ringThick)
+    .attr("opacity", isPinned ? 1 : .6);
+
+  // Inner filled circle
+  const fillColor = isPinned
+    ? activityColorPinned(d.activity)
+    : activityColor(d.activity);
+
+  svg.append("circle")
+    .attr("cx", cx).attr("cy", cy)
+    .attr("r", innerR)
+    .attr("fill", fillColor)
+    .attr("stroke", "none");
+
+  // Activity value text
+  svg.append("text")
+    .attr("x", cx).attr("y", cy + 1)
+    .attr("text-anchor", "middle")
+    .attr("dominant-baseline", "middle")
+    .attr("font-size", 8)
+    .attr("font-weight", 700)
+    .attr("fill", d.activity > .55 ? "#fff" : "#1e293b")
+    .text(d.activity.toFixed(2));
+}
+
+// ═══════════════════════════════════════════
+//  PIN LOGIC
+// ═══════════════════════════════════════════
+function togglePin(id) {
+  if (pinnedSet.has(id)) {
+    pinnedSet.delete(id);
+  } else {
+    pinnedSet.add(id);
+  }
+  // Re-draw affected token
+  const d = tokenData.find(t => t.id === id);
+  if (d) {
+    const isPinned = pinnedSet.has(id);
+    const row = document.getElementById(`tok-row-${id}`);
+    if (row) row.classList.toggle("pinned", isPinned);
+    drawBadge(d, isPinned);
+    const confTag = row.querySelector(".conf-tag");
+    // confidence doesn't change, just re-set for consistency
+  }
+  updatePinnedCount();
+  updatePinnedNote();
+}
+
+function updatePinnedCount() {
+  const el = document.getElementById("pinned-count");
+  const n = pinnedSet.size;
+  el.textContent = `${n} pinned`;
+}
+
+function updatePinnedNote() {
+  const note = document.getElementById("pinned-note");
+  const nameEl = document.getElementById("pinned-list-note");
+  if (pinnedSet.size === 0) {
+    note.style.display = "none";
+  } else {
+    const names = [...pinnedSet].map(id => {
+      const p = PATHWAYS.find(p => p.id === id);
+      return p ? p.label : id;
+    }).join(", ");
+    nameEl.textContent = names;
+    note.style.display = "flex";
+  }
+}
+
+// ═══════════════════════════════════════════
+//  MOCK CANVAS BARS
+// ═══════════════════════════════════════════
+function renderMockBars(level) {
+  const meta = LEVEL_META[level];
+  const container = document.getElementById("mock-bars");
+  container.innerHTML = "";
+  meta.bars.forEach(bar => {
+    const val = Math.random();
+    const pct = Math.round(val * 100);
+    const div = document.createElement("div");
+    div.className = "mock-bar-row";
+    div.innerHTML = `
+      <span class="mock-bar-label">${bar.label}</span>
+      <div class="mock-bar-track"><div class="mock-bar-fill" style="width:${pct}%"></div></div>
+      <span class="mock-bar-val">${pct}%</span>
+    `;
+    container.appendChild(div);
+  });
+}
+
+// ═══════════════════════════════════════════
+//  LEVEL SWITCH
+// ═══════════════════════════════════════════
+function switchLevel(level) {
+  if (level === currentLevel) return;
+  currentLevel = level;
+
+  // Flash transition
+  const flash = document.getElementById("flash");
+  flash.classList.add("active");
+  setTimeout(() => flash.classList.remove("active"), 300);
+
+  // Update nav buttons
+  document.querySelectorAll(".scale-item").forEach(btn => {
+    const active = parseInt(btn.dataset.level) === level;
+    btn.classList.toggle("active", active);
+  });
+
+  // Update header
+  const meta = LEVEL_META[level];
+  document.getElementById("level-badge").textContent = meta.badge;
+  document.getElementById("canvas-title").textContent = meta.title;
+  document.getElementById("canvas-desc").textContent = meta.desc;
+  document.getElementById("viz-icon").textContent = meta.icon;
+  document.getElementById("viz-title").textContent = meta.vizTitle;
+  document.getElementById("viz-desc").innerHTML = meta.vizDesc;
+
+  // New token scores
+  tokenData = buildTokenData(level);
+  renderTokens(true);
+  renderMockBars(level);
+}
+
+// ═══════════════════════════════════════════
+//  TOOLTIP
+// ═══════════════════════════════════════════
+const tip = document.getElementById("tooltip");
+
+function showTooltip(e, d) {
+  const isPinned = pinnedSet.has(d.id);
+  tip.innerHTML = `<strong>${d.id}</strong>\nCategory: ${d.category}\nActivity: ${d.activity.toFixed(3)}\nConfidence: ${d.confidence.toFixed(2)}\n${isPinned ? "📌 Pinned" : "Click to pin"}`;
+  tip.style.opacity = 1;
+  moveTooltip(e);
+}
+function moveTooltip(e) {
+  tip.style.left = (e.clientX + 12) + "px";
+  tip.style.top  = (e.clientY - 10) + "px";
+}
+function hideTooltip() {
+  tip.style.opacity = 0;
+}
+
+// ═══════════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════════
+(function init() {
+  renderLegend();
+  tokenData = buildTokenData(1);
+  renderTokens();
+  renderMockBars(1);
+})();
+</script>
+</body>
+</html>

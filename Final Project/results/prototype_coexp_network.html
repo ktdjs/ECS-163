@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>OxPhos Cross–Cell-Type Co-variation Network — Tabula Sapiens (17 cell-type means)</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #0d0d1a; color: #e0e0f0; font-family: 'Segoe UI', system-ui, sans-serif; overflow: hidden; }
+
+#header {
+  position: absolute; top: 0; left: 0; right: 0;
+  padding: 10px 18px; background: rgba(13,13,26,0.92);
+  border-bottom: 1px solid #2a2a4a; z-index: 10;
+  display: flex; align-items: center; gap: 20px;
+}
+#header h1 { font-size: 14px; font-weight: 600; color: #a0c8ff; white-space: nowrap; }
+#header .subtitle { font-size: 11px; color: #6070a0; white-space: nowrap; }
+
+#controls {
+  position: absolute; top: 52px; left: 0;
+  width: 240px; bottom: 0; overflow-y: auto;
+  padding: 14px; background: rgba(13,13,26,0.88);
+  border-right: 1px solid #1e1e3a; z-index: 5;
+}
+#controls h3 { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: #5060a0; margin: 12px 0 6px; }
+#controls h3:first-child { margin-top: 0; }
+
+.control-row { margin-bottom: 10px; }
+.control-row label { font-size: 11px; color: #8090c0; display: block; margin-bottom: 3px; }
+.control-row input[type=range] { width: 100%; accent-color: #5b8df8; }
+.control-row select { 
+  width: 100%; padding: 5px 6px; background: #1a1a2e; border: 1px solid #2a2a4a;
+  color: #c0d0f0; border-radius: 4px; font-size: 11px;
+}
+
+.btn-group { display: flex; flex-wrap: wrap; gap: 4px; }
+.cx-btn {
+  padding: 4px 9px; border: 1px solid transparent; border-radius: 12px;
+  font-size: 10px; cursor: pointer; transition: all 0.15s; font-weight: 600;
+}
+.cx-btn.active { opacity: 1; }
+.cx-btn:not(.active) { opacity: 0.38; }
+.cx-btn[data-cx="ALL"] { background: #2a2a4a; border-color: #4a4a7a; color: #c0d0f0; }
+.cx-btn[data-cx="CI"]  { background: #3b2d7a; border-color: #6655bb; color: #c8bfff; }
+.cx-btn[data-cx="CII"] { background: #7a4d1a; border-color: #c88030; color: #ffd090; }
+.cx-btn[data-cx="CIII"]{ background: #1a4d5a; border-color: #30a0c0; color: #90d8f0; }
+.cx-btn[data-cx="CIV"] { background: #1a5a30; border-color: #30b060; color: #90e8b0; }
+.cx-btn[data-cx="CV"]  { background: #5a1a5a; border-color: #b030b0; color: #e898e8; }
+
+.legend-item { display: flex; align-items: center; gap: 7px; font-size: 11px; margin: 3px 0; }
+.legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+#stats { 
+  background: #0f0f22; border: 1px solid #2a2a4a; border-radius: 6px;
+  padding: 8px; font-size: 10px; color: #6070a0; line-height: 1.7;
+}
+#stats span { color: #90a8e0; font-weight: 600; }
+
+#canvas {
+  position: absolute; top: 52px; left: 240px; right: 0; bottom: 0;
+}
+
+#tooltip {
+  position: fixed; pointer-events: none; z-index: 100;
+  background: rgba(10,10,28,0.96); border: 1px solid #3a3a6a;
+  border-radius: 8px; padding: 10px 13px; font-size: 11px; line-height: 1.7;
+  max-width: 240px; box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+  display: none;
+}
+#tooltip .tt-gene { font-size: 14px; font-weight: 700; color: #a0c8ff; }
+#tooltip .tt-cx { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; }
+#tooltip .tt-label { color: #5060a0; font-size: 10px; }
+#tooltip .tt-val { color: #c0d8f8; }
+#tooltip .tt-r-pos { color: #60c8ff; }
+#tooltip .tt-r-neg { color: #ff8080; }
+#tooltip hr { border: none; border-top: 1px solid #2a2a4a; margin: 6px 0; }
+
+.sdha-ring { animation: spin 4s linear infinite; transform-origin: center; }
+@keyframes spin { from { stroke-dashoffset: 0; } to { stroke-dashoffset: -60; } }
+
+#edge-info {
+  position: absolute; bottom: 12px; left: 252px;
+  font-size: 10px; color: #5060a0;
+  background: rgba(13,13,26,0.8); padding: 5px 10px; border-radius: 6px;
+  border: 1px solid #1e1e3a;
+}
+#data-caption {
+  position: absolute; bottom: 12px; right: 12px; max-width: 460px;
+  font-size: 10px; line-height: 1.5; color: #9aa6c8;
+  background: rgba(13,13,26,0.92); padding: 9px 12px; border-radius: 6px;
+  border: 1px solid #3a3050;
+}
+#data-caption b { color: #c8d2f0; }
+#data-caption code { color: #a0c8ff; font-size: 9.5px; }
+</style>
+</head>
+<body>
+
+<div id="header">
+  <h1>OxPhos Cross–Cell-Type Co-variation Network</h1>
+  <div class="subtitle">Pearson r across <b style="color:#a0c8ff">17</b> Tabula Sapiens cell-type mean-expression profiles · <b style="color:#ffb060">NOT</b> single-cell co-expression</div>
+</div>
+
+<div id="controls">
+  <h3>Correlation Threshold</h3>
+  <div class="control-row">
+    <label>Min |r| = <span id="thresh-val">0.975</span></label>
+    <input type="range" id="thresh-slider" min="0.975" max="0.996" step="0.001" value="0.975">
+  </div>
+  <div style="font-size:9px;color:#6070a0;margin-top:-2px">Edges precomputed at |r| ≥ 0.975; slider filters within that set.</div>
+
+  <h3>Filter by Complex</h3>
+  <div class="btn-group">
+    <button class="cx-btn active" data-cx="ALL">All</button>
+    <button class="cx-btn active" data-cx="CI">CI</button>
+    <button class="cx-btn active" data-cx="CII">CII</button>
+    <button class="cx-btn active" data-cx="CIII">CIII</button>
+    <button class="cx-btn active" data-cx="CIV">CIV</button>
+    <button class="cx-btn active" data-cx="CV">CV</button>
+  </div>
+
+  <h3>Legend — Complex</h3>
+  <div class="legend-item"><div class="legend-dot" style="background:#7c6bbf"></div>Complex I (NADH deh.)</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#d4801a"></div>Complex II (SDH) ★ SDHA</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#28a0c0"></div>Complex III (bc1)</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#28b060"></div>Complex IV (COX)</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#c030c0"></div>Complex V (ATP syn.)</div>
+
+  <h3>Legend — Edges</h3>
+  <div class="legend-item"><div style="width:24px;height:3px;background:#4080ff;border-radius:2px"></div>Positive r</div>
+  <div class="legend-item"><div style="width:24px;height:3px;background:#ff4040;border-radius:2px"></div>Negative r</div>
+
+  <h3>Stats</h3>
+  <div id="stats">
+    Genes: <span id="st-nodes">82</span> · Edges: <span id="st-edges">—</span><br>
+    Mean same-cx |r|: <span id="st-same">—</span><br>
+    Mean cross-cx |r|: <span id="st-cross">—</span>
+  </div>
+
+  <h3 style="margin-top:14px">Instructions</h3>
+  <div style="font-size:10px;color:#4a5a7a;line-height:1.6">
+    Hover node → tooltip<br>
+    Click node → highlight neighbors<br>
+    Click background → deselect<br>
+    Drag to reposition<br>
+    Scroll to zoom
+  </div>
+</div>
+
+<svg id="canvas" width="100%" height="100%"></svg>
+
+<div id="tooltip"></div>
+<div id="edge-info">Showing <span id="ei-count">—</span> edges with |r| ≥ <span id="ei-thresh">—</span></div>
+
+<div id="data-caption">
+  <b>Data &amp; method:</b> Pearson correlation across <b>17 Tabula Sapiens cell-type mean-expression profiles</b>
+  (one mean per gene per cell type, from <code>data/tabula_sapiens_mito_expr.tsv</code>; values z-scored per gene).
+  This is a <b>cross–cell-type co-variation</b> signal &mdash; <b>NOT single-cell co-expression</b> and not computed across the 85,233 individual cells.
+  It is coarser and weaker than true scRNA-seq co-expression; with only 17 points per gene, |r| values are inflated and OXPHOS genes
+  co-vary strongly (all displayed edges are positive). Network: |r| ≥ 0.975 · <b>82 genes</b>, <b>196 edges</b>
+  (OXPHOS Complex I&ndash;V subunits, isolated nodes removed).
+</div>
+
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script>
+// ============================================================
+// EMBEDDED DATA
+// ============================================================
+const NODES = [{"id":"ATP5F1A","complex":"CV","meanExpr":76.299736,"top5":[["NDUFB4",0.982],["SDHB",0.976],["UQCRC2",0.975],["NDUFV1",0.975],["ATP5PD",0.969]]},{"id":"ATP5F1C","complex":"CV","meanExpr":38.065419,"top5":[["NDUFB4",0.989],["NDUFA8",0.989],["UQCRC2",0.986],["ATP5PO",0.985],["NDUFA1",0.983]]},{"id":"ATP5F1D","complex":"CV","meanExpr":19.214266,"top5":[["COX5A",0.987],["NDUFA12",0.981],["ATP5PF",0.979],["NDUFS7",0.978],["COX17",0.977]]},{"id":"ATP5F1E","complex":"CV","meanExpr":33.818765,"top5":[["NDUFA3",0.983],["NDUFB11",0.982],["NDUFB6",0.977],["NDUFA11",0.976],["NDUFA2",0.974]]},{"id":"ATP5MC1","complex":"CV","meanExpr":23.896756,"top5":[["NDUFA8",0.983],["NDUFA9",0.979],["NDUFS8",0.977],["NDUFB9",0.973],["NDUFB7",0.968]]},{"id":"ATP5MC2","complex":"CV","meanExpr":40.442205,"top5":[["COX7A2",0.981],["SDHAF4",0.978],["ATP5MG",0.976],["NDUFB8",0.971],["MT-ND6",0.961]]},{"id":"ATP5MC3","complex":"CV","meanExpr":32.980868,"top5":[["ATP5PF",0.986],["COX7B",0.986],["COX8A",0.979],["UQCR10",0.978],["NDUFAB1",0.971]]},{"id":"ATP5ME","complex":"CV","meanExpr":15.769717,"top5":[["NDUFS6",0.988],["NDUFA3",0.987],["NDUFB1",0.987],["ATP5MF",0.982],["NDUFA11",0.978]]},{"id":"ATP5MF","complex":"CV","meanExpr":19.393868,"top5":[["NDUFC1",0.994],["NDUFAF8",0.993],["NDUFA2",0.988],["NDUFA3",0.986],["NDUFA10",0.985]]},{"id":"ATP5MG","complex":"CV","meanExpr":29.992055,"top5":[["COX6B1",0.983],["NDUFB8",0.98],["COX7A2",0.977],["ATP5MC2",0.976],["NDUFC2",0.974]]},{"id":"ATP5PB","complex":"CV","meanExpr":29.155057,"top5":[["NDUFS3",0.987],["NDUFC1",0.981],["ATP5PO",0.98],["COX6C",0.977],["NDUFA7",0.976]]},{"id":"ATP5PD","complex":"CV","meanExpr":19.311129,"top5":[["ATP5PO",0.989],["NDUFB5",0.988],["ATP5F1C",0.977],["NDUFB4",0.976],["SDHC",0.971]]},{"id":"ATP5PF","complex":"CV","meanExpr":33.444288,"top5":[["NDUFA12",0.994],["COX5A",0.993],["COX7B",0.992],["ATP5MC3",0.986],["NDUFAB1",0.986]]},{"id":"ATP5PO","complex":"CV","meanExpr":24.410262,"top5":[["NDUFA1",0.991],["ATP5PD",0.989],["ATP5F1C",0.985],["NDUFB2",0.985],["NDUFA7",0.984]]},{"id":"COX17","complex":"CIV","meanExpr":8.617358,"top5":[["CYC1",0.984],["NDUFS7",0.983],["COX5A",0.98],["ATP5PF",0.979],["NDUFB3",0.979]]},{"id":"COX18","complex":"CIV","meanExpr":0.563178,"top5":[["NDUFB11",0.982],["COX16",0.972],["NDUFC1",0.964],["ATP5MG",0.963],["NDUFA3",0.961]]},{"id":"COX5A","complex":"CIV","meanExpr":37.810685,"top5":[["NDUFA12",0.996],["ATP5PF",0.993],["NDUFB10",0.987],["ATP5F1D",0.987],["NDUFS7",0.982]]},{"id":"COX5B","complex":"CIV","meanExpr":26.042145,"top5":[["NDUFA1",0.994],["NDUFA7",0.991],["NDUFB2",0.987],["COX6C",0.986],["UQCRB",0.979]]},{"id":"COX6B1","complex":"CIV","meanExpr":29.479695,"top5":[["ATP5MG",0.983],["COX6C",0.978],["COX7C",0.977],["NDUFB1",0.971],["ATP5PO",0.967]]},{"id":"COX6C","complex":"CIV","meanExpr":28.609795,"top5":[["COX7C",0.988],["NDUFA11",0.987],["COX5B",0.986],["NDUFS3",0.986],["NDUFA1",0.983]]},{"id":"COX7A2","complex":"CIV","meanExpr":20.261751,"top5":[["NDUFB8",0.99],["NDUFC2",0.987],["ATP5MC2",0.981],["ATP5MG",0.977],["MT-ATP8",0.972]]},{"id":"COX7A2L","complex":"CIV","meanExpr":11.211573,"top5":[["SDHAF1",0.976],["NDUFAF2",0.972],["MT-CYB",0.945],["NDUFC2",0.941],["MT-ND6",0.939]]},{"id":"COX7B","complex":"CIV","meanExpr":23.894785,"top5":[["ATP5PF",0.992],["ATP5MC3",0.986],["NDUFAB1",0.985],["UQCR10",0.982],["COX5A",0.979]]},{"id":"COX7C","complex":"CIV","meanExpr":39.169673,"top5":[["COX6C",0.988],["NDUFB1",0.981],["NDUFA1",0.981],["ATP5PO",0.98],["NDUFA11",0.978]]},{"id":"COX8A","complex":"CIV","meanExpr":16.957287,"top5":[["ATP5MC3",0.979],["COX7B",0.976],["UQCRB",0.975],["NDUFA4",0.974],["ATP5PF",0.97]]},{"id":"CYC1","complex":"CIII","meanExpr":26.84268,"top5":[["NDUFB3",0.986],["COX17",0.984],["UQCRC1",0.982],["SDHB",0.978],["NDUFAB1",0.977]]},{"id":"MT-ATP6","complex":"CV","meanExpr":336.239497,"top5":[["MT-ND4",0.98],["MT-CYB",0.979],["MT-ND4L",0.971],["MT-CO3",0.968],["MT-ATP8",0.958]]},{"id":"MT-ATP8","complex":"CV","meanExpr":29.683061,"top5":[["MT-ND4L",0.99],["MT-ND6",0.988],["MT-CO3",0.983],["MT-CYB",0.981],["COX7A2",0.972]]},{"id":"MT-CO1","complex":"CIV","meanExpr":1117.050304,"top5":[["MT-ND5",0.991],["MT-ND4",0.983],["MT-ATP6",0.955],["COX6A1",0.949],["MT-CYB",0.944]]},{"id":"MT-CO2","complex":"CIV","meanExpr":809.33644,"top5":[["MT-CO3",0.976],["MT-ATP8",0.97],["NDUFS4",0.959],["MT-ND4L",0.954],["MT-ATP6",0.954]]},{"id":"MT-CO3","complex":"CIV","meanExpr":992.068653,"top5":[["MT-CYB",0.984],["MT-ATP8",0.983],["MT-ND4L",0.982],["MT-CO2",0.976],["MT-ATP6",0.968]]},{"id":"MT-CYB","complex":"CIII","meanExpr":685.318796,"top5":[["MT-ND4L",0.99],["MT-CO3",0.984],["MT-ATP8",0.981],["MT-ATP6",0.979],["MT-ND6",0.974]]},{"id":"MT-ND1","complex":"CI","meanExpr":277.4829,"top5":[["MT-ND2",0.983],["SDHAF2",0.959],["MT-CO1",0.866],["COX19",0.836],["MT-ND5",0.827]]},{"id":"MT-ND2","complex":"CI","meanExpr":220.502182,"top5":[["MT-ND1",0.983],["SDHAF2",0.964],["MT-CO1",0.9],["COX19",0.874],["MT-ND4",0.872]]},{"id":"MT-ND4","complex":"CI","meanExpr":359.822596,"top5":[["MT-CO1",0.983],["MT-ATP6",0.98],["MT-ND5",0.977],["MT-ND4L",0.962],["MT-CYB",0.961]]},{"id":"MT-ND4L","complex":"CI","meanExpr":52.510571,"top5":[["MT-ATP8",0.99],["MT-CYB",0.99],["MT-ND6",0.986],["MT-CO3",0.982],["MT-ATP6",0.971]]},{"id":"MT-ND5","complex":"CI","meanExpr":160.133974,"top5":[["MT-CO1",0.991],["MT-ND4",0.977],["COX6A1",0.967],["MT-CYB",0.95],["MT-ND4L",0.942]]},{"id":"MT-ND6","complex":"CI","meanExpr":25.306345,"top5":[["MT-ATP8",0.988],["MT-ND4L",0.986],["SDHAF4",0.974],["MT-CYB",0.974],["COX7A2",0.968]]},{"id":"NDUFA1","complex":"CI","meanExpr":18.397157,"top5":[["COX5B",0.994],["ATP5PO",0.991],["NDUFA7",0.99],["NDUFB2",0.988],["UQCRB",0.987]]},{"id":"NDUFA10","complex":"CI","meanExpr":8.115855,"top5":[["NDUFAF8",0.991],["ATP5MF",0.985],["NDUFC1",0.981],["NDUFA2",0.979],["SDHAF3",0.968]]},{"id":"NDUFA11","complex":"CI","meanExpr":8.711477,"top5":[["COX6C",0.987],["NDUFA2",0.985],["NDUFC2",0.984],["NDUFA3",0.983],["NDUFC1",0.98]]},{"id":"NDUFA12","complex":"CI","meanExpr":18.94063,"top5":[["COX5A",0.996],["ATP5PF",0.994],["NDUFB10",0.987],["ATP5F1D",0.981],["NDUFAB1",0.978]]},{"id":"NDUFA13","complex":"CI","meanExpr":10.329633,"top5":[["ATP5MF",0.983],["NDUFA2",0.981],["COX6C",0.976],["NDUFA11",0.973],["UQCRH",0.973]]},{"id":"NDUFA2","complex":"CI","meanExpr":9.371752,"top5":[["ATP5MF",0.988],["NDUFA11",0.985],["NDUFC1",0.982],["NDUFA13",0.981],["NDUFA10",0.979]]},{"id":"NDUFA3","complex":"CI","meanExpr":5.979393,"top5":[["ATP5ME",0.987],["ATP5MF",0.986],["NDUFC1",0.985],["NDUFA11",0.983],["ATP5F1E",0.983]]},{"id":"NDUFA4","complex":"CI","meanExpr":45.094889,"top5":[["NDUFB7",0.987],["UQCR11",0.98],["COX7B",0.978],["UQCR10",0.976],["ATP5F1C",0.975]]},{"id":"NDUFA7","complex":"CI","meanExpr":1.750647,"top5":[["NDUFB2",0.991],["COX5B",0.991],["NDUFA1",0.99],["ATP5PO",0.984],["ATP5F1C",0.98]]},{"id":"NDUFA8","complex":"CI","meanExpr":12.765858,"top5":[["NDUFS8",0.994],["ATP5F1C",0.989],["NDUFB7",0.987],["ATP5MC1",0.983],["UQCRC2",0.982]]},{"id":"NDUFA9","complex":"CI","meanExpr":4.217636,"top5":[["ATP5MC1",0.979],["NDUFA8",0.968],["NDUFS8",0.966],["UQCRC2",0.957],["ATP5PB",0.956]]},{"id":"NDUFAB1","complex":"CI","meanExpr":20.633821,"top5":[["ATP5PF",0.986],["COX7B",0.985],["NDUFA8",0.981],["UQCR10",0.979],["NDUFB7",0.979]]},{"id":"NDUFAF8","complex":"CI","meanExpr":6.05066,"top5":[["NDUFC1",0.993],["ATP5MF",0.993],["NDUFA10",0.991],["NDUFA2",0.977],["NDUFA3",0.976]]},{"id":"NDUFB1","complex":"CI","meanExpr":9.040762,"top5":[["ATP5ME",0.987],["COX7C",0.981],["NDUFA3",0.981],["NDUFA11",0.978],["COX6C",0.975]]},{"id":"NDUFB10","complex":"CI","meanExpr":19.523171,"top5":[["NDUFS7",0.992],["NDUFA12",0.987],["COX5A",0.987],["ATP5PF",0.983],["COX17",0.978]]},{"id":"NDUFB11","complex":"CI","meanExpr":17.035064,"top5":[["NDUFB6",0.989],["NDUFC1",0.984],["COX18",0.982],["NDUFS3",0.982],["ATP5F1E",0.982]]},{"id":"NDUFB2","complex":"CI","meanExpr":15.022115,"top5":[["NDUFA7",0.991],["NDUFA1",0.988],["COX5B",0.987],["ATP5PO",0.985],["ATP5F1C",0.976]]},{"id":"NDUFB3","complex":"CI","meanExpr":10.940309,"top5":[["CYC1",0.986],["NDUFS7",0.982],["NDUFB7",0.981],["UQCR10",0.979],["COX17",0.979]]},{"id":"NDUFB4","complex":"CI","meanExpr":16.68074,"top5":[["ATP5F1C",0.989],["UQCRC2",0.989],["ATP5F1A",0.982],["ATP5PD",0.976],["NDUFA8",0.974]]},{"id":"NDUFB5","complex":"CI","meanExpr":12.723607,"top5":[["ATP5PD",0.988],["ATP5PO",0.983],["NDUFV1",0.978],["NDUFS3",0.975],["SDHC",0.973]]},{"id":"NDUFB6","complex":"CI","meanExpr":15.651623,"top5":[["NDUFB11",0.989],["NDUFA2",0.979],["ATP5F1E",0.977],["NDUFC2",0.976],["NDUFB8",0.975]]},{"id":"NDUFB7","complex":"CI","meanExpr":13.764395,"top5":[["NDUFA8",0.987],["NDUFA4",0.987],["NDUFS8",0.986],["UQCR10",0.984],["ATP5F1C",0.982]]},{"id":"NDUFB8","complex":"CI","meanExpr":12.453905,"top5":[["NDUFC2",0.991],["COX7A2",0.99],["ATP5MG",0.98],["NDUFB6",0.975],["ATP5MC2",0.971]]},{"id":"NDUFB9","complex":"CI","meanExpr":27.690872,"top5":[["NDUFAB1",0.976],["NDUFS5",0.974],["ATP5MC1",0.973],["NDUFA4",0.972],["NDUFB7",0.971]]},{"id":"NDUFC1","complex":"CI","meanExpr":11.11767,"top5":[["ATP5MF",0.994],["NDUFAF8",0.993],["NDUFA3",0.985],["NDUFB11",0.984],["NDUFA2",0.982]]},{"id":"NDUFC2","complex":"CI","meanExpr":11.222829,"top5":[["NDUFB8",0.991],["COX7A2",0.987],["NDUFA11",0.984],["NDUFB6",0.976],["NDUFA2",0.976]]},{"id":"NDUFS3","complex":"CI","meanExpr":9.859663,"top5":[["ATP5PB",0.987],["COX6C",0.986],["ATP5PO",0.984],["NDUFB11",0.982],["SDHC",0.98]]},{"id":"NDUFS4","complex":"CI","meanExpr":10.970176,"top5":[["NDUFB6",0.975],["NDUFC2",0.972],["COX4I1",0.97],["COX16",0.968],["COX7A2",0.968]]},{"id":"NDUFS6","complex":"CI","meanExpr":9.89314,"top5":[["ATP5ME",0.988],["ATP5MF",0.977],["NDUFA3",0.972],["NDUFAF8",0.971],["NDUFB1",0.971]]},{"id":"NDUFS7","complex":"CI","meanExpr":12.418434,"top5":[["NDUFB10",0.992],["COX17",0.983],["NDUFB3",0.982],["COX5A",0.982],["ATP5F1D",0.978]]},{"id":"NDUFS8","complex":"CI","meanExpr":14.331043,"top5":[["NDUFA8",0.994],["NDUFB7",0.986],["ATP5MC1",0.977],["ATP5F1C",0.975],["UQCRC2",0.974]]},{"id":"NDUFV1","complex":"CI","meanExpr":14.553182,"top5":[["NDUFB5",0.978],["ATP5F1A",0.975],["ATP5PD",0.97],["SDHC",0.961],["NDUFB4",0.947]]},{"id":"NDUFV2","complex":"CI","meanExpr":7.097535,"top5":[["UQCR11",0.978],["NDUFA4",0.963],["NDUFB7",0.953],["COX5A",0.942],["ATP5F1C",0.937]]},{"id":"SDHAF1","complex":"CII","meanExpr":1.977112,"top5":[["COX7A2L",0.976],["NDUFB8",0.961],["NDUFAF2",0.96],["COX7A2",0.954],["ATP5MC2",0.953]]},{"id":"SDHAF4","complex":"CII","meanExpr":0.598325,"top5":[["ATP5MC2",0.978],["MT-ND6",0.974],["MT-ATP8",0.964],["COX7A2",0.963],["COX16",0.956]]},{"id":"SDHB","complex":"CII","meanExpr":20.271389,"top5":[["CYC1",0.978],["ATP5F1A",0.976],["UQCRC1",0.974],["SDHD",0.969],["COX17",0.968]]},{"id":"SDHC","complex":"CII","meanExpr":4.242504,"top5":[["NDUFS3",0.98],["NDUFB5",0.973],["ATP5PD",0.971],["ATP5PO",0.97],["COX7C",0.967]]},{"id":"UQCR10","complex":"CIII","meanExpr":22.734061,"top5":[["ATP5PF",0.985],["NDUFB7",0.984],["COX7B",0.982],["NDUFAB1",0.979],["NDUFB3",0.979]]},{"id":"UQCR11","complex":"CIII","meanExpr":22.555842,"top5":[["NDUFA4",0.98],["NDUFV2",0.978],["NDUFB7",0.969],["NDUFS5",0.965],["ATP5PO",0.957]]},{"id":"UQCRB","complex":"CIII","meanExpr":25.722862,"top5":[["NDUFA1",0.987],["COX5B",0.979],["COX8A",0.975],["ATP5F1C",0.974],["ATP5PO",0.966]]},{"id":"UQCRC1","complex":"CIII","meanExpr":38.170669,"top5":[["UQCRFS1",0.993],["CYC1",0.982],["NDUFS7",0.977],["COX17",0.975],["SDHB",0.974]]},{"id":"UQCRC2","complex":"CIII","meanExpr":14.568689,"top5":[["NDUFB4",0.989],["ATP5F1C",0.986],["NDUFA8",0.982],["NDUFAB1",0.978],["ATP5F1A",0.975]]},{"id":"UQCRFS1","complex":"CIII","meanExpr":27.531993,"top5":[["UQCRC1",0.993],["COX10",0.968],["NDUFS7",0.963],["COX17",0.961],["ATP5F1B",0.959]]},{"id":"UQCRQ","complex":"CIII","meanExpr":28.48951,"top5":[["ATP5MF",0.978],["NDUFC1",0.976],["NDUFAF8",0.974],["COX6C",0.969],["ATP5PB",0.968]]}];
+const ALL_EDGES = [{"source":"ATP5F1A","target":"NDUFB4","r":0.9815},{"source":"ATP5F1A","target":"SDHB","r":0.976},{"source":"ATP5F1A","target":"UQCRC2","r":0.9751},{"source":"ATP5F1C","target":"ATP5PD","r":0.9768},{"source":"ATP5F1C","target":"ATP5PO","r":0.9849},{"source":"ATP5F1C","target":"NDUFA1","r":0.9834},{"source":"ATP5F1C","target":"NDUFA7","r":0.9802},{"source":"ATP5F1C","target":"NDUFA8","r":0.9887},{"source":"ATP5F1C","target":"NDUFAB1","r":0.9771},{"source":"ATP5F1C","target":"NDUFB2","r":0.9763},{"source":"ATP5F1C","target":"NDUFB4","r":0.9891},{"source":"ATP5F1C","target":"NDUFB7","r":0.9824},{"source":"ATP5F1C","target":"UQCRC2","r":0.986},{"source":"ATP5F1D","target":"ATP5PF","r":0.9789},{"source":"ATP5F1D","target":"COX17","r":0.9768},{"source":"ATP5F1D","target":"COX5A","r":0.9868},{"source":"ATP5F1D","target":"NDUFA12","r":0.9815},{"source":"ATP5F1D","target":"NDUFB10","r":0.9765},{"source":"ATP5F1D","target":"NDUFS7","r":0.9776},{"source":"ATP5F1E","target":"NDUFA11","r":0.9762},{"source":"ATP5F1E","target":"NDUFA3","r":0.983},{"source":"ATP5F1E","target":"NDUFB11","r":0.9816},{"source":"ATP5F1E","target":"NDUFB6","r":0.9772},{"source":"ATP5MC1","target":"NDUFA8","r":0.9828},{"source":"ATP5MC1","target":"NDUFA9","r":0.979},{"source":"ATP5MC1","target":"NDUFS8","r":0.9768},{"source":"ATP5MC2","target":"ATP5MG","r":0.976},{"source":"ATP5MC2","target":"COX7A2","r":0.9806},{"source":"ATP5MC2","target":"SDHAF4","r":0.9779},{"source":"ATP5MC3","target":"ATP5PF","r":0.9863},{"source":"ATP5MC3","target":"COX7B","r":0.9862},{"source":"ATP5MC3","target":"COX8A","r":0.9795},{"source":"ATP5MC3","target":"UQCR10","r":0.9776},{"source":"ATP5ME","target":"ATP5MF","r":0.9823},{"source":"ATP5ME","target":"NDUFA11","r":0.9775},{"source":"ATP5ME","target":"NDUFA3","r":0.9872},{"source":"ATP5ME","target":"NDUFB1","r":0.9867},{"source":"ATP5ME","target":"NDUFS6","r":0.9881},{"source":"ATP5MF","target":"COX6C","r":0.9786},{"source":"ATP5MF","target":"NDUFA10","r":0.9849},{"source":"ATP5MF","target":"NDUFA11","r":0.98},{"source":"ATP5MF","target":"NDUFA13","r":0.9829},{"source":"ATP5MF","target":"NDUFA2","r":0.9883},{"source":"ATP5MF","target":"NDUFA3","r":0.9855},{"source":"ATP5MF","target":"NDUFAF8","r":0.9931},{"source":"ATP5MF","target":"NDUFC1","r":0.9938},{"source":"ATP5MF","target":"NDUFS6","r":0.9774},{"source":"ATP5MF","target":"UQCRQ","r":0.9784},{"source":"ATP5MG","target":"COX6B1","r":0.9829},{"source":"ATP5MG","target":"COX7A2","r":0.9774},{"source":"ATP5MG","target":"NDUFB8","r":0.9802},{"source":"ATP5PB","target":"ATP5PO","r":0.9802},{"source":"ATP5PB","target":"COX6C","r":0.9766},{"source":"ATP5PB","target":"NDUFA7","r":0.976},{"source":"ATP5PB","target":"NDUFC1","r":0.9812},{"source":"ATP5PB","target":"NDUFS3","r":0.9865},{"source":"ATP5PD","target":"ATP5PO","r":0.9892},{"source":"ATP5PD","target":"NDUFB4","r":0.976},{"source":"ATP5PD","target":"NDUFB5","r":0.9881},{"source":"ATP5PF","target":"COX17","r":0.9793},{"source":"ATP5PF","target":"COX5A","r":0.9933},{"source":"ATP5PF","target":"COX7B","r":0.9916},{"source":"ATP5PF","target":"NDUFA12","r":0.9942},{"source":"ATP5PF","target":"NDUFAB1","r":0.986},{"source":"ATP5PF","target":"NDUFB10","r":0.9826},{"source":"ATP5PF","target":"UQCR10","r":0.9847},{"source":"ATP5PO","target":"COX5B","r":0.9776},{"source":"ATP5PO","target":"COX6C","r":0.9761},{"source":"ATP5PO","target":"COX7C","r":0.9801},{"source":"ATP5PO","target":"NDUFA1","r":0.9908},{"source":"ATP5PO","target":"NDUFA7","r":0.9838},{"source":"ATP5PO","target":"NDUFB2","r":0.9847},{"source":"ATP5PO","target":"NDUFB5","r":0.9834},{"source":"ATP5PO","target":"NDUFS3","r":0.9836},{"source":"COX17","target":"COX5A","r":0.9796},{"source":"COX17","target":"COX7B","r":0.9784},{"source":"COX17","target":"CYC1","r":0.9841},{"source":"COX17","target":"NDUFB10","r":0.9784},{"source":"COX17","target":"NDUFB3","r":0.9787},{"source":"COX17","target":"NDUFS7","r":0.9831},{"source":"COX17","target":"UQCRC1","r":0.9752},{"source":"COX18","target":"NDUFB11","r":0.9824},{"source":"COX5A","target":"COX7B","r":0.979},{"source":"COX5A","target":"NDUFA12","r":0.9955},{"source":"COX5A","target":"NDUFB10","r":0.9868},{"source":"COX5A","target":"NDUFS7","r":0.9817},{"source":"COX5A","target":"UQCR10","r":0.9755},{"source":"COX5B","target":"COX6C","r":0.9863},{"source":"COX5B","target":"NDUFA1","r":0.9938},{"source":"COX5B","target":"NDUFA7","r":0.991},{"source":"COX5B","target":"NDUFB2","r":0.9866},{"source":"COX5B","target":"UQCRB","r":0.9791},{"source":"COX6B1","target":"COX6C","r":0.9777},{"source":"COX6B1","target":"COX7C","r":0.9775},{"source":"COX6C","target":"COX7C","r":0.9876},{"source":"COX6C","target":"NDUFA1","r":0.983},{"source":"COX6C","target":"NDUFA11","r":0.9874},{"source":"COX6C","target":"NDUFA13","r":0.9761},{"source":"COX6C","target":"NDUFB1","r":0.9754},{"source":"COX6C","target":"NDUFC1","r":0.9797},{"source":"COX6C","target":"NDUFS3","r":0.9856},{"source":"COX7A2","target":"NDUFB8","r":0.9897},{"source":"COX7A2","target":"NDUFC2","r":0.9867},{"source":"COX7A2L","target":"SDHAF1","r":0.9759},{"source":"COX7B","target":"COX8A","r":0.9761},{"source":"COX7B","target":"NDUFA12","r":0.9756},{"source":"COX7B","target":"NDUFA4","r":0.9781},{"source":"COX7B","target":"NDUFAB1","r":0.9846},{"source":"COX7B","target":"UQCR10","r":0.982},{"source":"COX7C","target":"NDUFA1","r":0.9805},{"source":"COX7C","target":"NDUFA11","r":0.978},{"source":"COX7C","target":"NDUFB1","r":0.981},{"source":"COX7C","target":"NDUFS3","r":0.9767},{"source":"CYC1","target":"NDUFAB1","r":0.9774},{"source":"CYC1","target":"NDUFB3","r":0.9859},{"source":"CYC1","target":"SDHB","r":0.9781},{"source":"CYC1","target":"UQCRC1","r":0.9817},{"source":"MT-ATP6","target":"MT-CYB","r":0.9788},{"source":"MT-ATP6","target":"MT-ND4","r":0.9799},{"source":"MT-ATP8","target":"MT-CO3","r":0.9826},{"source":"MT-ATP8","target":"MT-CYB","r":0.9814},{"source":"MT-ATP8","target":"MT-ND4L","r":0.9903},{"source":"MT-ATP8","target":"MT-ND6","r":0.9875},{"source":"MT-CO1","target":"MT-ND4","r":0.9831},{"source":"MT-CO1","target":"MT-ND5","r":0.9908},{"source":"MT-CO2","target":"MT-CO3","r":0.9762},{"source":"MT-CO3","target":"MT-CYB","r":0.9844},{"source":"MT-CO3","target":"MT-ND4L","r":0.9819},{"source":"MT-CYB","target":"MT-ND4L","r":0.9897},{"source":"MT-ND1","target":"MT-ND2","r":0.983},{"source":"MT-ND4","target":"MT-ND5","r":0.9767},{"source":"MT-ND4L","target":"MT-ND6","r":0.9858},{"source":"NDUFA1","target":"NDUFA7","r":0.9899},{"source":"NDUFA1","target":"NDUFB2","r":0.9877},{"source":"NDUFA1","target":"UQCRB","r":0.9875},{"source":"NDUFA10","target":"NDUFA2","r":0.9791},{"source":"NDUFA10","target":"NDUFAF8","r":0.991},{"source":"NDUFA10","target":"NDUFC1","r":0.9811},{"source":"NDUFA11","target":"NDUFA2","r":0.9854},{"source":"NDUFA11","target":"NDUFA3","r":0.9833},{"source":"NDUFA11","target":"NDUFB1","r":0.9781},{"source":"NDUFA11","target":"NDUFB11","r":0.9783},{"source":"NDUFA11","target":"NDUFC1","r":0.9803},{"source":"NDUFA11","target":"NDUFC2","r":0.9842},{"source":"NDUFA12","target":"NDUFAB1","r":0.9785},{"source":"NDUFA12","target":"NDUFB10","r":0.9869},{"source":"NDUFA12","target":"NDUFS7","r":0.9774},{"source":"NDUFA12","target":"UQCR10","r":0.9762},{"source":"NDUFA13","target":"NDUFA2","r":0.9807},{"source":"NDUFA2","target":"NDUFA3","r":0.9776},{"source":"NDUFA2","target":"NDUFAF8","r":0.9769},{"source":"NDUFA2","target":"NDUFB6","r":0.9788},{"source":"NDUFA2","target":"NDUFC1","r":0.9816},{"source":"NDUFA2","target":"NDUFC2","r":0.9759},{"source":"NDUFA3","target":"NDUFAF8","r":0.9756},{"source":"NDUFA3","target":"NDUFB1","r":0.9809},{"source":"NDUFA3","target":"NDUFB11","r":0.9782},{"source":"NDUFA3","target":"NDUFC1","r":0.9852},{"source":"NDUFA4","target":"NDUFB7","r":0.9871},{"source":"NDUFA4","target":"UQCR10","r":0.976},{"source":"NDUFA4","target":"UQCR11","r":0.9795},{"source":"NDUFA7","target":"NDUFA8","r":0.9779},{"source":"NDUFA7","target":"NDUFB2","r":0.9911},{"source":"NDUFA7","target":"NDUFB7","r":0.9772},{"source":"NDUFA8","target":"NDUFAB1","r":0.9806},{"source":"NDUFA8","target":"NDUFB7","r":0.9872},{"source":"NDUFA8","target":"NDUFS8","r":0.9943},{"source":"NDUFA8","target":"UQCRC2","r":0.9818},{"source":"NDUFAB1","target":"NDUFB3","r":0.976},{"source":"NDUFAB1","target":"NDUFB7","r":0.9789},{"source":"NDUFAB1","target":"NDUFB9","r":0.9763},{"source":"NDUFAB1","target":"UQCR10","r":0.9793},{"source":"NDUFAB1","target":"UQCRC2","r":0.9778},{"source":"NDUFAF8","target":"NDUFC1","r":0.9933},{"source":"NDUFB10","target":"NDUFS7","r":0.9918},{"source":"NDUFB11","target":"NDUFB6","r":0.9886},{"source":"NDUFB11","target":"NDUFC1","r":0.9843},{"source":"NDUFB11","target":"NDUFS3","r":0.9818},{"source":"NDUFB3","target":"NDUFB7","r":0.9805},{"source":"NDUFB3","target":"NDUFS7","r":0.9819},{"source":"NDUFB3","target":"UQCR10","r":0.9793},{"source":"NDUFB4","target":"UQCRC2","r":0.9887},{"source":"NDUFB5","target":"NDUFS3","r":0.9752},{"source":"NDUFB5","target":"NDUFV1","r":0.9775},{"source":"NDUFB6","target":"NDUFB8","r":0.9754},{"source":"NDUFB6","target":"NDUFC2","r":0.976},{"source":"NDUFB6","target":"NDUFS4","r":0.9754},{"source":"NDUFB7","target":"NDUFS8","r":0.9859},{"source":"NDUFB7","target":"UQCR10","r":0.9841},{"source":"NDUFB8","target":"NDUFC2","r":0.9911},{"source":"NDUFC1","target":"NDUFS3","r":0.9793},{"source":"NDUFC1","target":"UQCRQ","r":0.9759},{"source":"NDUFS3","target":"SDHC","r":0.9803},{"source":"NDUFS7","target":"UQCRC1","r":0.9766},{"source":"NDUFV2","target":"UQCR11","r":0.9775},{"source":"UQCRC1","target":"UQCRFS1","r":0.9927}];
+// (Per-cell-type correlation is NOT possible from a single mean per cell type, so the
+//  cell-type selector and CT_EDGES/CT_NCELLS machinery have been removed — see caption.)
+
+// ============================================================
+// COMPLEX COLORS
+// ============================================================
+const CX_COLOR = {
+  CI:   '#7c6bbf',
+  CII:  '#d4801a',
+  CIII: '#28a0c0',
+  CIV:  '#28b060',
+  CV:   '#c030c0',
+};
+const CX_BG = {
+  CI:   '#3b2d7a',
+  CII:  '#7a4d1a',
+  CIII: '#1a4d5a',
+  CIV:  '#1a5a30',
+  CV:   '#5a1a5a',
+};
+
+// ============================================================
+// STATE
+// ============================================================
+let threshold = 0.975;
+let activeCX = new Set(['CI','CII','CIII','CIV','CV']);
+let selectedNode = null;
+let currentEdges = [];
+let fitDone = false;
+
+// ============================================================
+// SETUP SVG + SIMULATION
+// ============================================================
+const svg = d3.select('#canvas');
+const width = () => document.getElementById('canvas').clientWidth;
+const height = () => document.getElementById('canvas').clientHeight;
+
+const g = svg.append('g');
+
+// Zoom
+const zoom = d3.zoom()
+  .scaleExtent([0.2, 5])
+  .on('zoom', (event) => { g.attr('transform', event.transform); });
+svg.call(zoom);
+svg.on('click', (event) => {
+  if (event.target === svg.node()) deselectNode();
+});
+
+// Arrow markers (not used but placeholders)
+svg.append('defs');
+
+// Layer groups
+const edgeGroup = g.append('g').attr('class', 'edges');
+const nodeGroup = g.append('g').attr('class', 'nodes');
+
+// ============================================================
+// SIMULATION
+// ============================================================
+const simulation = d3.forceSimulation()
+  .force('link', d3.forceLink().id(d => d.id).distance(d => {
+    const sameComplex = d.source.complex === d.target.complex;
+    const rStrength = Math.abs(d.r);
+    return sameComplex ? (40 + (1 - rStrength) * 40) : (80 + (1 - rStrength) * 60);
+  }).strength(d => Math.abs(d.r) * 0.4))
+  .force('charge', d3.forceManyBody().strength(-350))
+  .force('collision', d3.forceCollide().radius(d => nodeRadius(d) + 8))
+  .force('center', d3.forceCenter(0, 0))
+  .force('x', d3.forceX(0).strength(0.05))
+  .force('y', d3.forceY(0).strength(0.05))
+  .alphaDecay(0.015)
+  .velocityDecay(0.4);
+
+// ============================================================
+// HELPERS
+// ============================================================
+function nodeRadius(d) {
+  const base = 8, range = 14;
+  const maxExpr = d3.max(NODES, n => n.meanExpr);
+  return base + (d.meanExpr / maxExpr) * range;
+}
+
+function edgeColor(r) {
+  return r >= 0 ? '#4080ff' : '#ff4040';
+}
+
+function edgeOpacity(r) {
+  return 0.15 + Math.abs(r) * 0.75;
+}
+
+function edgeWidth(r) {
+  return 0.5 + Math.abs(r) * 4.5;
+}
+
+// ============================================================
+// GET CURRENT EDGES
+// ============================================================
+function getEdges() {
+  const pool = ALL_EDGES;
+  return pool.filter(e => {
+    if (Math.abs(e.r) < threshold) return false;
+    // If filtering by complex, only keep edges where at least one node is active
+    if (activeCX.size < 5) {
+      const sNode = NODES.find(n => n.id === e.source || (e.source && e.source.id === e.source));
+      const tNode = NODES.find(n => n.id === e.target || (e.target && e.target.id === e.target));
+      // We need to check the node id
+      const srcId = typeof e.source === 'string' ? e.source : e.source.id;
+      const tgtId = typeof e.target === 'string' ? e.target : e.target.id;
+      const sNodeObj = NODES.find(n => n.id === srcId);
+      const tNodeObj = NODES.find(n => n.id === tgtId);
+      if (!sNodeObj || !tNodeObj) return false;
+      if (!activeCX.has(sNodeObj.complex) || !activeCX.has(tNodeObj.complex)) return false;
+    }
+    return true;
+  });
+}
+
+function getVisibleNodes() {
+  if (activeCX.size === 5) return NODES;
+  return NODES.filter(n => activeCX.has(n.complex));
+}
+
+// ============================================================
+// UPDATE STATS
+// ============================================================
+function updateStats(edges, nodes) {
+  document.getElementById('st-nodes').textContent = nodes.length;
+  document.getElementById('st-edges').textContent = edges.length;
+  
+  const sameR = edges.filter(e => {
+    const srcId = typeof e.source === 'string' ? e.source : e.source.id;
+    const tgtId = typeof e.target === 'string' ? e.target : e.target.id;
+    const sn = NODES.find(n => n.id === srcId);
+    const tn = NODES.find(n => n.id === tgtId);
+    return sn && tn && sn.complex === tn.complex;
+  }).map(e => Math.abs(e.r));
+  
+  const crossR = edges.filter(e => {
+    const srcId = typeof e.source === 'string' ? e.source : e.source.id;
+    const tgtId = typeof e.target === 'string' ? e.target : e.target.id;
+    const sn = NODES.find(n => n.id === srcId);
+    const tn = NODES.find(n => n.id === tgtId);
+    return sn && tn && sn.complex !== tn.complex;
+  }).map(e => Math.abs(e.r));
+  
+  const avg = arr => arr.length ? (arr.reduce((a,b)=>a+b,0)/arr.length).toFixed(3) : '—';
+  document.getElementById('st-same').textContent = avg(sameR);
+  document.getElementById('st-cross').textContent = avg(crossR);
+  document.getElementById('ei-count').textContent = edges.length;
+  document.getElementById('ei-thresh').textContent = threshold.toFixed(2);
+}
+
+// ============================================================
+// MAIN RENDER
+// ============================================================
+function render() {
+  currentEdges = getEdges();
+  const visNodes = getVisibleNodes();
+  const nodeMap = new Map(NODES.map(n => [n.id, n]));
+  
+  // Filter edges to only include visible nodes
+  const filteredEdges = currentEdges.filter(e => {
+    const srcId = typeof e.source === 'string' ? e.source : e.source.id;
+    const tgtId = typeof e.target === 'string' ? e.target : e.target.id;
+    return visNodes.find(n => n.id === srcId) && visNodes.find(n => n.id === tgtId);
+  });
+
+  updateStats(filteredEdges, visNodes);
+
+  // Prepare edge data (deep copy to avoid simulation mutation issues)
+  const edgeData = filteredEdges.map(e => ({...e}));
+
+  // Update simulation nodes — spread new nodes in a circle to avoid initial clumping
+  const prevNodeMap = new Map((simulation.nodes() || []).map(n => [n.id, {x: n.x, y: n.y, vx: n.vx, vy: n.vy}]));
+  const cxAngles = {CI: 0, CII: Math.PI*0.4, CIII: Math.PI*0.8, CIV: Math.PI*1.2, CV: Math.PI*1.6};
+  const newNodes = visNodes.map((n, i) => {
+    const prev = prevNodeMap.get(n.id);
+    if (prev && prev.x !== undefined && prev.x !== 0) return Object.assign({...n}, prev);
+    // Initial position: arrange by complex cluster around a circle
+    const baseAngle = (cxAngles[n.complex] || 0) + (Math.random() - 0.5) * 0.8;
+    const radius = 120 + Math.random() * 80;
+    return {...n, x: Math.cos(baseAngle) * radius, y: Math.sin(baseAngle) * radius};
+  });
+
+  simulation.nodes(newNodes);
+  simulation.force('link').links(edgeData);
+  fitDone = false;
+  simulation.alpha(0.3).restart();
+
+  // Draw edges
+  const edgeSel = edgeGroup.selectAll('line.edge')
+    .data(edgeData, d => d.source + '|' + d.target);
+
+  edgeSel.enter().append('line')
+    .attr('class', 'edge')
+    .merge(edgeSel)
+    .attr('stroke', d => edgeColor(d.r))
+    .attr('stroke-opacity', d => edgeOpacity(d.r))
+    .attr('stroke-width', d => edgeWidth(d.r));
+
+  edgeSel.exit().remove();
+
+  // Draw nodes
+  const nodeSel = nodeGroup.selectAll('g.node')
+    .data(newNodes, d => d.id);
+
+  const nodeEnter = nodeSel.enter().append('g')
+    .attr('class', 'node')
+    .style('cursor', 'pointer')
+    .call(d3.drag()
+      .on('start', dragStart)
+      .on('drag', dragging)
+      .on('end', dragEnd))
+    .on('mouseover', showTooltip)
+    .on('mousemove', moveTooltip)
+    .on('mouseout', hideTooltip)
+    .on('click', (event, d) => {
+      event.stopPropagation();
+      if (selectedNode === d.id) {
+        deselectNode();
+      } else {
+        selectNode(d.id);
+      }
+    });
+
+  // Main circle
+  nodeEnter.append('circle')
+    .attr('class', 'main-circle');
+
+  // Glow circle (ring for SDHA)
+  nodeEnter.each(function(d) {
+    if (d.id === 'SDHA') {
+      d3.select(this).append('circle')
+        .attr('class', 'sdha-ring')
+        .attr('fill', 'none')
+        .attr('stroke', '#ffd060')
+        .attr('stroke-width', 2)
+        .attr('stroke-dasharray', '4 2')
+        .attr('opacity', 0.8);
+    }
+  });
+
+  // Label
+  nodeEnter.append('text')
+    .attr('class', 'node-label')
+    .attr('text-anchor', 'middle')
+    .attr('dy', '0.35em')
+    .attr('font-size', '8px')
+    .attr('fill', '#fff')
+    .attr('pointer-events', 'none')
+    .attr('font-weight', '700');
+
+  const nodeMerge = nodeEnter.merge(nodeSel);
+
+  nodeMerge.select('.main-circle')
+    .attr('r', d => nodeRadius(d))
+    .attr('fill', d => CX_COLOR[d.complex] || '#888')
+    .attr('fill-opacity', 0.85)
+    .attr('stroke', d => d.id === selectedNode ? '#fff' : 'rgba(255,255,255,0.2)')
+    .attr('stroke-width', d => d.id === selectedNode ? 2.5 : 1);
+
+  nodeMerge.each(function(d) {
+    if (d.id === 'SDHA') {
+      d3.select(this).select('.sdha-ring')
+        .attr('r', nodeRadius(d) + 5);
+    }
+  });
+
+  nodeMerge.select('.node-label')
+    .attr('font-size', d => nodeRadius(d) < 11 ? '7px' : '8.5px')
+    .text(d => d.id);
+
+  nodeSel.exit().remove();
+
+  // Tick update
+  simulation.on('tick', () => {
+    edgeGroup.selectAll('line.edge')
+      .attr('x1', d => d.source.x)
+      .attr('y1', d => d.source.y)
+      .attr('x2', d => d.target.x)
+      .attr('y2', d => d.target.y);
+
+    nodeGroup.selectAll('g.node')
+      .attr('transform', d => `translate(${d.x},${d.y})`);
+  });
+
+  applyHighlight();
+}
+
+// ============================================================
+// NODE SELECTION
+// ============================================================
+function selectNode(id) {
+  selectedNode = id;
+  applyHighlight();
+  // Update circle strokes
+  nodeGroup.selectAll('g.node').select('.main-circle')
+    .attr('stroke', d => d.id === selectedNode ? '#fff' : 'rgba(255,255,255,0.2)')
+    .attr('stroke-width', d => d.id === selectedNode ? 2.5 : 1);
+}
+
+function deselectNode() {
+  selectedNode = null;
+  applyHighlight();
+  nodeGroup.selectAll('g.node').select('.main-circle')
+    .attr('stroke', 'rgba(255,255,255,0.2)')
+    .attr('stroke-width', 1);
+}
+
+function applyHighlight() {
+  if (!selectedNode) {
+    // All fully visible
+    edgeGroup.selectAll('line.edge').attr('stroke-opacity', d => edgeOpacity(d.r));
+    nodeGroup.selectAll('g.node').attr('opacity', 1);
+    return;
+  }
+  // Neighbors
+  const neighbors = new Set([selectedNode]);
+  edgeGroup.selectAll('line.edge').each(function(d) {
+    const srcId = typeof d.source === 'string' ? d.source : d.source.id;
+    const tgtId = typeof d.target === 'string' ? d.target : d.target.id;
+    if (srcId === selectedNode) neighbors.add(tgtId);
+    if (tgtId === selectedNode) neighbors.add(srcId);
+  });
+
+  edgeGroup.selectAll('line.edge')
+    .attr('stroke-opacity', d => {
+      const srcId = typeof d.source === 'string' ? d.source : d.source.id;
+      const tgtId = typeof d.target === 'string' ? d.target : d.target.id;
+      if (srcId === selectedNode || tgtId === selectedNode) return edgeOpacity(d.r);
+      return 0.03;
+    });
+
+  nodeGroup.selectAll('g.node')
+    .attr('opacity', d => neighbors.has(d.id) ? 1 : 0.15);
+}
+
+// ============================================================
+// DRAG
+// ============================================================
+function dragStart(event, d) {
+  if (!event.active) simulation.alphaTarget(0.3).restart();
+  d.fx = d.x; d.fy = d.y;
+}
+function dragging(event, d) {
+  d.fx = event.x; d.fy = event.y;
+}
+function dragEnd(event, d) {
+  if (!event.active) simulation.alphaTarget(0);
+  d.fx = null; d.fy = null;
+}
+
+// ============================================================
+// TOOLTIP
+// ============================================================
+function showTooltip(event, d) {
+  const cx = d.complex;
+  const cxName = { CI: 'Complex I', CII: 'Complex II', CIII: 'Complex III', CIV: 'Complex IV', CV: 'Complex V' };
+  const top5html = d.top5.map(([g, r]) => {
+    const cls = r >= 0 ? 'tt-r-pos' : 'tt-r-neg';
+    return `<div><span class="tt-label">${g}</span> <span class="${cls}">r=${r.toFixed(3)}</span></div>`;
+  }).join('');
+  
+  const tt = document.getElementById('tooltip');
+  tt.innerHTML = `
+    <div class="tt-gene">${d.id}</div>
+    <div class="tt-cx" style="color:${CX_COLOR[cx]}">${cxName[cx] || cx}</div>
+    <hr>
+    <div><span class="tt-label">Mean expr:</span> <span class="tt-val">${d.meanExpr.toFixed(3)}</span></div>
+    <hr>
+    <div class="tt-label" style="margin-bottom:3px">Top co-expressed:</div>
+    ${top5html}
+  `;
+  tt.style.display = 'block';
+  moveTooltip(event);
+}
+function moveTooltip(event) {
+  const tt = document.getElementById('tooltip');
+  const x = event.clientX + 14, y = event.clientY - 10;
+  const w = tt.offsetWidth, h = tt.offsetHeight;
+  const vw = window.innerWidth, vh = window.innerHeight;
+  tt.style.left = (x + w > vw - 10 ? x - w - 24 : x) + 'px';
+  tt.style.top  = (y + h > vh - 10 ? vh - h - 10 : y) + 'px';
+}
+function hideTooltip() {
+  document.getElementById('tooltip').style.display = 'none';
+}
+
+// ============================================================
+// CONTROLS SETUP
+// ============================================================
+// Threshold slider
+const threshSlider = document.getElementById('thresh-slider');
+threshSlider.addEventListener('input', function() {
+  threshold = parseFloat(this.value);
+  document.getElementById('thresh-val').textContent = threshold.toFixed(2);
+  render();
+});
+
+// Complex buttons
+document.querySelectorAll('.cx-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    const cx = this.dataset.cx;
+    if (cx === 'ALL') {
+      if (activeCX.size === 5) {
+        activeCX.clear();
+        document.querySelectorAll('.cx-btn:not([data-cx=ALL])').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+      } else {
+        activeCX = new Set(['CI','CII','CIII','CIV','CV']);
+        document.querySelectorAll('.cx-btn').forEach(b => b.classList.add('active'));
+      }
+    } else {
+      // Remove ALL button active state
+      document.querySelector('.cx-btn[data-cx=ALL]').classList.remove('active');
+      if (activeCX.has(cx)) {
+        activeCX.delete(cx);
+        this.classList.remove('active');
+        if (activeCX.size === 0) {
+          activeCX = new Set(['CI','CII','CIII','CIV','CV']);
+          document.querySelectorAll('.cx-btn').forEach(b => b.classList.add('active'));
+        }
+      } else {
+        activeCX.add(cx);
+        this.classList.add('active');
+        if (activeCX.size === 5) {
+          document.querySelector('.cx-btn[data-cx=ALL]').classList.add('active');
+        }
+      }
+    }
+    render();
+  });
+});
+
+// (Cell-type dropdown removed: per-cell-type correlation cannot be derived
+//  from a single mean per cell type. See data caption.)
+
+// ============================================================
+// INITIAL RENDER + CENTER
+// ============================================================
+function centerView() {
+  const w = width(), h = height();
+  // Center the (0,0) origin in the middle of the canvas area
+  svg.call(zoom.transform, d3.zoomIdentity.translate(w/2, h/2).scale(1.0));
+}
+
+function fitToView() {
+  // Auto-fit all nodes into view after simulation settles
+  const nodes = simulation.nodes();
+  if (!nodes.length) return;
+  const xs = nodes.map(n => n.x), ys = nodes.map(n => n.y);
+  const minX = Math.min(...xs) - 40, maxX = Math.max(...xs) + 40;
+  const minY = Math.min(...ys) - 40, maxY = Math.max(...ys) + 40;
+  const w = width(), h = height();
+  const scaleX = w / (maxX - minX), scaleY = h / (maxY - minY);
+  const scale = Math.min(scaleX, scaleY, 2.0) * 0.85;
+  const tx = w/2 - scale * (minX + maxX)/2;
+  const ty = h/2 - scale * (minY + maxY)/2;
+  svg.transition().duration(800)
+    .call(zoom.transform, d3.zoomIdentity.translate(tx, ty).scale(scale));
+}
+
+window.addEventListener('resize', () => {
+  simulation.force('center', d3.forceCenter(0, 0));
+  simulation.alpha(0.1).restart();
+});
+
+centerView();
+render();
+
+// Fit to view after simulation end
+simulation.on('end', () => {
+  if (!fitDone) { fitDone = true; fitToView(); }
+});
+// Fallback: fit after 4s in case simulation end fires late
+setTimeout(() => { if (!fitDone) { fitDone = true; fitToView(); } }, 4000);
+
+</script>
+</body>
+</html>

@@ -1,0 +1,1396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interactive Healthy Blood · SDHA: Genome to Cell Type</title>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<style>
+:root {
+  --nav-w:210px; --hero:#d97706; --hero-lt:#fef3c7;
+  --blue-hi:#1a3c6e; --blue-lo:#cfe2f3;
+  --bg:#f8fafc; --surf:#fff; --bdr:#e2e8f0;
+  --text:#1e293b; --muted:#64748b; --accent:#2563eb;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-family:system-ui,sans-serif;font-size:14px}
+body{background:var(--bg);color:var(--text);display:flex}
+#nav{width:var(--nav-w);min-height:100vh;background:var(--surf);border-right:1px solid var(--bdr);
+  position:fixed;top:0;left:0;bottom:0;display:flex;flex-direction:column;padding:18px 12px;z-index:100}
+#nav h2{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+.ni{display:flex;align-items:flex-start;gap:8px;padding:8px 6px;border-radius:7px;cursor:pointer;
+  text-decoration:none;color:var(--text);margin-bottom:3px;font-size:12px;line-height:1.4;transition:background .15s}
+.ni:hover{background:#f0f4ff}.ni.active{background:#e8f0fe;color:var(--accent);font-weight:600}
+.nd{width:20px;height:20px;border-radius:50%;background:var(--bdr);color:#fff;font-size:10px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.ni.active .nd{background:var(--accent)}
+.nconn{width:2px;height:12px;background:var(--bdr);margin:0 auto 3px;margin-left:15px}
+#main{margin-left:var(--nav-w);margin-right:220px;width:calc(100% - var(--nav-w) - 220px)}
+section{min-height:100vh;padding:34px 34px 54px;border-bottom:2px solid var(--bdr)}
+section:nth-child(odd){background:#fff}section:nth-child(even){background:var(--bg)}
+.sh{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+.sb{background:var(--accent);color:#fff;font-size:10px;font-weight:700;letter-spacing:.08em;
+  padding:3px 9px;border-radius:20px}
+.sb.h{background:var(--hero)}
+.st{font-size:20px;font-weight:700}
+.sd{color:var(--muted);font-size:13px;margin-bottom:18px;max-width:720px;line-height:1.65}
+.bridge{display:flex;align-items:flex-start;gap:10px;background:var(--hero-lt);
+  border-left:3px solid var(--hero);border-radius:0 8px 8px 0;padding:10px 14px;
+  margin:22px 0;font-size:12px;line-height:1.6;color:#78350f;max-width:700px}
+.bridge strong{color:#92400e}
+.warn{display:inline-flex;align-items:center;gap:6px;background:#fef3c7;border:1px solid #fbbf24;
+  border-radius:6px;padding:5px 11px;font-size:11px;color:#92400e;margin-bottom:14px}
+.card{background:#fff;border:1px solid var(--bdr);border-radius:10px;padding:14px}
+.ct{font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.btn{font-size:11px;padding:4px 11px;border-radius:6px;border:1px solid var(--accent);
+  background:#fff;color:var(--accent);cursor:pointer;transition:background .15s,color .15s}
+.btn:hover,.btn.active{background:var(--accent);color:#fff}
+.btn.hb{border-color:var(--hero);color:var(--hero)}
+.btn.hb:hover,.btn.hb.active{background:var(--hero);color:#fff}
+.brow{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap}
+.tip{position:fixed;background:rgba(15,23,42,.93);color:#f1f5f9;padding:7px 11px;border-radius:7px;
+  font-size:11px;line-height:1.55;pointer-events:none;z-index:999;max-width:230px;white-space:pre-line;transition:opacity .1s}
+.legend{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px;font-size:11px;align-items:center}
+.li{display:flex;align-items:center;gap:5px}
+.ld{width:12px;height:12px;border-radius:2px;flex-shrink:0}
+.flux-ctrl{display:flex;align-items:center;gap:10px;margin:12px 0 6px;flex-wrap:wrap}
+.flux-ctrl .fc-lbl{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.flux-ctrl input[type=range]{width:160px;accent-color:var(--accent);cursor:pointer}
+.flux-ctrl .fc-end{font-size:11px;color:var(--muted);white-space:nowrap}
+#tca-flux-val{font-size:12px;font-weight:600;color:var(--accent);white-space:nowrap}
+.disc{font-size:10px;color:#94a3b8;margin-top:4px}
+
+/* ── Constellation sidebar ── */
+#constellation{
+  position:fixed;right:0;top:0;bottom:0;width:220px;
+  background:#161b22;
+  border-left:1px solid #30363d;
+  z-index:200;
+  display:flex;flex-direction:column;
+  overflow:hidden;
+}
+#constellation h3{
+  font-size:9px;letter-spacing:.12em;text-transform:uppercase;
+  color:#8b949e;padding:14px 12px 8px;
+  border-bottom:1px solid #21262d;
+  flex-shrink:0;
+  margin:0;
+}
+#constellation .csub{
+  font-size:8px;letter-spacing:.06em;text-transform:uppercase;
+  color:#484f58;padding:4px 12px 10px;
+  border-bottom:1px solid #21262d;
+  flex-shrink:0;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+#pw-list{
+  overflow-y:auto;flex:1;padding:6px 0;
+  scrollbar-width:thin;scrollbar-color:#30363d #161b22;
+}
+#pw-list::-webkit-scrollbar{width:4px}
+#pw-list::-webkit-scrollbar-track{background:#161b22}
+#pw-list::-webkit-scrollbar-thumb{background:#30363d;border-radius:2px}
+.pw-token{
+  display:flex;align-items:center;gap:9px;
+  padding:5px 12px;cursor:pointer;
+  border-left:3px solid transparent;
+  transition:background .12s, border-color .12s;
+  user-select:none;
+}
+.pw-token:hover{background:#21262d}
+.pw-token.pinned{
+  border-left-color:#d97706;
+  background:rgba(217,119,6,0.08);
+}
+.pw-badge{
+  width:36px;height:36px;flex-shrink:0;
+  /* SVG drawn by D3 */
+}
+.pw-name{
+  font-size:10px;color:#c9d1d9;line-height:1.3;
+  flex:1;word-break:break-word;
+}
+</style>
+</head>
+<body>
+<nav id="nav">
+  <h2>Scale Levels</h2>
+  <a class="ni active" href="#s1"><span class="nd">1</span>Genome → Gene</a>
+  <div class="nconn"></div>
+  <a class="ni" href="#s2"><span class="nd">2</span>Gene → TCA Pathway</a>
+  <div class="nconn"></div>
+  <a class="ni" href="#s3"><span class="nd">3</span>Mitochondria Interior</a>
+  <div class="nconn"></div>
+  <a class="ni" href="#s3r"><span class="nd">3½</span>Mito: Reactome Groups</a>
+  <div class="nconn"></div>
+  <a class="ni" href="#s4"><span class="nd">4</span>Mito in the Cell</a>
+  <div class="nconn"></div>
+  <a class="ni" href="#s5"><span class="nd">5</span>Across Cell Types</a>
+  <div style="flex:1"></div>
+  <div style="font-size:10px;color:var(--muted);line-height:1.7">
+    Hero: <strong style="color:var(--hero)">SDHA</strong><br>
+    TCA cycle / Complex II<br>Tabula Sapiens blood<br>85,233 cells · 22 types<br>MitoCarta 3.0 · 1,136 genes
+  </div>
+</nav>
+
+<div id="main">
+
+<!-- ══ L1 ══ -->
+<section id="s1">
+  <div class="sh"><span class="sb h">Level 1</span><h1 class="st">Genome → Chromosome 5 → SDHA Sequence</h1></div>
+  <p class="sd">Follow <strong>SDHA</strong> (succinate dehydrogenase subunit A) — a core TCA cycle enzyme and
+  Complex II of the electron transport chain — from its location on chromosome 5p15 to the nucleotide sequence.
+  SDHA is intracellular, residing in the <span style="color:var(--hero);font-weight:600">inner mitochondrial membrane</span>.</p>
+  <div class="g2">
+    <div class="card">
+      <div class="ct">Human Genome · hg38</div>
+      <div class="brow">
+        <button class="btn active" id="btn-genome" onclick="setG('genome')">⊕ Whole Genome</button>
+        <button class="btn hb"     id="btn-chr5"   onclick="setG('chr5')">Chr 5 (SDHA)</button>
+      </div>
+      <div id="gsvg"></div>
+    </div>
+    <div class="card">
+      <div class="ct">SDHA Exon 1 region — scroll to zoom · drag to pan</div>
+      <div id="seqwrap"></div>
+      <div class="legend" id="seqleg"></div>
+    </div>
+  </div>
+  <div class="bridge"><span>🔬</span><span>
+    <strong>Thread to Level 2:</strong> SDHA (gene on chr5p15) encodes the catalytic subunit of
+    succinate dehydrogenase — the enzyme that converts succinate to fumarate in step 6 of the TCA cycle.
+    It is the only TCA enzyme that is also embedded in the inner mitochondrial membrane (as Complex II).
+  </span></div>
+</section>
+
+<!-- ══ L2 ══ -->
+<section id="s2">
+  <div class="sh"><span class="sb h">Level 2</span><h1 class="st">SDHA in the TCA Cycle (Krebs Cycle)</h1></div>
+  <p class="sd">The TCA cycle in the mitochondrial matrix.
+  <span style="color:var(--hero);font-weight:600">SDHA ✦ is the hero enzyme</span> (amber).
+  Every arc uses the same <strong>3-layer width</strong>: faint halo (2×) · thick line (best estimate, blood PSM) · thin line (lower bound — actual expression may be lower).
+  <strong>Particle speed</strong> encodes the flux hypothesis — drag the slider to explore.</p>
+  <div class="warn">⚠️ Arc width = expression range (blood PSM proxy). Particle speed = flux hypothesis. Neither is measured reaction flux.</div>
+  <div class="card"><div id="tca-wrap"></div></div>
+  <div class="flux-ctrl">
+    <span class="fc-lbl">Flux coupling k</span>
+    <span class="fc-end">Equal (0)</span>
+    <input type="range" id="tca-flux" min="0" max="1" step="0.01" value="0">
+    <span class="fc-end">∝ Protein (1)</span>
+    <span id="tca-flux-val"></span>
+  </div>
+  <p class="disc">⚠ Real flux requires ¹³C-MFA or FBA — not derivable from proteomics alone.</p>
+  <div class="legend" style="margin-top:10px">
+    <div class="li"><div class="ld" style="background:#dbeafe;border-radius:50%;border:1.5px solid #0369a1"></div>Metabolite</div>
+    <div class="li"><div class="ld" style="background:var(--blue-hi)"></div>Enzyme arc — 3-layer uniform width</div>
+    <div class="li"><div class="ld" style="background:var(--hero)"></div>SDHA ✦ (hero) — amber, also ETC Complex II</div>
+    <div class="li"><div class="ld" style="background:#7c3aed"></div>NADH output</div>
+    <div class="li"><div class="ld" style="background:#16a34a"></div>Acetyl-CoA input</div>
+    <div class="li" style="color:var(--muted)">Particle speed = flux hypothesis (slider)</div>
+  </div>
+  <div class="bridge"><span>🔬</span><span>
+    <strong>Thread to Level 3:</strong> The TCA cycle is one of many pathways sharing the
+    mitochondrial <em>matrix</em>. SDHA also anchors to the <em>inner membrane</em> as Complex II.
+    The next level zooms into the mitochondrion itself and places each pathway in its correct spatial zone.
+  </span></div>
+</section>
+
+<!-- ══ L3 ══ -->
+<section id="s3">
+  <div class="sh"><span class="sb">Level 3</span><h1 class="st">All Pathways Inside the Mitochondrion</h1></div>
+  <p class="sd">MitoCarta 3.0 pathways detected in two whole-blood cell types (Tabula Sapiens, n=85,233 cells).
+  Each <strong>rectangle</strong> = one MitoCarta pathway — area ∝ mean RNA count across pathway genes in that cell type.
+  <span style="color:var(--hero);font-weight:600">OXPHOS (amber) contains SDHA ✦ (Complex II)</span>. Hover for details.</p>
+  <div class="card" style="display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap">
+    <img src="mito.png" alt="Mitochondrion cross-section (BioRender)" style="width:280px;border-radius:8px;flex-shrink:0;align-self:center">
+    <div style="flex:1;min-width:220px">
+      <div style="font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin-bottom:6px">Neutrophil</div>
+      <svg id="mito-svg-neut"></svg>
+    </div>
+    <div style="flex:1;min-width:220px">
+      <div style="font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin-bottom:6px">Classical Monocyte</div>
+      <svg id="mito-svg"></svg>
+    </div>
+  </div>
+  <div class="legend" style="margin-top:10px">
+    <div class="li"><div class="ld" style="background:var(--hero)"></div>TCA Cycle — contains SDHA ✦ (hero)</div>
+    <div class="li"><div class="ld" style="background:#3b6cb7"></div>Other mitochondrial pathways</div>
+    <div class="li" style="color:var(--muted)">Rectangle area ∝ total PSM counts across pathway genes (PeptideAtlas blood)</div>
+  </div>
+  <div class="bridge"><span>🔬</span><span>
+    <strong>Thread to Level 4:</strong> The mitochondrion is a distinct organelle in the cytoplasm.
+    In actively respiring cells it can occupy ~15–25% of cell volume.
+    The next level places it in the context of all other cellular compartments.
+  </span></div>
+</section>
+
+<!-- ══ L3r — Reactome groups ══ -->
+<section id="s3r">
+  <div class="sh"><span class="sb">Level 3½</span><h1 class="st">Mitochondrial Processes — Reactome Categories</h1></div>
+  <p class="sd">All MitoCarta 3.0 genes grouped into biologically coherent <strong>Reactome pathway categories</strong>.
+  Area ∝ total mean RNA counts across category genes (Tabula Sapiens blood). Same two cell types as Level 3.
+  <span style="color:var(--hero);font-weight:600">Aerobic respiration & ETC (amber) contains SDHA ✦</span>.</p>
+  <div class="card" style="display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap">
+    <img src="mito.png" alt="Mitochondrion (BioRender)" style="width:280px;border-radius:8px;flex-shrink:0;align-self:center">
+    <div style="flex:1;min-width:220px">
+      <div style="font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin-bottom:6px">Neutrophil</div>
+      <svg id="reactome-svg-neut"></svg>
+    </div>
+    <div style="flex:1;min-width:220px">
+      <div style="font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin-bottom:6px">Classical Monocyte</div>
+      <svg id="reactome-svg-mono"></svg>
+    </div>
+  </div>
+  <div class="legend" style="margin-top:10px">
+    <div class="li"><div class="ld" style="background:var(--hero)"></div>Aerobic respiration & ETC — contains SDHA ✦</div>
+    <div class="li"><div class="ld" style="background:#3b6cb7"></div>Other Reactome categories</div>
+    <div class="li" style="color:var(--muted)">Area ∝ total RNA counts · MitoCarta 3.0 × Reactome × Tabula Sapiens</div>
+  </div>
+  <div class="bridge"><span>🔬</span><span>
+    <strong>Thread to Level 4:</strong> These ~15 Reactome categories summarise all mitochondrial function.
+    The next level zooms into each individual MitoCarta pathway (107 tiles at leaf resolution).
+  </span></div>
+</section>
+
+<!-- ══ L4 ══ -->
+<section id="s4">
+  <div class="sh"><span class="sb">Level 4</span><h1 class="st">The Mitochondrion in the Cell</h1></div>
+  <p class="sd">GO Cellular Component compartments — area ∝ mean RNA counts across compartment genes in classical monocyte (Tabula Sapiens).
+  <span style="color:var(--hero);font-weight:600">Mitochondrion (amber) harbours SDHA ✦</span>. Hover for details.</p>
+  <div class="card" style="display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap">
+    <img src="cell.png" alt="Cell cross-section (BioRender)" style="width:280px;border-radius:8px;flex-shrink:0;align-self:center">
+    <div style="flex:1;min-width:260px">
+      <div style="font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin-bottom:6px">Classical Monocyte — GO Cellular Components</div>
+      <svg id="cell-svg"></svg>
+    </div>
+  </div>
+  <div class="legend" style="margin-top:10px">
+    <div class="li"><div class="ld" style="background:var(--hero)"></div>Mitochondrion — SDHA ✦ (hero)</div>
+    <div class="li"><div class="ld" style="background:#3b6cb7"></div>Other cellular compartments</div>
+    <div class="li" style="color:var(--muted)">Rectangle area ∝ mean RNA counts per GO CC term (Tabula Sapiens, classical monocyte)</div>
+  </div>
+  <div class="bridge"><span>🔬</span><span>
+    <strong>Thread to Level 5:</strong> Mitochondrial abundance varies dramatically by cell type.
+    Mature erythrocytes (red blood cells) contain <em>no mitochondria</em> — they rely entirely on glycolysis.
+    Monocytes, NK cells, and hepatocytes have high oxidative phosphorylation activity.
+  </span></div>
+</section>
+
+<!-- ══ L5 ══ -->
+<section id="s5">
+  <div class="sh"><span class="sb">Level 5</span><h1 class="st">Mitochondrial Activity Across Cell Types</h1></div>
+  <p class="sd">Schematic UMAP coloured by <strong>mitochondrial enrichment score</strong>
+  (amber = high OXPHOS activity; blue = low; grey = no mitochondria).
+  Bubble size = total mitochondria-annotated genes detected. Hover for breakdown.</p>
+  <div class="warn">⚠️ Schematic UMAP — positions and scores estimated from published cell-type biology.</div>
+  <div class="card"><div id="ct-plot" style="height:500px"></div></div>
+</section>
+
+</div>
+
+<!-- ══ Constellation sidebar ══ -->
+<aside id="constellation">
+  <h3>Pathway Constellation</h3>
+  <div class="csub" id="cst-level-label">Level 1 · Genome</div>
+  <div id="pw-list"></div>
+</aside>
+
+<div class="tip" id="tip" style="opacity:0"></div>
+
+<script>
+// ── shared ──────────────────────────────────────────
+const tip=document.getElementById('tip');
+function showTip(e,h){tip.innerHTML=h;tip.style.opacity=1;moveTip(e)}
+function moveTip(e){
+  const x=e.clientX+13,y=e.clientY-10;
+  tip.style.left=Math.min(x,window.innerWidth-250)+'px';
+  tip.style.top=Math.max(y,6)+'px';
+}
+function hideTip(){tip.style.opacity=0}
+
+// nav highlight
+document.querySelectorAll('section').forEach(s=>
+  new IntersectionObserver(es=>{
+    if(es[0].isIntersecting){
+      document.querySelectorAll('.ni').forEach(n=>n.classList.remove('active'));
+      const a=document.querySelector(`.ni[href="#${es[0].target.id}"]`);
+      if(a)a.classList.add('active');
+    }
+  },{threshold:0.35}).observe(s));
+
+// ════════════════════════════════════════════════════
+// LEVEL 1
+// ════════════════════════════════════════════════════
+const CHROMS=[
+  {n:'1',l:249,c:125},{n:'2',l:242,c:93},{n:'3',l:198,c:91},
+  {n:'4',l:190,c:50},{n:'5',l:182,c:48,sdha:0.63},{n:'6',l:171,c:61},
+  {n:'7',l:159,c:60},{n:'8',l:145,c:45},{n:'9',l:138,c:49},
+  {n:'10',l:134,c:40},{n:'11',l:136,c:54},{n:'12',l:134,c:36},
+  {n:'13',l:115,c:17},{n:'14',l:107,c:17},{n:'15',l:103,c:19},
+  {n:'16',l:90,c:37},{n:'17',l:83,c:24},{n:'18',l:80,c:18},
+  {n:'19',l:58,c:26},{n:'20',l:63,c:28},{n:'21',l:48,c:12},
+  {n:'22',l:51,c:15},{n:'X',l:156,c:61},{n:'Y',l:57,c:11},
+];
+
+let gState='genome';
+function setG(s){
+  gState=s;
+  ['genome','chr5'].forEach(id=>document.getElementById('btn-'+id).classList.toggle('active',id===s));
+  drawG();
+}
+
+function drawG(){
+  const wrap=document.getElementById('gsvg'); wrap.innerHTML='';
+  if(gState==='genome') drawIdeogram(wrap); else drawChr5(wrap);
+}
+
+function drawIdeogram(wrap){
+  const W=wrap.parentElement.clientWidth-28, H=240;
+  const svg=d3.select(wrap).append('svg').attr('width',W).attr('height',H);
+  const maxL=249,barH=8,rowH=28,top=18;
+  const bS=d3.scaleLinear().domain([0,maxL]).range([0,W*0.92/12]);
+  [CHROMS.slice(0,12),CHROMS.slice(12)].forEach((row,ri)=>{
+    row.forEach((ch,ci)=>{
+      const bw=bS(ch.l), bx=ci*(W/12), y0=top+ri*rowH*2.8;
+      const isS=ch.sdha!=null;
+      const g=svg.append('g').attr('transform',`translate(${bx},${y0})`).style('cursor','pointer');
+      g.append('rect').attr('x',2).attr('y',0).attr('width',bw).attr('height',barH).attr('rx',3)
+        .attr('fill',isS?'#fde68a':'#bfdbfe')
+        .attr('stroke',isS?'#d97706':'#93c5fd').attr('stroke-width',isS?2:.8);
+      // centromere
+      g.append('line').attr('x1',bS(ch.c)+2).attr('x2',bS(ch.c)+2).attr('y1',-1).attr('y2',barH+1)
+        .attr('stroke',isS?'#b45309':'#3b82f6').attr('stroke-width',1.5);
+      if(isS){
+        const ax=bS(ch.sdha)+2;
+        g.append('line').attr('x1',ax).attr('x2',ax).attr('y1',-5).attr('y2',barH+5)
+          .attr('stroke','#d97706').attr('stroke-width',2);
+        g.append('text').attr('x',ax+2).attr('y',-6).attr('font-size',8).attr('fill','#d97706').attr('font-weight','700').text('SDHA');
+      }
+      g.append('text').attr('x',bw/2+2).attr('y',barH+12).attr('text-anchor','middle')
+        .attr('font-size',9).attr('fill',isS?'#92400e':'#475569').attr('font-weight',isS?'700':'400').text(ch.n);
+      g.on('mouseover',e=>showTip(e,`Chr ${ch.n}  ${ch.l} Mb${ch.sdha?'\n▶ SDHA at '+ch.sdha+' Mb':''}`))
+        .on('mousemove',moveTip).on('mouseout',hideTip)
+        .on('click',()=>{if(isS)setG('chr5')});
+    });
+  });
+  svg.append('text').attr('x',W/2).attr('y',H-4).attr('text-anchor','middle')
+    .attr('font-size',10).attr('fill','#64748b').text('Click Chr 5 (amber) to zoom in');
+}
+
+function drawChr5(wrap){
+  const W=wrap.parentElement.clientWidth-28, H=130;
+  const svg=d3.select(wrap).append('svg').attr('width',W).attr('height',H);
+  const ch=CHROMS.find(c=>c.n==='5');
+  const xS=d3.scaleLinear().domain([0,ch.l]).range([40,W-20]);
+  const bY=46,bH=22;
+  svg.append('rect').attr('x',xS(0)).attr('y',bY).attr('width',xS(ch.c)-xS(0)).attr('height',bH)
+    .attr('rx',6).attr('fill','#93c5fd').attr('stroke','#3b82f6').attr('stroke-width',1);
+  svg.append('rect').attr('x',xS(ch.c)).attr('y',bY).attr('width',xS(ch.l)-xS(ch.c)).attr('height',bH)
+    .attr('rx',6).attr('fill','#bfdbfe').attr('stroke','#3b82f6').attr('stroke-width',1);
+  svg.append('ellipse').attr('cx',xS(ch.c)).attr('cy',bY+bH/2).attr('rx',5).attr('ry',bH/2+3).attr('fill','#1d4ed8');
+  // SDHA band
+  const sx=xS(ch.sdha||0.63), sw=Math.max(xS(ch.sdha+0.5||1.13)-sx,4);
+  svg.append('rect').attr('x',sx-2).attr('y',bY-6).attr('width',Math.max(sw,6)).attr('height',bH+12)
+    .attr('rx',3).attr('fill','#d97706').attr('opacity',.92);
+  svg.append('text').attr('x',sx+2).attr('y',bY-12).attr('text-anchor','middle')
+    .attr('font-size',11).attr('font-weight','700').attr('fill','#92400e').text('SDHA (0.63 Mb)');
+  [0,50,100,150,ch.l].forEach(t=>{
+    svg.append('line').attr('x1',xS(t)).attr('x2',xS(t)).attr('y1',bY+bH+2).attr('y2',bY+bH+8).attr('stroke','#94a3b8');
+    svg.append('text').attr('x',xS(t)).attr('y',bY+bH+18).attr('text-anchor','middle')
+      .attr('font-size',9).attr('fill','#64748b').text(t);
+  });
+  svg.append('text').attr('x',W/2).attr('y',16).attr('text-anchor','middle')
+    .attr('font-size',12).attr('font-weight','600').attr('fill','#1e293b').text('Chromosome 5 — SDHA at 0.63 Mb (p15.33)');
+}
+
+// Sequence viewer — SDHA exon 1 region (synthetic, shows key features)
+(function initSeq(){
+  const SEQ =
+    'GCGCGGCGCCGGCGCCCAGCGCCGGCGCCCAGCGCCGGCGTCCAGCGCC'+ // 0-49 5UTR
+    'GCCACC'+                                              // 50-55 Kozak
+    'ATG'+                                                 // 56-58 Start
+    'GCGCTGCGGCGGCGGCTGCGGCTGCGGGCGCGCCTGCGGCGCAGGCGA'+ // 59-107 MTS (mitochondrial targeting seq, 24aa)
+    'GCCGAGTTCGTGGAGCGGATCAACGACTACCTCAAGGGCTTCAAGAAG'+ // 108-155 FAD binding domain start
+    'GT'+                                                  // 156-157 donor
+    'AGTAGTACGCGGCGGTTGTGGCGGGCGGCGTCGACGGAGGCGGTGGCA'+ // 158-205 intron
+    'AG'+                                                  // 206-207 acceptor
+    'ATCCTGGAGAAGCTGCAGCAGGCGATGGAGCAGTTCAAGAAGATCGAG'+ // 208-255 exon 2
+    'AATAAA'+                                             // 256-261 polyA
+    'GCTTCTGAGCAGAAGTACATCTTCACCGAGCTGGAGAAGGACATCGAG'; // 262-309 3UTR
+
+  const ANNS=[
+    {name:"5' UTR",     start:0,  end:50, color:'#93c5fd'},
+    {name:'Kozak',      start:50, end:56, color:'#fde68a'},
+    {name:'ATG',        start:56, end:59, color:'#f97316'},
+    {name:'Mito. Target Seq.',start:59,end:108,color:'#d97706',bold:true},
+    {name:'FAD domain', start:108,end:156,color:'#bbf7d0'},
+    {name:'GT Donor',   start:156,end:158,color:'#a855f7'},
+    {name:'Intron',     start:156,end:208,color:'#e2e8f0'},
+    {name:'AG Acceptor',start:206,end:208,color:'#a855f7'},
+    {name:'Exon 2',     start:208,end:256,color:'#bbf7d0'},
+    {name:'Poly-A Sig.',start:256,end:262,color:'#fca5a5'},
+    {name:"3' UTR",     start:262,end:310,color:'#93c5fd'},
+  ];
+  const layerMap={"5' UTR":2,'Kozak':0,'ATG':1,'Mito. Target Seq.':0,'FAD domain':1,
+    'GT Donor':1,'Intron':2,'AG Acceptor':1,'Exon 2':0,'Poly-A Sig.':0,"3' UTR":2};
+  const ntC={A:'#3b82f6',T:'#ef4444',G:'#f59e0b',C:'#10b981'};
+
+  const wrap=document.getElementById('seqwrap');
+  const W=wrap.parentElement.clientWidth-28;
+  const m={top:72,right:12,bottom:22,left:44};
+  const iW=W-m.left-m.right, iH=55, H=iH+m.top+m.bottom;
+
+  const svg=d3.select(wrap).append('svg').attr('width',W).attr('height',H);
+  svg.append('defs').append('clipPath').attr('id','sc').append('rect').attr('width',iW).attr('height',H);
+  const g=svg.append('g').attr('transform',`translate(${m.left},${m.top})`);
+  const seqG=g.append('g').attr('clip-path','url(#sc)');
+  const annG=g.append('g').attr('transform',`translate(0,${-m.top+4})`);
+  const axG=g.append('g').attr('transform',`translate(0,${iH})`);
+  let xB=d3.scaleLinear().domain([0,SEQ.length]).range([0,iW]);
+
+  function draw(xS){
+    annG.selectAll('*').remove();
+    ANNS.forEach(a=>{
+      const ly=layerMap[a.name]??0, x1=xS(a.start), x2=xS(a.end), w=Math.max(x2-x1,1), y=ly*20;
+      const ag=annG.append('g');
+      ag.append('rect').attr('x',x1).attr('y',y).attr('width',w).attr('height',15).attr('rx',2)
+        .attr('fill',a.color).attr('opacity',.88)
+        .attr('stroke',a.bold?'#c2410c':'none').attr('stroke-width',a.bold?1.5:0);
+      if(w>22) ag.append('text').attr('x',x1+2).attr('y',y+10).attr('font-size',8.5)
+        .attr('fill','#1e293b').attr('font-weight',a.bold?'700':'400').text(a.name);
+    });
+    const bpW=xS(1)-xS(0);
+    const lo=Math.max(0,Math.floor(xS.invert(0))), hi=Math.min(SEQ.length,Math.ceil(xS.invert(iW)));
+    seqG.selectAll('*').remove();
+    if(bpW<2){
+      seqG.selectAll('rect').data(SEQ.slice(lo,hi).split('')).join('rect')
+        .attr('x',(_,i)=>xS(lo+i)).attr('y',0).attr('width',Math.max(bpW,.5)).attr('height',iH)
+        .attr('fill',d=>ntC[d]||'#999').attr('opacity',.55);
+    } else {
+      const ns=seqG.selectAll('g.nt').data(SEQ.slice(lo,hi).split('')).join('g')
+        .attr('class','nt').attr('transform',(_,i)=>`translate(${xS(lo+i)},0)`);
+      ns.append('rect').attr('width',bpW-.5).attr('height',iH).attr('fill',d=>ntC[d]||'#999').attr('opacity',.22);
+      if(bpW>8) ns.append('text').attr('x',bpW/2).attr('y',iH/2+5).attr('text-anchor','middle')
+        .attr('font-size',Math.min(bpW-2,13)).attr('font-family','monospace').attr('font-weight','600')
+        .attr('fill',d=>ntC[d]||'#333').attr('pointer-events','none').text(d=>d);
+    }
+    axG.call(d3.axisBottom(xS).ticks(8).tickFormat(d=>`bp${Math.round(d)}`).tickSize(3));
+    axG.select('.domain').remove();
+    axG.selectAll('text').attr('font-size',8).attr('fill','#94a3b8');
+  }
+  draw(xB);
+  svg.call(d3.zoom().scaleExtent([1,SEQ.length/2]).translateExtent([[0,0],[iW,0]])
+    .on('zoom',e=>draw(e.transform.rescaleX(xB))));
+
+  const leg=document.getElementById('seqleg');
+  ANNS.slice(0,8).forEach(a=>{
+    const d=document.createElement('div'); d.className='li';
+    d.innerHTML=`<div class="ld" style="background:${a.color};border-radius:2px"></div><span>${a.name}</span>`;
+    leg.appendChild(d);
+  });
+  Object.entries(ntC).forEach(([n,c])=>{
+    const d=document.createElement('div'); d.className='li';
+    d.innerHTML=`<div class="ld" style="background:${c};border-radius:2px"></div><span>${n}</span>`;
+    leg.appendChild(d);
+  });
+})();
+
+setTimeout(drawG,50);
+
+// ════════════════════════════════════════════════════
+// LEVEL 2 — TCA Cycle (D3 circular arcs + particle flux animation)
+// ════════════════════════════════════════════════════
+(function initTCA(){
+  const wrap = document.getElementById('tca-wrap');
+  const W = wrap.parentElement.clientWidth - 28;
+  const H = 500;
+  const cx = W/2, cy = H/2;
+  const R   = Math.min(W,H) * 0.285;
+  const Rl  = R * 1.40;
+  const nodeR = 29;
+  const maxPSM = 300;
+
+  // ── visual constants (UNIFORM — no PSM in arc width) ──
+  const HALO_W = 10;   // outer halo = 2× MID_W
+  const MID_W  = 5;    // best-estimate line
+  const LOW_W  = 1.5;  // lower bound ("actual expression could be lower")
+
+  // ── flux / speed ──────────────────────────────────
+  const BASE_SPD = 0.28; // cycles/sec at k=0 (all equal)
+  function getSpeed(norm, k){
+    const f = 0.4 + norm * 1.6;  // 0.4→2.0 across PSM range
+    return BASE_SPD * (1 + (f - 1) * k);
+  }
+
+  const svg = d3.select('#tca-wrap').append('svg').attr('width',W).attr('height',H);
+
+  // ── arrowhead markers ─────────────────────────────
+  const defs = svg.append('defs');
+  [['arr','#94a3b8'],['arrH','#d97706'],['arrG','#16a34a']].forEach(([id,col])=>{
+    defs.append('marker').attr('id',id)
+      .attr('viewBox','0 -4 8 8').attr('refX',6).attr('refY',0)
+      .attr('markerWidth',5).attr('markerHeight',5).attr('orient','auto')
+      .append('path').attr('d','M0,-4L8,0L0,4').attr('fill',col);
+  });
+
+  // ── metabolites ───────────────────────────────────
+  const mets=[
+    {id:'OAA',  lines:['Oxalo-','acetate']},
+    {id:'Cit',  lines:['Citrate']},
+    {id:'Iso',  lines:['Iso-','citrate']},
+    {id:'aKG',  lines:['α-Keto-','glutarate']},
+    {id:'SCoA', lines:['Succinyl-','CoA']},
+    {id:'Suc',  lines:['Succinate']},
+    {id:'Fum',  lines:['Fumarate']},
+    {id:'Mal',  lines:['Malate']},
+  ];
+  mets.forEach((m,i)=>{
+    m.a = -Math.PI/2 + i*2*Math.PI/8;
+    m.x = cx + R*Math.cos(m.a);
+    m.y = cy + R*Math.sin(m.a);
+  });
+  const byId = Object.fromEntries(mets.map(m=>[m.id,m]));
+
+  // ── reactions ─────────────────────────────────────
+  const rxns=[
+    {s:'OAA', t:'Cit',  enz:'CS',     psm:150, tip:'Citrate synthase\nOAA + Acetyl-CoA → Citrate\nPSM: 150'},
+    {s:'Cit', t:'Iso',  enz:'ACO2',   psm:200, tip:'Aconitase 2\nCitrate → Isocitrate\nPSM: 200'},
+    {s:'Iso', t:'aKG',  enz:'IDH2',   psm:150, tip:'Isocitrate DH 2\nIsocitrate → α-KG\n→ NADH + CO₂\nPSM: 150'},
+    {s:'aKG', t:'SCoA', enz:'OGDH',   psm:100, tip:'α-KG dehydrogenase\nα-KG → Succinyl-CoA\n→ NADH + CO₂\nPSM: 100'},
+    {s:'SCoA',t:'Suc',  enz:'SUCLA2', psm:80,  tip:'Succinyl-CoA synthetase\nSuccinyl-CoA → Succinate\n→ GTP  PSM: 80'},
+    {s:'Suc', t:'Fum',  enz:'SDHA ✦', psm:220, tip:'Succinate dehydrogenase\nSuccinate → Fumarate\n= Complex II of ETC!\n→ FADH₂ (directly to ETC)\nPSM: 220', hero:true},
+    {s:'Fum', t:'Mal',  enz:'FH',     psm:180, tip:'Fumarate hydratase\nFumarate → Malate\nPSM: 180'},
+    {s:'Mal', t:'OAA',  enz:'MDH2',   psm:300, tip:'Malate DH 2\nMalate → Oxaloacetate\n→ NADH\nPSM: 300 (highest in blood)'},
+  ];
+
+  const colE = d3.scaleSequential(d3.interpolate('#93c5fd','#1a3c6e')).domain([0,1]);
+
+  // ── animation bookkeeping ─────────────────────────
+  const allParticles = [];
+  const arcParticles = [];  // arcParticles[ri] = [{t,speed,pathNode,dotSel}, ...]
+  const pendingDots  = [];  // dots created after nodes so they render on top
+
+  // ── 1. arc layers + hit areas ─────────────────────
+  rxns.forEach((r, ri)=>{
+    const src=byId[r.s], tgt=byId[r.t];
+    const norm=r.psm/maxPSM;
+    const col = r.hero ? '#d97706' : colE(norm);
+    const arrId = r.hero ? 'arrH' : 'arr';
+    const d = `M${src.x} ${src.y} A${R} ${R} 0 0 1 ${tgt.x} ${tgt.y}`;
+
+    // Halo (2× inner width)
+    svg.append('path').attr('d',d)
+      .attr('fill','none').attr('stroke',col)
+      .attr('stroke-width',HALO_W).attr('opacity',0.10)
+      .attr('stroke-linecap','round');
+
+    // Best-estimate line
+    svg.append('path').attr('d',d)
+      .attr('fill','none').attr('stroke',col)
+      .attr('stroke-width',MID_W).attr('opacity',0.55)
+      .attr('stroke-linecap','round')
+      .attr('marker-end',`url(#${arrId})`);
+
+    // Lower-bound line ("actual expression could be lower")
+    svg.append('path').attr('d',d)
+      .attr('fill','none').attr('stroke',col)
+      .attr('stroke-width',LOW_W).attr('opacity',1.0)
+      .attr('stroke-linecap','round');
+
+    // Invisible track path for getPointAtLength
+    const trackNode = svg.append('path').attr('d',d)
+      .attr('fill','none').attr('stroke','none').node();
+
+    // Tooltip hit area
+    svg.append('path').attr('d',d)
+      .attr('fill','none').attr('stroke','transparent')
+      .attr('stroke-width',HALO_W+8).style('cursor','pointer')
+      .on('mouseover',e=>{
+        const k=+document.getElementById('tca-flux').value;
+        const spd=getSpeed(norm,k);
+        showTip(e, r.tip +
+          `\n\nFlux k=${k.toFixed(2)}: ${spd.toFixed(3)} cyc/s (${(1/spd).toFixed(1)} s/cycle)` +
+          `\nLower bound: actual expression may be lower than blood PSM`);
+      })
+      .on('mousemove',moveTip).on('mouseout',hideTip);
+
+    arcParticles.push([]);
+    for(let i=0;i<2;i++) pendingDots.push({ri, t_init:i/2, trackNode, norm});
+  });
+
+  // ── 2. co-factor output labels (inside ring) ──────
+  const outputs=[
+    {ri:2, label:'NADH\n+CO₂', col:'#7c3aed'},
+    {ri:3, label:'NADH\n+CO₂', col:'#7c3aed'},
+    {ri:4, label:'GTP',         col:'#16a34a'},
+    {ri:5, label:'FADH₂\n→CII', col:'#d97706'},
+    {ri:7, label:'NADH',        col:'#7c3aed'},
+  ];
+  outputs.forEach(o=>{
+    const r=rxns[o.ri];
+    const src=byId[r.s], tgt=byId[r.t];
+    let a1=src.a, a2=tgt.a;
+    if(a1>a2) a2+=2*Math.PI;
+    const midA=(a1+a2)/2;
+    const innerR=R*0.52;
+    const lx=cx+innerR*Math.cos(midA), ly=cy+innerR*Math.sin(midA);
+    o.label.split('\n').forEach((ln,i,arr)=>{
+      svg.append('text').attr('x',lx).attr('y',ly+(i-(arr.length-1)/2)*11+3)
+        .attr('text-anchor','middle').attr('font-size',8).attr('fill',o.col)
+        .attr('font-weight','600').text(ln);
+    });
+  });
+
+  // ── 3. Acetyl-CoA input ───────────────────────────
+  const csA=(-Math.PI/2 + -Math.PI/4)/2;
+  const acX=cx+(Rl+52)*Math.cos(csA), acY=cy+(Rl+52)*Math.sin(csA);
+  const arrowEndX=cx+(R+nodeR+4)*Math.cos(csA), arrowEndY=cy+(R+nodeR+4)*Math.sin(csA);
+  svg.append('line').attr('x1',acX).attr('y1',acY+18).attr('x2',arrowEndX).attr('y2',arrowEndY)
+    .attr('stroke','#16a34a').attr('stroke-width',2).attr('stroke-dasharray','5,2')
+    .attr('marker-end','url(#arrG)');
+  svg.append('text').attr('x',acX).attr('y',acY-2).attr('text-anchor','middle')
+    .attr('font-size',9).attr('font-weight','600').attr('fill','#166534').text('Acetyl-CoA');
+  svg.append('text').attr('x',acX).attr('y',acY+10).attr('text-anchor','middle')
+    .attr('font-size',8).attr('fill','#64748b').text('(glycolysis / FAO)');
+
+  // ── 4. metabolite nodes ───────────────────────────
+  mets.forEach(m=>{
+    const g=svg.append('g').attr('transform',`translate(${m.x},${m.y})`);
+    g.append('circle').attr('r',nodeR).attr('fill','#f0f9ff')
+      .attr('stroke','#0369a1').attr('stroke-width',2);
+    m.lines.forEach((ln,i,arr)=>{
+      g.append('text').attr('text-anchor','middle').attr('font-size',8).attr('fill','#0f172a')
+        .attr('y',(i-(arr.length-1)/2)*10+3.5).text(ln);
+    });
+  });
+
+  // ── 5. enzyme labels ──────────────────────────────
+  rxns.forEach((r,ri)=>{
+    const src=byId[r.s], tgt=byId[r.t];
+    const norm=r.psm/maxPSM;
+    let a1=src.a, a2=tgt.a;
+    if(a1>a2) a2+=2*Math.PI;
+    const midA=(a1+a2)/2;
+    const lx=cx+Rl*Math.cos(midA), ly=cy+Rl*Math.sin(midA);
+
+    const lg=svg.append('g').style('cursor','pointer')
+      .on('mouseover',e=>{
+        const k=+document.getElementById('tca-flux').value;
+        const spd=getSpeed(norm,k);
+        showTip(e, r.tip +
+          `\n\nFlux k=${k.toFixed(2)}: ${spd.toFixed(3)} cyc/s (${(1/spd).toFixed(1)} s/cycle)`);
+      })
+      .on('mousemove',moveTip).on('mouseout',hideTip);
+
+    if(r.hero){
+      lg.append('rect').attr('x',lx-28).attr('y',ly-11).attr('width',56).attr('height',22)
+        .attr('rx',5).attr('fill','#fef3c7').attr('stroke','#d97706').attr('stroke-width',2);
+    }
+    lg.append('text').attr('x',lx).attr('y',ly+4.5)
+      .attr('text-anchor','middle').attr('font-size',r.hero?11:9.5)
+      .attr('font-weight',r.hero?'700':'500').attr('fill',r.hero?'#92400e':'#1e293b')
+      .text(r.enz);
+  });
+
+  // ── 6. particle dots (drawn last = on top of nodes) ──
+  pendingDots.forEach(pd=>{
+    const r=rxns[pd.ri];
+    const col = r.hero ? '#d97706' : colE(pd.norm);
+    const dot = svg.append('circle')
+      .attr('r',3.5).attr('fill',col).attr('opacity',0.88)
+      .attr('pointer-events','none');
+    const pObj={t:pd.t_init, speed:BASE_SPD, pathNode:pd.trackNode, dotSel:dot};
+    allParticles.push(pObj);
+    arcParticles[pd.ri].push(pObj);
+  });
+
+  // ── 7. title ──────────────────────────────────────
+  svg.append('text').attr('x',cx).attr('y',22)
+    .attr('text-anchor','middle').attr('font-size',13).attr('font-weight','700').attr('fill','#1e293b')
+    .text('TCA Cycle (Krebs Cycle) · Homo sapiens · Mitochondrial Matrix');
+  svg.append('text').attr('x',cx).attr('y',36)
+    .attr('text-anchor','middle').attr('font-size',9.5).attr('fill','#64748b')
+    .text('3-layer arc = expression range  ·  particle speed = flux hypothesis (slider)  ·  SDHA ✦ amber');
+
+  // ── 8. animation loop ─────────────────────────────
+  let lastTs=null;
+  (function animLoop(ts){
+    if(lastTs!==null){
+      const dt=Math.min((ts-lastTs)/1000, 0.05);
+      allParticles.forEach(p=>{
+        p.t=(p.t+p.speed*dt)%1;
+        const len=p.pathNode.getTotalLength();
+        const pt=p.pathNode.getPointAtLength(p.t*len);
+        p.dotSel.attr('cx',pt.x).attr('cy',pt.y);
+      });
+    }
+    lastTs=ts;
+    requestAnimationFrame(animLoop);
+  })(0);
+
+  // ── 9. slider wiring ──────────────────────────────
+  const fluxSlider=document.getElementById('tca-flux');
+  const fluxValEl =document.getElementById('tca-flux-val');
+
+  function fluxLabel(k){
+    if(k<0.02) return 'k = 0.00 — equal speed · no flux claim';
+    if(k<0.25) return `k = ${k.toFixed(2)} — slight PSM bias`;
+    if(k<0.55) return `k = ${k.toFixed(2)} — moderate coupling`;
+    if(k<0.85) return `k = ${k.toFixed(2)} — strong coupling`;
+    return            `k = ${k.toFixed(2)} — speed ∝ protein (max)`;
+  }
+
+  function updateSpeeds(k){
+    fluxValEl.textContent=fluxLabel(k);
+    rxns.forEach((r,ri)=>{
+      const spd=getSpeed(r.psm/maxPSM, k);
+      arcParticles[ri].forEach(p=>p.speed=spd);
+    });
+  }
+
+  fluxSlider.addEventListener('input', e=>updateSpeeds(+e.target.value));
+  updateSpeeds(0);
+})();
+
+// ════════════════════════════════════════════════════
+// LEVEL 3 — Mitochondrial pathways (Tabula Sapiens)
+// ════════════════════════════════════════════════════
+(function initMito(){
+  const H = 360;
+  const getW = id => {
+    const el = document.getElementById(id);
+    return Math.max(200, Math.min(el.parentElement.clientWidth - 4, 360));
+  };
+
+  // ── shared pathway data: MitoCarta 3.0 × Tabula Sapiens blood ──────────
+  // neutrophil / monocyte = mean RNA count summed across MitoCarta pathway genes
+  const pwData = [
+    {name:"OXPHOS subunits",                    neutrophil:29.604, monocyte:90.397, hero:true},
+    {name:"CI subunits",                         neutrophil:11.431, monocyte:34.018},
+    {name:"CIV subunits",                        neutrophil:8.689,  monocyte:24.209},
+    {name:"CV subunits",                         neutrophil:5.901,  monocyte:19.839},
+    {name:"Mitochondrial ribosome",              neutrophil:1.894,  monocyte:15.711},
+    {name:"OXPHOS assembly factors",             neutrophil:3.075,  monocyte:12.275},
+    {name:"Unclassified",                        neutrophil:6.767,  monocyte:12.213},
+    {name:"ROS & glutathione",                   neutrophil:6.251,  monocyte:12.149},
+    {name:"CIII subunits",                       neutrophil:3.060,  monocyte:10.420},
+    {name:"Apoptosis",                           neutrophil:7.511,  monocyte:9.112},
+    {name:"SLC25A carriers",                     neutrophil:5.194,  monocyte:9.096},
+    {name:"Fatty acid oxidation",                neutrophil:4.915,  monocyte:9.079},
+    {name:"Heme-containing proteins",            neutrophil:3.062,  monocyte:8.798},
+    {name:"Phospholipid metabolism",             neutrophil:5.715,  monocyte:7.642},
+    {name:"TCA cycle",                           neutrophil:1.807,  monocyte:6.312},
+    {name:"Fe-S proteins",                       neutrophil:1.620,  monocyte:6.284},
+    {name:"Iron homeostasis",                    neutrophil:6.184,  monocyte:4.409},
+    {name:"Autophagy",                           neutrophil:2.854,  monocyte:6.165},
+    {name:"Proteases",                           neutrophil:1.891,  monocyte:5.941},
+    {name:"CIV assembly factors",                neutrophil:1.222,  monocyte:5.626},
+    {name:"Nucleotide synthesis",                neutrophil:1.787,  monocyte:5.349},
+    {name:"Mitophagy",                           neutrophil:2.273,  monocyte:5.210},
+    {name:"Lipid metabolism",                    neutrophil:1.998,  monocyte:4.775},
+    {name:"BCAA metabolism",                     neutrophil:1.313,  monocyte:4.710},
+    {name:"Calcium cycle",                       neutrophil:2.343,  monocyte:4.680},
+    {name:"Xenobiotic metabolism",               neutrophil:1.331,  monocyte:4.671},
+    {name:"Selenoproteins",                      neutrophil:1.041,  monocyte:4.305},
+    {name:"EF hand proteins",                    neutrophil:2.424,  monocyte:4.200},
+    {name:"Small molecule transport",            neutrophil:0.987,  monocyte:3.945},
+    {name:"Cardiolipin synthesis",               neutrophil:2.685,  monocyte:3.864},
+    {name:"Cholesterol/bile acid synth.",        neutrophil:2.176,  monocyte:3.849},
+    {name:"Fe-S cluster biosynthesis",           neutrophil:0.926,  monocyte:3.834},
+    {name:"Cytochromes",                         neutrophil:1.259,  monocyte:3.792},
+    {name:"Signaling",                           neutrophil:1.799,  monocyte:3.293},
+    {name:"Lysine metabolism",                   neutrophil:1.100,  monocyte:3.285},
+    {name:"Calcium uniporter",                   neutrophil:1.869,  monocyte:3.277},
+    {name:"Chaperones",                          neutrophil:1.476,  monocyte:3.267},
+    {name:"mtRNA granules",                      neutrophil:0.380,  monocyte:3.162},
+    {name:"CI assembly factors",                 neutrophil:0.718,  monocyte:3.141},
+    {name:"Cristae formation",                   neutrophil:0.859,  monocyte:3.092},
+    {name:"Organelle contact sites",             neutrophil:1.646,  monocyte:3.026},
+    {name:"mt-tRNA synthetases",                 neutrophil:0.852,  monocyte:3.004},
+    {name:"mtRNA stability/decay",               neutrophil:0.336,  monocyte:2.817},
+    {name:"TOM complex",                         neutrophil:0.394,  monocyte:2.800},
+    {name:"mt-tRNA modifications",               neutrophil:0.557,  monocyte:2.711},
+    {name:"Pyruvate metabolism",                 neutrophil:1.297,  monocyte:2.687},
+    {name:"Translation factors",                 neutrophil:0.500,  monocyte:2.643},
+    {name:"Copper metabolism",                   neutrophil:0.734,  monocyte:2.550},
+    {name:"Fission",                             neutrophil:0.842,  monocyte:2.546},
+    {name:"Mitoribosome assembly",               neutrophil:0.421,  monocyte:2.475},
+    {name:"TCA-associated",                      neutrophil:1.080,  monocyte:2.427},
+    {name:"Nucleotide import",                   neutrophil:0.429,  monocyte:2.418},
+    {name:"Respirasome assembly",                neutrophil:0.841,  monocyte:2.363},
+    {name:"Q-linked reactions",                  neutrophil:0.834,  monocyte:2.255},
+    {name:"MICOS complex",                       neutrophil:0.268,  monocyte:2.155},
+    {name:"Protein import/sorting",              neutrophil:1.314,  monocyte:2.115},
+    {name:"Translation",                         neutrophil:0.437,  monocyte:2.084},
+    {name:"Preprotein cleavage",                 neutrophil:0.408,  monocyte:2.072},
+    {name:"mtDNA replication",                   neutrophil:0.596,  monocyte:2.051},
+    {name:"MTP pore",                            neutrophil:0.190,  monocyte:1.915},
+    {name:"Fusion",                              neutrophil:0.934,  monocyte:1.911},
+    {name:"Sulfur metabolism",                   neutrophil:1.508,  monocyte:1.896},
+    {name:"Coenzyme Q metabolism",               neutrophil:1.206,  monocyte:1.707},
+    {name:"Malate-aspartate shuttle",            neutrophil:0.441,  monocyte:1.608},
+    {name:"mt-rRNA modifications",               neutrophil:0.222,  monocyte:1.599},
+    {name:"Polycistronic mtRNA",                 neutrophil:0.170,  monocyte:1.581},
+    {name:"Protein homeostasis",                 neutrophil:0.840,  monocyte:1.574},
+    {name:"Itaconate metabolism",                neutrophil:0.479,  monocyte:1.530},
+    {name:"Intramito. membrane",                 neutrophil:0.263,  monocyte:1.511},
+    {name:"Folate/1-C metabolism",               neutrophil:0.758,  monocyte:1.503},
+    {name:"Glycine metabolism",                  neutrophil:0.384,  monocyte:1.470},
+    {name:"Gluconeogenesis",                     neutrophil:0.371,  monocyte:1.456},
+    {name:"Import motor",                        neutrophil:0.201,  monocyte:1.437},
+    {name:"CII subunits",                        neutrophil:0.480,  monocyte:1.418},
+    {name:"TIM23 pathway",                       neutrophil:0.350,  monocyte:1.408},
+    {name:"Heme synthesis",                      neutrophil:0.197,  monocyte:1.381},
+    {name:"mtDNA nucleoid",                      neutrophil:0.274,  monocyte:1.377},
+    {name:"Ketone metabolism",                   neutrophil:0.430,  monocyte:1.360},
+    {name:"Trafficking",                         neutrophil:0.731,  monocyte:1.349},
+    {name:"Glutamate metabolism",                neutrophil:0.666,  monocyte:1.347},
+    {name:"cAMP-PKA signaling",                  neutrophil:1.051,  monocyte:1.288},
+    {name:"NAD metabolism",                      neutrophil:0.585,  monocyte:1.265},
+    {name:"Type II FA synthesis",                neutrophil:0.209,  monocyte:1.154},
+    {name:"GABA metabolism",                     neutrophil:0.327,  monocyte:1.136},
+    {name:"Amidoxime reducing",                  neutrophil:0.546,  monocyte:1.054},
+    {name:"Choline/betaine",                     neutrophil:0.187,  monocyte:1.020},
+    {name:"mtDNA repair",                        neutrophil:0.209,  monocyte:0.999},
+    {name:"ABC transporters",                    neutrophil:0.128,  monocyte:0.970},
+    {name:"Catechol metabolism",                 neutrophil:0.376,  monocyte:0.918},
+    {name:"Molybdenum cofactor",                 neutrophil:0.444,  monocyte:0.906},
+    {name:"Cholesterol-associated",              neutrophil:0.869,  monocyte:0.706},
+    {name:"Urea cycle",                          neutrophil:0.301,  monocyte:0.863},
+    {name:"Carnitine synthesis",                 neutrophil:0.427,  monocyte:0.854},
+    {name:"Mito dynamics",                       neutrophil:0.158,  monocyte:0.848},
+    {name:"Coenzyme A metabolism",               neutrophil:0.553,  monocyte:0.835},
+    {name:"Glyoxylate metabolism",               neutrophil:0.052,  monocyte:0.831},
+    {name:"Transcription",                       neutrophil:0.141,  monocyte:0.814},
+    {name:"Biotin proteins",                     neutrophil:0.113,  monocyte:0.803},
+    {name:"BCAA dehydrogenase",                  neutrophil:0.262,  monocyte:0.783},
+    {name:"CIII assembly factors",               neutrophil:0.083,  monocyte:0.757},
+    {name:"Sideroflexins",                       neutrophil:0.416,  monocyte:0.713},
+    {name:"Eicosanoid metabolism",               neutrophil:0.012,  monocyte:0.684},
+    {name:"Immune response",                     neutrophil:0.201,  monocyte:0.661},
+    {name:"Carnitine shuttle",                   neutrophil:0.139,  monocyte:0.623},
+    {name:"Glycerol-P shuttle",                  neutrophil:0.215,  monocyte:0.608},
+    {name:"CV assembly factors",                 neutrophil:0.142,  monocyte:0.586},
+    {name:"Propanoate metabolism",               neutrophil:0.057,  monocyte:0.583},
+  ];
+
+  // ── shared draw function ──────────────────────────
+  function drawGrid(svgId, field) {
+    const W = getW(svgId);
+    const svg = d3.select('#'+svgId).attr('width', W).attr('height', H);
+    const root = d3.hierarchy({name:'mito', children: pwData.map(d=>({...d, n:d[field]}))}).sum(d=>d.n);
+    d3.treemap().size([W, H-16]).padding(2).round(true)(root);
+
+    svg.selectAll('rect').data(root.leaves()).join('rect')
+      .attr('x',d=>d.x0).attr('y',d=>d.y0)
+      .attr('width',d=>d.x1-d.x0).attr('height',d=>d.y1-d.y0)
+      .attr('fill',d=>d.data.hero?'#d97706':'#3b6cb7')
+      .attr('stroke','#fff').attr('stroke-width',1.5)
+      .attr('rx',2).attr('opacity',.90)
+      .style('cursor','pointer')
+      .on('mouseover',(e,d)=>showTip(e,
+        `${d.data.name}\nNeutrophil: ${d.data.neutrophil}\nMonocyte: ${d.data.monocyte}${d.data.hero?'\n✦ includes SDHA (Complex II)':''}`))
+      .on('mousemove',moveTip).on('mouseout',hideTip);
+
+    svg.selectAll('g.pl').data(root.leaves()).join('g').attr('class','pl')
+      .each(function(d){
+        const tw=d.x1-d.x0, th=d.y1-d.y0;
+        if(tw<22||th<13) return;
+        const fs=Math.max(6,Math.min(10,tw/5.5,th/2.4));
+        const lines=d.data.name.split(' ').reduce((acc,w)=>{
+          const last=acc[acc.length-1];
+          if(last&&(last+' '+w).length<=14) acc[acc.length-1]=last+' '+w;
+          else acc.push(w);
+          return acc;
+        },['']);
+        const mx=(d.x0+d.x1)/2, my=(d.y0+d.y1)/2;
+        const yTop=my-(lines.length-1)*fs*0.65;
+        lines.forEach((ln,i)=>{
+          d3.select(this).append('text')
+            .attr('x',mx).attr('y',yTop+i*fs*1.3)
+            .attr('text-anchor','middle').attr('dominant-baseline','middle')
+            .attr('pointer-events','none').attr('font-size',fs)
+            .attr('font-weight',d.data.hero?'700':'400')
+            .attr('fill','#fff').text(ln);
+        });
+      });
+
+    svg.append('text').attr('x',W/2).attr('y',H-3)
+      .attr('text-anchor','middle').attr('font-size',8).attr('fill','#64748b').attr('font-style','italic')
+      .text('area ∝ mean RNA counts · Tabula Sapiens');
+  }
+
+  drawGrid('mito-svg-neut', 'neutrophil');
+  drawGrid('mito-svg',      'monocyte');
+
+})();
+
+// ════════════════════════════════════════════════════
+// LEVEL 3r — Reactome pathway categories
+// ════════════════════════════════════════════════════
+(function initReactome(){
+  const H = 360;
+  const getW = id => Math.max(200, Math.min(document.getElementById(id).parentElement.clientWidth - 4, 360));
+
+  // Reactome subgroup totals for MitoCarta genes — neutrophil / classical monocyte
+  // Source: Reactome pathway hierarchy × MitoCarta 3.0 × Tabula Sapiens blood
+  const groups = [
+    {name:'Aerobic Resp.\n& ETC',       neutrophil:104.9, monocyte:324.4, hero:true,
+     note:'Reactome: Aerobic respiration and respiratory electron transport\nNeut=104.9 · Mono=324.4\n✦ Includes SDHA (Complex II), TCA cycle, OXPHOS'},
+    {name:'Translation',                neutrophil: 65.3, monocyte:217.4,
+     note:'Reactome: Translation\nNeut=65.3 · Mono=217.4\nIncludes mitochondrial ribosome and mt-tRNA'},
+    {name:'Lipid\nMetabolism',          neutrophil: 85.7, monocyte:161.3,
+     note:'Reactome: Metabolism of lipids\nNeut=85.7 · Mono=161.3\nFatty acid oxidation, phospholipids, cardiolipin'},
+    {name:'Transcription',              neutrophil: 69.3, monocyte:144.5,
+     note:'Reactome: RNA Polymerase II Transcription\nNeut=69.3 · Mono=144.5\nIncludes mitochondrial transcription factors'},
+    {name:'Stress\nResponse',           neutrophil: 50.0, monocyte:115.2,
+     note:'Reactome: Cellular responses to stress\nNeut=50.0 · Mono=115.2\nROS handling, heat shock, antioxidant defence'},
+    {name:'Protein\nHomeostasis',       neutrophil: 48.8, monocyte:148.7,
+     note:'Reactome: Metabolism of proteins + Mitochondrial protein degradation\nNeut=48.8 · Mono=148.7\nImport, chaperones, proteases, quality control'},
+    {name:'Innate\nImmune',             neutrophil: 34.1, monocyte: 40.2,
+     note:'Reactome: Innate Immune System\nNeut=34.1 · Mono=40.2\nInflammation, DAMP signalling, NF-κB'},
+    {name:'Mito\nBiogenesis',           neutrophil: 19.2, monocyte: 53.9,
+     note:'Reactome: Mitochondrial biogenesis\nNeut=19.2 · Mono=53.9\nFission, fusion, PGC-1α axis'},
+    {name:'Mito Protein\nDegradation',  neutrophil: 17.3, monocyte: 52.1,
+     note:'Reactome: Mitochondrial protein degradation\nNeut=17.3 · Mono=52.1\nLon protease, ClpXP, AAA proteases'},
+    {name:'Amino Acid\nMetabolism',     neutrophil: 15.9, monocyte: 29.3,
+     note:'Reactome: Metabolism of amino acids and derivatives\nNeut=15.9 · Mono=29.3\nBCAA, lysine, GABA, urea cycle'},
+    {name:'Apoptosis',                  neutrophil: 17.6, monocyte: 27.6,
+     note:'Reactome: Apoptosis\nNeut=17.6 · Mono=27.6\nMitochondria-mediated (intrinsic pathway), Bcl-2 family'},
+    {name:'Autophagy',                  neutrophil:  7.3, monocyte: 23.1,
+     note:'Reactome: Macroautophagy\nNeut=7.3 · Mono=23.1\nMitophagy, selective autophagy'},
+    {name:'Vitamin &\nCofactor Metab.', neutrophil:  8.9, monocyte: 19.7,
+     note:'Reactome: Metabolism of vitamins and cofactors\nNeut=8.9 · Mono=19.7\nCoA, NAD, folate, riboflavin'},
+    {name:'Biological\nOxidations',     neutrophil:  3.9, monocyte: 19.2,
+     note:'Reactome: Biological oxidations\nNeut=3.9 · Mono=19.2\nPhase I/II detoxification, CYPs'},
+    {name:'Protein\nImport',            neutrophil:  3.1, monocyte: 17.1,
+     note:'Reactome: Mitochondrial protein import\nNeut=3.1 · Mono=17.1\nTOM, TIM23, TIM22, OXA complexes'},
+    {name:'Ca²⁺\nTransport',            neutrophil:  5.9, monocyte: 13.8,
+     note:'Reactome: Mitochondrial calcium ion transport\nNeut=5.9 · Mono=13.8\nMCU complex, permeability transition pore'},
+  ];
+
+  function drawReactome(svgId, field) {
+    const W = getW(svgId);
+    const svg = d3.select('#'+svgId).attr('width', W).attr('height', H);
+    const root = d3.hierarchy({name:'r', children: groups.map(d=>({...d, n:d[field]}))}).sum(d=>d.n);
+    d3.treemap().size([W, H-16]).padding(3).round(true)(root);
+
+    svg.selectAll('rect').data(root.leaves()).join('rect')
+      .attr('x',d=>d.x0).attr('y',d=>d.y0)
+      .attr('width',d=>d.x1-d.x0).attr('height',d=>d.y1-d.y0)
+      .attr('fill',d=>d.data.hero?'#d97706':'#3b6cb7')
+      .attr('stroke','#fff').attr('stroke-width',2)
+      .attr('rx',3).attr('opacity',.90)
+      .style('cursor','pointer')
+      .on('mouseover',(e,d)=>showTip(e,d.data.note))
+      .on('mousemove',moveTip).on('mouseout',hideTip);
+
+    svg.selectAll('g.rg').data(root.leaves()).join('g').attr('class','rg')
+      .each(function(d){
+        const tw=d.x1-d.x0, th=d.y1-d.y0;
+        if(tw<28||th<16) return;
+        const fs=Math.max(7,Math.min(11,tw/6,th/2.6));
+        const lines=d.data.name.split('\n');
+        const mx=(d.x0+d.x1)/2, my=(d.y0+d.y1)/2;
+        const yTop=my-(lines.length-1)*fs*0.65;
+        lines.forEach((ln,i)=>{
+          d3.select(this).append('text')
+            .attr('x',mx).attr('y',yTop+i*fs*1.3)
+            .attr('text-anchor','middle').attr('dominant-baseline','middle')
+            .attr('pointer-events','none').attr('font-size',fs)
+            .attr('font-weight',d.data.hero?'700':'400')
+            .attr('fill','#fff').text(ln);
+        });
+      });
+
+    svg.append('text').attr('x',W/2).attr('y',H-3)
+      .attr('text-anchor','middle').attr('font-size',8).attr('fill','#64748b').attr('font-style','italic')
+      .text('area ∝ total RNA counts · Reactome × MitoCarta 3.0 · Tabula Sapiens');
+  }
+
+  drawReactome('reactome-svg-neut', 'neutrophil');
+  drawReactome('reactome-svg-mono', 'monocyte');
+})();
+
+// ════════════════════════════════════════════════════
+// LEVEL 4 — Cell diagram (BioRender-style)
+// ════════════════════════════════════════════════════
+(function initCell(){
+  const container = document.getElementById('cell-svg').parentElement;
+  const W = Math.max(260, Math.min(container.clientWidth - 4, 480));
+  const H = 360;
+  const svg = d3.select('#cell-svg').attr('width', W).attr('height', H);
+
+  // GO CC compartments — n = sum of mean RNA counts for compartment genes
+  // in classical monocyte (Tabula Sapiens, n=10,591 cells)
+  const ccData = [
+    {name:'Mitochondrion\n✦ SDHA', n: 94.7, hero:true,
+     note:'GO:0005739 · Mitochondrion\nRNA total = 94.7  n=373 genes\n✦ SDHA (Complex II) lives here'},
+    {name:'Cytosol',               n: 35.9,
+     note:'GO:0005829 · Cytosol\nRNA total = 35.9  n=1,777 genes'},
+    {name:'Nucleus',               n: 14.0,
+     note:'GO:0005634 · Nucleus\nRNA total = 14.0  n=917 genes'},
+    {name:'Plasma\nMembrane',      n: 12.1,
+     note:'GO:0005886 · Plasma Membrane\nRNA total = 12.1  n=1,269 genes'},
+    {name:'Endoplasmic\nReticulum',n:  9.5,
+     note:'GO:0005783 · Endoplasmic Reticulum\nRNA total = 9.5  n=326 genes'},
+    {name:'Peroxisome',            n:  7.4,
+     note:'GO:0005777 · Peroxisome\nRNA total = 7.4  n=34 genes'},
+    {name:'Extracellular\nRegion', n:  6.6,
+     note:'GO:0005576 · Extracellular Region\nRNA total = 6.6  n=822 genes'},
+    {name:'Golgi\nApparatus',      n:  2.3,
+     note:'GO:0005794 · Golgi Apparatus\nRNA total = 2.3  n=259 genes'},
+    {name:'Cytoskeleton',          n:  1.6,
+     note:'GO:0005856 · Cytoskeleton\nRNA total = 1.6  n=99 genes'},
+  ];
+
+  const root = d3.hierarchy({name:'cell', children:ccData}).sum(d=>d.n);
+  d3.treemap().size([W, H-16]).padding(3).round(true)(root);
+
+  svg.selectAll('rect.cw').data(root.leaves()).join('rect').attr('class','cw')
+    .attr('x',d=>d.x0).attr('y',d=>d.y0)
+    .attr('width',d=>d.x1-d.x0).attr('height',d=>d.y1-d.y0)
+    .attr('fill',d=>d.data.hero?'#d97706':'#3b6cb7')
+    .attr('stroke','#fff').attr('stroke-width',2)
+    .attr('rx',3).attr('opacity',.90)
+    .style('cursor','pointer')
+    .on('mouseover',(e,d)=>showTip(e,d.data.note))
+    .on('mousemove',moveTip).on('mouseout',hideTip);
+
+  svg.selectAll('g.cw').data(root.leaves()).join('g').attr('class','cw')
+    .each(function(d){
+      const tw=d.x1-d.x0, th=d.y1-d.y0;
+      if(tw<28||th<16) return;
+      const fs=Math.max(7,Math.min(11,tw/6,th/2.6));
+      const lines=d.data.name.split('\n');
+      const mx=(d.x0+d.x1)/2, my=(d.y0+d.y1)/2;
+      const yTop=my-(lines.length-1)*fs*0.65;
+      lines.forEach((ln,i)=>{
+        d3.select(this).append('text')
+          .attr('x',mx).attr('y',yTop+i*fs*1.3)
+          .attr('text-anchor','middle').attr('dominant-baseline','middle')
+          .attr('pointer-events','none').attr('font-size',fs)
+          .attr('font-weight',d.data.hero?'700':'400')
+          .attr('fill','#fff').text(ln);
+      });
+    });
+
+  svg.append('text').attr('x',W/2).attr('y',H-3)
+    .attr('text-anchor','middle').attr('font-size',8).attr('fill','#64748b').attr('font-style','italic')
+    .text('area ∝ mean RNA counts per GO CC compartment · classical monocyte · Tabula Sapiens');
+})();
+
+// ════════════════════════════════════════════════════
+// LEVEL 5 — Cell types (D3) — mitochondrial activity
+// ════════════════════════════════════════════════════
+(function initCT(){
+  const cts=[
+    {name:'Classical\nMonocyte',     x: 2.8, y: 2.5, rna:279.4},
+    {name:'Non-classical\nMonocyte', x: 2.2, y: 3.6, rna:320.5},
+    {name:'Intermediate\nMonocyte',  x: 3.4, y: 3.2, rna:297.3},
+    {name:'Macrophage',              x: 4.0, y: 1.8, rna:231.3},
+    {name:'pDC',                     x: 4.2, y: 3.8, rna:342.8},
+    {name:'NK Cell',                 x: 0.9, y: 4.8, rna:257.9},
+    {name:'NK T Cell',               x: 1.5, y: 5.5, rna:262.4},
+    {name:'CD4⁺ T Cell',             x:-0.4, y: 4.2, rna:253.4},
+    {name:'CD8⁺ T Cell',             x: 0.5, y: 3.5, rna:259.5},
+    {name:'Naive CD4⁺ T',            x:-1.2, y: 4.8, rna:250.9},
+    {name:'Regulatory T',            x:-0.8, y: 3.0, rna:292.2},
+    {name:'B Cell',                  x:-2.2, y: 3.4, rna:228.1},
+    {name:'Plasma Cell',             x:-3.2, y: 2.2, rna:323.1},
+    {name:'Basophil',                x: 2.8, y: 0.2, rna:200.1},
+    {name:'Neutrophil',              x: 3.6, y:-0.6, rna:110.7},
+    {name:'Platelet',                x: 0.4, y:-2.2, rna:165.5},
+    {name:'Erythrocyte\n(RBC)',      x:-1.4, y:-2.6, rna: 50.1, noMito:true},
+    {name:'HSC',                     x:-4.2, y: 0.8, rna:334.4},
+    {name:'Progenitor',              x:-3.6, y:-0.4, rna:299.2},
+  ];
+
+  const container = document.getElementById('ct-plot');
+  const W = Math.max(580, container.parentElement.clientWidth - 28);
+  const H = 480;
+  const m = {t:20, r:155, b:50, l:60};
+  const iW = W-m.l-m.r, iH = H-m.t-m.b;
+
+  const maxRNA = d3.max(cts.filter(d=>!d.noMito), d=>d.rna);
+  const colorS = d3.scaleLinear()
+    .domain([50,170,262,350]).range(['#bfdbfe','#60a5fa','#f59e0b','#d97706']).clamp(true);
+  const rS = d => d.noMito ? 8 : (10 + (d.rna/maxRNA)*34) / 2;
+
+  const xPad=0.8, yPad=0.8;
+  const xS = d3.scaleLinear()
+    .domain([d3.min(cts,d=>d.x)-xPad, d3.max(cts,d=>d.x)+xPad]).range([0,iW]);
+  const yS = d3.scaleLinear()
+    .domain([d3.min(cts,d=>d.y)-yPad, d3.max(cts,d=>d.y)+yPad]).range([iH,0]);
+
+  const svg = d3.select('#ct-plot').append('svg').attr('width',W).attr('height',H);
+  const g = svg.append('g').attr('transform',`translate(${m.l},${m.t})`);
+
+  g.append('g').attr('transform',`translate(0,${iH})`)
+    .call(d3.axisBottom(xS).ticks(5).tickSize(-iH).tickFormat(''))
+    .call(a=>a.select('.domain').remove())
+    .call(a=>a.selectAll('line').attr('stroke','#f0f4ff').attr('stroke-dasharray','2,2'));
+  g.append('g')
+    .call(d3.axisLeft(yS).ticks(5).tickSize(-iW).tickFormat(''))
+    .call(a=>a.select('.domain').remove())
+    .call(a=>a.selectAll('line').attr('stroke','#f0f4ff').attr('stroke-dasharray','2,2'));
+
+  g.append('g').attr('transform',`translate(0,${iH})`)
+    .call(d3.axisBottom(xS).ticks(5))
+    .call(a=>a.selectAll('text').attr('font-size',9).attr('fill','#64748b'))
+    .call(a=>a.select('.domain').attr('stroke','#e2e8f0'));
+  g.append('g')
+    .call(d3.axisLeft(yS).ticks(5))
+    .call(a=>a.selectAll('text').attr('font-size',9).attr('fill','#64748b'))
+    .call(a=>a.select('.domain').attr('stroke','#e2e8f0'));
+
+  svg.append('text').attr('x',m.l+iW/2).attr('y',H-6)
+    .attr('text-anchor','middle').attr('font-size',11).attr('fill','#475569')
+    .text('UMAP 1 (schematic)');
+  svg.append('text').attr('transform',`translate(14,${m.t+iH/2}) rotate(-90)`)
+    .attr('text-anchor','middle').attr('font-size',11).attr('fill','#475569')
+    .text('UMAP 2 (schematic)');
+
+  const anns=[
+    {x:-0.2,y:5.8, lines:['Adaptive immune','(T / NK)'],    fc:'#166534',bg:'#dcfce7'},
+    {x: 3.5,y: 4.5,lines:['Innate myeloid','(Mono / DC)'], fc:'#1e40af',bg:'#dbeafe'},
+    {x:-3.2,y: 1.5,lines:['Secretory','(Plasma / HSC)'],   fc:'#92400e',bg:'#fef3c7'},
+    {x:-0.4,y:-3.3,lines:['No mitochondria →'],             fc:'#991b1b',bg:'#fee2e2'},
+  ];
+  anns.forEach(a=>{
+    const ax=xS(a.x), ay=yS(a.y), bw=112, bh=a.lines.length*13+8;
+    g.append('rect').attr('x',ax-bw/2).attr('y',ay-bh/2).attr('width',bw).attr('height',bh)
+      .attr('rx',3).attr('fill',a.bg).attr('stroke',a.fc).attr('stroke-width',0.5).attr('opacity',0.92);
+    a.lines.forEach((ln,i)=>{
+      g.append('text').attr('x',ax).attr('y',ay-(a.lines.length-1)*6.5+i*13)
+        .attr('text-anchor','middle').attr('dominant-baseline','middle')
+        .attr('font-size',10).attr('fill',a.fc).text(ln);
+    });
+  });
+
+  // Normal cells: circles
+  g.selectAll('circle.ct').data(cts.filter(d=>!d.noMito)).join('circle').attr('class','ct')
+    .attr('cx',d=>xS(d.x)).attr('cy',d=>yS(d.y)).attr('r',d=>rS(d))
+    .attr('fill',d=>colorS(d.rna))
+    .attr('stroke','rgba(30,64,175,0.4)').attr('stroke-width',1.5)
+    .attr('opacity',0.90).style('cursor','pointer')
+    .on('mouseover',(e,d)=>showTip(e,
+      `${d.name.replace('\n',' ')}\nTotal MitoCarta RNA: ${d.rna}\nTabula Sapiens blood · 1,125 MitoCarta genes`))
+    .on('mousemove',moveTip).on('mouseout',hideTip);
+
+  // noMito cells: 'x' marker
+  cts.filter(d=>d.noMito).forEach(d=>{
+    const cx=xS(d.x), cy=yS(d.y), s=rS(d);
+    g.append('path')
+      .attr('d',`M${cx-s},${cy-s}L${cx+s},${cy+s}M${cx-s},${cy+s}L${cx+s},${cy-s}`)
+      .attr('stroke','#dc2626').attr('stroke-width',2.5).attr('stroke-linecap','round')
+      .style('cursor','pointer')
+      .on('mouseover',e=>showTip(e,`${d.name.replace('\n',' ')}\nTotal MitoCarta RNA: ${d.rna}\nNo mitochondria`))
+      .on('mousemove',moveTip).on('mouseout',hideTip);
+  });
+
+  // Labels
+  cts.forEach(d=>{
+    const lines=d.name.split('\n');
+    const t=g.append('text').attr('x',xS(d.x)).attr('y',yS(d.y)-rS(d)-4-(lines.length-1)*5)
+      .attr('text-anchor','middle').attr('font-size',10)
+      .attr('fill',d.noMito?'#991b1b':'#334155').attr('pointer-events','none');
+    lines.forEach((ln,i)=>t.append('tspan').attr('x',xS(d.x)).attr('dy',i===0?0:10).text(ln));
+  });
+
+  const defs=svg.append('defs');
+  const grad=defs.append('linearGradient').attr('id','ctcbGradC')
+    .attr('x1','0').attr('x2','0').attr('y1','1').attr('y2','0');
+  [{o:'0%',c:'#bfdbfe'},{o:'40%',c:'#60a5fa'},{o:'75%',c:'#f59e0b'},{o:'100%',c:'#d97706'}]
+    .forEach(s=>grad.append('stop').attr('offset',s.o).attr('stop-color',s.c));
+
+  const cbX=m.l+iW+16, cbY=m.t+iH*0.2, cbH=iH*0.55, cbW=12;
+  svg.append('rect').attr('x',cbX).attr('y',cbY).attr('width',cbW).attr('height',cbH)
+    .attr('fill','url(#ctcbGradC)').attr('rx',2);
+  const cbScale=d3.scaleLinear().domain([50,350]).range([cbY+cbH,cbY]);
+  svg.append('g').attr('transform',`translate(${cbX+cbW},0)`)
+    .call(d3.axisRight(cbScale).ticks(5).tickSize(3))
+    .call(a=>a.select('.domain').remove())
+    .call(a=>a.selectAll('text').attr('font-size',9).attr('fill','#64748b'));
+  svg.append('text').attr('x',cbX+cbW/2).attr('y',cbY-13)
+    .attr('text-anchor','middle').attr('font-size',9).attr('fill','#64748b').text('MitoCarta RNA');
+  svg.append('text').attr('x',cbX+cbW/2).attr('y',cbY-3)
+    .attr('text-anchor','middle').attr('font-size',9).attr('fill','#64748b').text('(mean counts)');
+})();
+</script>
+
+<!-- ══ Constellation panel script ══ -->
+<script>
+(function(){
+  // ── Pathway definitions ──────────────────────────────────────────────────
+  const PATHWAYS = [
+    {id:'OxPhos',      label:'OxPhos',          conf:5},
+    {id:'IFN-alpha',   label:'IFN-alpha',        conf:4},
+    {id:'TCR-sig',     label:'TCR-sig',          conf:3},
+    {id:'HSP-stress',  label:'HSP-stress',       conf:3},
+    {id:'Circ-core',   label:'Circ-core',        conf:4},
+    {id:'Neut-frac',   label:'Neut-fraction',    conf:3},
+    {id:'Apoptosis',   label:'Apoptosis',        conf:4},
+    {id:'mTORC1',      label:'mTORC1',           conf:3},
+    {id:'IL6-JAK',     label:'IL6-JAK-STAT3',    conf:3},
+    {id:'PI3K-AKT',    label:'PI3K-AKT-mTOR',   conf:3},
+    {id:'Hypoxia',     label:'Hypoxia',          conf:2},
+    {id:'p53',         label:'p53-pathway',      conf:3},
+    {id:'MYC',         label:'MYC-targets',      conf:3},
+    {id:'TNF-alpha',   label:'TNF-alpha',        conf:4},
+    {id:'NF-kB',       label:'NF-kB',            conf:4},
+    {id:'Complement',  label:'Complement',       conf:4},
+    {id:'Coagulation', label:'Coagulation',      conf:3},
+    {id:'Glycolysis',  label:'Glycolysis',       conf:4},
+    {id:'FA-Metab',    label:'FA-Metabolism',    conf:3},
+    {id:'Ox-stress',   label:'Oxidative-stress', conf:3},
+  ];
+
+  // ── Per-level scores ─────────────────────────────────────────────────────
+  const LEVEL_SCORES = {
+    s1: { // Genome — baseline, low activity
+      OxPhos:0.30, 'IFN-alpha':0.25, 'TCR-sig':0.25, 'HSP-stress':0.28,
+      'Circ-core':0.50, 'Neut-frac':0.27, Apoptosis:0.28, mTORC1:0.30,
+      'IL6-JAK':0.28, 'PI3K-AKT':0.30, Hypoxia:0.25, p53:0.28,
+      MYC:0.27, 'TNF-alpha':0.28, 'NF-kB':0.25, Complement:0.27,
+      Coagulation:0.28, Glycolysis:0.30, 'FA-Metab':0.28, 'Ox-stress':0.28,
+    },
+    s2: { // TCA cycle — OxPhos dominant, glycolysis moderate
+      OxPhos:0.90, 'IFN-alpha':0.15, 'TCR-sig':0.12, 'HSP-stress':0.22,
+      'Circ-core':0.25, 'Neut-frac':0.15, Apoptosis:0.20, mTORC1:0.30,
+      'IL6-JAK':0.15, 'PI3K-AKT':0.22, Hypoxia:0.20, p53:0.18,
+      MYC:0.25, 'TNF-alpha':0.15, 'NF-kB':0.15, Complement:0.12,
+      Coagulation:0.12, Glycolysis:0.40, 'FA-Metab':0.60, 'Ox-stress':0.35,
+    },
+    s3: { // Mito interior — OxPhos + FA-Metab dominant
+      OxPhos:0.95, 'IFN-alpha':0.12, 'TCR-sig':0.10, 'HSP-stress':0.30,
+      'Circ-core':0.40, 'Neut-frac':0.18, Apoptosis:0.50, mTORC1:0.25,
+      'IL6-JAK':0.12, 'PI3K-AKT':0.20, Hypoxia:0.28, p53:0.22,
+      MYC:0.20, 'TNF-alpha':0.15, 'NF-kB':0.18, Complement:0.10,
+      Coagulation:0.10, Glycolysis:0.22, 'FA-Metab':0.75, 'Ox-stress':0.55,
+    },
+    s3r: { // Reactome — similar to L3 with slight variation
+      OxPhos:0.92, 'IFN-alpha':0.14, 'TCR-sig':0.12, 'HSP-stress':0.32,
+      'Circ-core':0.38, 'Neut-frac':0.20, Apoptosis:0.48, mTORC1:0.28,
+      'IL6-JAK':0.14, 'PI3K-AKT':0.22, Hypoxia:0.30, p53:0.24,
+      MYC:0.22, 'TNF-alpha':0.17, 'NF-kB':0.20, Complement:0.12,
+      Coagulation:0.12, Glycolysis:0.25, 'FA-Metab':0.70, 'Ox-stress':0.58,
+    },
+    s4: { // Cell — all compartments active, balanced
+      OxPhos:0.65, 'IFN-alpha':0.45, 'TCR-sig':0.42, 'HSP-stress':0.50,
+      'Circ-core':0.55, 'Neut-frac':0.48, Apoptosis:0.45, mTORC1:0.55,
+      'IL6-JAK':0.50, 'PI3K-AKT':0.58, Hypoxia:0.40, p53:0.42,
+      MYC:0.60, 'TNF-alpha':0.52, 'NF-kB':0.55, Complement:0.40,
+      Coagulation:0.45, Glycolysis:0.55, 'FA-Metab':0.50, 'Ox-stress':0.45,
+    },
+    s5: { // Cell types — immune signatures dominant
+      OxPhos:0.45, 'IFN-alpha':0.80, 'TCR-sig':0.70, 'HSP-stress':0.35,
+      'Circ-core':0.30, 'Neut-frac':0.90, Apoptosis:0.38, mTORC1:0.42,
+      'IL6-JAK':0.62, 'PI3K-AKT':0.45, Hypoxia:0.28, p53:0.32,
+      MYC:0.40, 'TNF-alpha':0.68, 'NF-kB':0.72, Complement:0.80,
+      Coagulation:0.65, Glycolysis:0.48, 'FA-Metab':0.30, 'Ox-stress':0.38,
+    },
+  };
+
+  const LEVEL_LABELS = {
+    s1:'Level 1 · Genome', s2:'Level 2 · TCA Cycle',
+    s3:'Level 3 · Mito Interior', s3r:'Level 3½ · Reactome',
+    s4:'Level 4 · The Cell', s5:'Level 5 · Cell Types',
+  };
+
+  // ── State ─────────────────────────────────────────────────────────────────
+  let currentScores = {...LEVEL_SCORES.s1};
+  const pinnedSet = new Set();
+
+  // ── Color scale: gray → amber ─────────────────────────────────────────────
+  const colorScale = d3.scaleSequential()
+    .domain([0, 1])
+    .interpolator(d3.interpolateRgb('#6e7681', '#d97706'));
+
+  // ── Build token rows ──────────────────────────────────────────────────────
+  const list = document.getElementById('pw-list');
+
+  PATHWAYS.forEach(pw => {
+    const row = document.createElement('div');
+    row.className = 'pw-token';
+    row.id = 'token-' + pw.id;
+
+    // SVG badge (D3-drawn circle with stroke)
+    const svgNS = 'http://www.w3.org/2000/svg';
+    const svg = document.createElementNS(svgNS, 'svg');
+    svg.setAttribute('width', '36');
+    svg.setAttribute('height', '36');
+    svg.classList.add('pw-badge');
+
+    const circle = document.createElementNS(svgNS, 'circle');
+    circle.setAttribute('cx', '18');
+    circle.setAttribute('cy', '18');
+    circle.setAttribute('r', '14');
+    circle.setAttribute('stroke-width', String(pw.conf)); // 1–5 px = confidence
+    svg.appendChild(circle);
+
+    const label = document.createElement('span');
+    label.className = 'pw-name';
+    label.textContent = pw.label;
+
+    row.appendChild(svg);
+    row.appendChild(label);
+
+    // Toggle pin on click
+    row.addEventListener('click', () => {
+      if (pinnedSet.has(pw.id)) {
+        pinnedSet.delete(pw.id);
+        row.classList.remove('pinned');
+      } else {
+        pinnedSet.add(pw.id);
+        row.classList.add('pinned');
+      }
+    });
+
+    list.appendChild(row);
+  });
+
+  // ── Render scores (D3 transition) ─────────────────────────────────────────
+  function renderScores(scores) {
+    PATHWAYS.forEach(pw => {
+      const score = scores[pw.id] ?? 0.3;
+      const circle = document.querySelector(`#token-${pw.id} circle`);
+      if (!circle) return;
+
+      d3.select(circle)
+        .transition()
+        .duration(400)
+        .attr('fill', colorScale(score))
+        .attr('stroke', () => {
+          // Lighter tint of fill for stroke
+          const c = d3.color(colorScale(score));
+          c.opacity = 0.75;
+          return c.brighter(0.6).formatHex();
+        });
+    });
+  }
+
+  // Initial render
+  renderScores(currentScores);
+
+  // ── IntersectionObserver: update on section scroll ─────────────────────────
+  const levelLabel = document.getElementById('cst-level-label');
+
+  document.querySelectorAll('section[id]').forEach(sec => {
+    new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting) {
+        const id = sec.id;
+        const scores = LEVEL_SCORES[id];
+        if (!scores) return;
+        currentScores = {...scores};
+        renderScores(currentScores);
+        levelLabel.textContent = LEVEL_LABELS[id] || id;
+      }
+    }, {threshold: 0.35}).observe(sec);
+  });
+
+})();
+</script>
+</body>
+</html>
